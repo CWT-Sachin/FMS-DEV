@@ -1,0 +1,404 @@
+﻿@model FMS_DEV.ViewModel.ProfitandLostViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header bg-info" style="position: relative;">
+                            <h4 class="m-b-0 text-white">Profit & Lost Job wise</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-body">
+                                <!--Job Serach-->
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        Job No
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row align-self-center text-right">
+                                            @using (Html.BeginForm("Index", "ProfitandLost", new { searchString = "" }, FormMethod.Get))
+                                            {
+                                                <div class="input-group">
+                                                    <input type="text" id="searchString" name="searchString" class="form-control" placeholder="Search Job No..." />
+                                                    <div class="input-group-append">
+                                                        <button type="submit" class="btn btn-info"> <i class="fas fa-search-plus"></i> Go!</button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <label class="control-label text-right col-md-4" style="color: red;">@ViewBag.JobFound</label>
+                                    </div>
+                                    
+                                </div>
+                                <!--span-->
+                            </div>
+                            <!--Job Serach END-->
+                            <!--Job Details-->
+                            <h5 style="font-weight: bold;">Job Details</h5>
+                            <!--/row-->
+                            <div style="border:1px  solid black; padding: 10px 10px 10px 10px; background-color:#E5F2FB; border-radius:10px;">
+
+                                <!--Job No & Date-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="Job No">Job No.</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span id="jobno">
+                                                    <b>  @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().JobNo) </b>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="Date">Date</label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().JobDate)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4"></div>
+
+                                </div><br />
+
+                                <!--Sales Person-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="Vessel">Vessel</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().VesselExportJobDtlNavigation.VesselName)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                </div>
+
+                                <br />
+                                <!--Vessel ,ETD (Date) & Shipper-->
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="Vessel">Voyage</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().Voyage)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="ETD (Date)">Agent</label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().AgentExportNavigation.AgentName)
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="Shipper">Shipper</label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().ShippingLineExportNavigation.Name)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div><br />
+
+                                <!--Final Destination & Consignee-->
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="Final Destination">Final Destination</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().FDNExportJobNavigation.PortName)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="Final Destination">Coloader</label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().ColoaderExportNavigation.Name)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="Consignee">Coload</label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().IsCoLoad)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><br />
+                            </div>
+                            <!--Job Details END-->
+                            <br />
+                            <br />
+                            <!--Total Amount-->
+                                <div class="row">
+                                <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                    <div class="box" style="background-color: #4D63F1;color:white; font-size:23px; font-family:Segoe UI; ">
+                                        <p class="box-text" style="font-weight:bold;">Rs. @ViewBag.TotalInvoiceAmountLKR</p>
+                                        <p class="box-text" style=" font-size:20px;" >Invoice</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                    <div class="box" style="background-color: #3DB811;color:white; font-size:23px; font-family:Segoe UI; ">
+                                        <p class="box-text" style="font-weight:bold;">Rs. @ViewBag.TotalCreditNoteAmountLKR</p>
+                                        <p class="box-text" style=" font-size:20px;">Debit</p>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                    <div class="box" style="background-color: #EFB11F;color:white; font-size:23px; ">
+                                        <p class="box-text" style="font-weight:bold;">Rs. @ViewBag.TotalDebitNoteAmountLKR</p>
+                                        <p class="box-text" style=" font-size:20px;">Credit</p>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                    <div class="box" style="background-color: #EA0B2F;color:white; font-size:23px; font-family:Segoe UI; ">
+                                        <p class="box-text" style="font-weight:bold;">Rs. @ViewBag.TotalPaymentVoucherAmountLKR</p>
+                                        <p class="box-text" style=" font-size:20px;">Payment Vouchers</p>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                    <div class="box" style="background-color: #A70BEA; color:white; font-size:23px; font-family:Segoe UI; ">
+                                        <p class="box-text" style="font-weight:bold;">Rs. @ViewBag.ProfitLoss</p>
+                                        <p class="box-text" style=" font-size:20px;">Profit /Lost</p>
+                                    </div>
+                                    </div>
+                                <div class="col-md-1"></div>
+                                </div>
+                                <!--End Of Total Amount-->
+
+                            <div class="line">
+                                <hr style="border-top: 1px solid #999999; margin-top: 20px; margin-bottom: 20px;">
+                            </div>
+                            <!--Invoice Tabel-->
+                            <h3 style="font-weight: bold;">Invoice</h3>
+                            <table class="table table-bordered table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice No</th>
+                                        <th>Description</th>
+                                        <th>UNIT</th>
+                                        <th style="text-align: right;">QTY</th>
+                                        <th style="text-align: right;">Rate</th>
+                                        <th style="text-align: right;">Income LKR</th>
+                                        <th style="text-align: right;">Expense LKR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var invoiceDtl in Model.InvoiceDtMulti)
+                                    {
+                                        <tr>
+                                            <td>@invoiceDtl.InvoiceNo</td>
+                                            <td>@invoiceDtl.ChargeItemNavigation.Description</td>
+                                            <td>@invoiceDtl.Unit</td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Qty))</td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Rate))</td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Amount))</td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <td style="font-weight:bold">Total Invoice Amount LKR</td>
+                                        <td style="font-weight:bold">@ViewBag.TotalInvoiceAmountLKR</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--End of Invoice Tabel-->
+                            <!--Debit Notes Tabel-->
+                            <h3 style="font-weight: bold;">Debit Notes</h3>
+                            <table class="table table-bordered table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Debit Notes No</th>
+                                        <th style="text-align: right;">B/L Number</th>
+                                        <th>Description</th>
+                                        <th>UNIT</th>
+                                        <th style="text-align: right;">QTY</th>
+                                        <th style="text-align: right;">Rate</th>
+                                        <th style="text-align: right;">Income LKR</th>
+                                        <th style="text-align: right;">Expense LKR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var invoiceDtl in Model.DebitNoteDtMulti)
+                                    {
+                                        <tr>
+                                            <td>@invoiceDtl.DebitNoteNo</td>
+                                            <td style="text-align: right;">@invoiceDtl.BlContainerNo</td>
+                                            <td>@invoiceDtl.ChargeItemNavigation.Description</td>
+                                            <td >@invoiceDtl.Unit</td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Qty))</td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Rate))</td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Amount))</td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td colspan="5"></td>
+                                        <td style="font-weight:bold">Total Debit Note Amount LKR</td>
+                                        <td style="font-weight:bold">@ViewBag.TotalDebitNoteAmountLKR</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--End of Debit Notes Tabel-->
+                            <!--Debit Notes Tabel-->
+                            <h3 style="font-weight: bold;">Credit Notes</h3>
+                            <table class="table table-bordered table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Credit Notes No</th>
+                                        <th style="text-align: right;">B/L Number</th>
+                                        <th>Description</th>
+                                        <th>UNIT</th>
+                                        <th style="text-align: right;">QTY</th>
+                                        <th style="text-align: right;">Rate</th>
+                                        <th style="text-align: right;">Income LKR</th>
+                                        <th style="text-align: right;">Expense LKR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var invoiceDtl in Model.CreditNoteDtMulti)
+                                    {
+                                        <tr>
+                                            <td>@invoiceDtl.CreditNoteNo</td>
+                                            <td style="text-align: right;">@invoiceDtl.BlContainerNo</td>
+                                            <td>@invoiceDtl.ChargeItemNavigation.Description</td>
+                                            <td >@invoiceDtl.Unit</td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Qty))</td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Rate))</td>
+                                            <td></td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Amount))</td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td colspan="6"></td>
+                                        <td style="font-weight:bold">Total Credit Note Amount LKR</td>
+                                        <td style="font-weight:bold">@ViewBag.TotalCreditNoteAmountLKR</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--End of Credit Notes Tabel-->
+                            <!--Payment Vouchers Tabel-->
+                            <h3 style="font-weight: bold;">Payment Vouchers</h3>
+                            <table class="table table-bordered table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Payment Vocher No</th>
+                                        <th style="text-align: right;">B/L Number</th>
+                                        <th>Description</th>
+                                        <th>UNIT</th>
+                                        <th style="text-align: right;">QTY</th>
+                                        <th style="text-align: right;">Rate</th>
+                                        <th style="text-align: right;">Income LKR</th>
+                                        <th style="text-align: right;">Expense LKR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var invoiceDtl in Model.PayVoucherDtlMulti)
+                                    {
+                                        <tr>
+                                            <td>@invoiceDtl.PayVoucherNo</td>
+                                            <td style="text-align: right;">@invoiceDtl.BlContainerNo</td>
+                                            <td>@invoiceDtl.ChargeItemNavigation.Description</td>
+                                            <td >@invoiceDtl.Unit</td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Qty))</td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Rate))</td>
+                                            <td></td>
+                                            <td style="text-align: right;">@(string.Format("{0:#,##0.00}", invoiceDtl.Amount))</td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td colspan="6"></td>
+                                        <td style="font-weight:bold">Total Payment Vouchers Amount LKR</td>
+                                        <td style="font-weight:bold">@ViewBag.TotalPaymentVoucherAmountLKR</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--End of Payment Vouchers Tabel-->
+                            <br />
+                            <!--Total Amount-->
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-2">
+                                    <div class="box" style="background-color: #4D63F1;color:white; font-size:25px; font-family:Segoe UI; ">
+                                        <p class="box-text" style="font-weight:bold;">Rs. @ViewBag.TotalIncome</p>
+                                        <p class="box-text">Total Income</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="box" style="background-color: #EFB11F;color:white; font-size:25px; font-family:Segoe UI; ">
+                                        <p class="box-text" style="font-weight:bold;">Rs. @ViewBag.TotalExpenses</p>
+                                        <p class="box-text">Total Expenses</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="box" style="background-color: #3DB811;color:white; font-size:25px; font-family:Segoe UI; ">
+                                        <p class="box-text" style="font-weight:bold;">Rs. @ViewBag.ProfitLoss</p>
+                                        <p class="box-text">Profit/Lost</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                            <!--End Of Total Amount-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,914 @@
+﻿
+@*@model IEnumerable<FMS_DEV.ViewModel.DashBrdExportForPlanViewModel>*@
+@model FMS_DEV.ViewModel.DashBrdExportForPlanViewModel
+
+@{
+    ViewData["Title"] = "DashBoardTransshipmentHandling";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">DashBoard-<b>Export-Planing</b></h3>
+                    
+                </div>
+                <div class="col-md-7 align-self-center text-right">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                     @*   <button type="button" onclick="location.href='@Url.Action("Create", "TxnImportJobDtls")'" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Import BL</button>*@
+                        @*   <button type="button" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Staff</button>*@
+                        @* onclick="location.href='@Url.Action("Create", "User")'"*@
+                        @*asp-action="Create"*@
+
+                    </div>
+                </div>
+            </div>
+            <div class="row page-titles">
+                <div class="col-md-3 align-self-center">
+                    
+                </div>
+
+                <!-- Search-->
+                <div class="col-md-9">
+                    @using (Html.BeginForm("DashBrdExportForPlan", "DashBrdExports", new { pFromDate = "" ,pToDate=""}, FormMethod.Post))
+                    {
+                       <div class="row">
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-4"  >
+                                        <label for="pFromDate">@ViewBag.Period</label>  
+                                    </div>
+
+                                    <div class="col-md-4"  >
+                                        <div class="row" >
+                                            <div class="col-md-4">
+                                                 <label for="pFromDate">From Date (mm/dd/yyyy)</label>  
+                                            </div>
+                                             <div class="col-md-5">
+                                                @{
+                                                   var passedFromDate = ViewBag.FromDate;
+                                                    // Convert to DateTime if it's not already in that format
+                                                    if (!(passedFromDate is DateTime fromDate))
+                                                    {
+                                                        if (DateTime.TryParse(passedFromDate.ToString(), out fromDate))
+                                                        {
+                                                            passedFromDate = fromDate.ToString("yyyy-MM-dd");
+                                                        }
+                                                        else
+                                                        {
+                                                            // Handle the case where the date is not in a valid format.
+                                                            // For example, you can set a default value or show an error message.
+                                                            passedFromDate = DateTime.Today.ToString("yyyy-MM-dd"); // Set a default date or display an error message.
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        passedFromDate = fromDate.ToString("yyyy-MM-dd");
+                                                    }
+                                                }
+                                                    <input type="date" id="pFromDate" name="pFromDate" value="@passedFromDate" />                 
+                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4"  >
+                                        <div class="row" >
+                                            <div class="col-md-4">
+                                                 <label for="pToDate">To Date (mm/dd/yyyy)</label>  
+                                            </div>
+                                             <div class="col-md-5">
+                                                @{
+                                                   var passedToDate = ViewBag.ToDate;
+                                                    // Convert to DateTime if it's not already in that format
+                                                    if (!(passedToDate is DateTime toDate))
+                                                    {
+                                                        if (DateTime.TryParse(passedToDate.ToString(), out toDate))
+                                                        {
+                                                            passedToDate = toDate.ToString("yyyy-MM-dd");
+                                                        }
+                                                        else
+                                                        {
+                                                            // Handle the case where the date is not in a valid format.
+                                                            // For example, you can set a default value or show an error message.
+                                                            passedToDate = DateTime.Today.ToString("yyyy-MM-dd"); // Set a default date or display an error message.
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        passedToDate = toDate.ToString("yyyy-MM-dd");
+                                                    }
+                                                }
+                                                    <input type="date" id="pToDate" name="pToDate" value="@passedToDate"  />                 
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                   @* <input type="text" id="searchString" name="searchString" class="form-control" placeholder="Search..." />*@
+                                    <div class="input-group-append" id="buttonContainer">
+                                          <button type="submit" class="btn btn-info" onclick=""> <i class="fas fa-search-plus"></i> Go!</button>
+                                    @*<button type="submit" class="btn btn-info" onclick="GetAndSetDestinationPortID()"> <i class="fas fa-search-plus"></i> Go!</button>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- End Search-->
+            </div>
+             <!-- Top Totala-->
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-1" style="background-color: blue; box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);">
+                            <span style="font-size: 13px; color:whitesmoke">TS Shipments</span><br/> <span style="font-size: 20px; color:whitesmoke">@ViewBag.TotalTSShipments </span> 
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1" style="background-color: blue;box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);"> 
+                            <span style="font-size: 13px; color:whitesmoke">TS CBM</span><br/> <span style="font-size: 20px; color:whitesmoke">@string.Format("{0:n2}", ViewBag.TotalTSCBM) </span> 
+                        </div>
+                         <div class="col-md-1"></div>
+                        <div class="col-md-1" style="background-color: blue;box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);">
+                            <span style="font-size: 13px; color:whitesmoke">TS FDNs</span><br/> <span style="font-size: 20px; color:whitesmoke">@ViewBag.TotalTSFDNsImport</span> 
+                        </div>
+                        <!--Local -->
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1" style="background-color: blue; box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);">
+                            <span style="font-size: 13px; color:whitesmoke">Local Shipments</span><br/> <span style="font-size: 20px; color:whitesmoke">@ViewBag.TotalLocalShipments </span> 
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1" style="background-color: blue;box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);"> 
+                            <span style="font-size: 13px; color:whitesmoke">Local CBM</span><br/> <span style="font-size: 20px; color:whitesmoke">@string.Format("{0:n2}", ViewBag.TotalLocalSCBM)</span> 
+                        </div>
+                         <div class="col-md-1"></div>
+                        <div class="col-md-1" style="background-color: blue;box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);">
+                            <span style="font-size: 13px; color:whitesmoke">Local FDNs</span><br/> <span style="font-size: 20px; color:whitesmoke">@ViewBag.TotalLocalFDNsExport</span> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Top Totals-->
+            <br/>
+
+            <!--FDN wise Table-->
+            <div class="row">
+                <div class="col-md-4">
+                   <b>FDN wise CBM -Transshipments</b><br />
+                   <div class="row">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- FDN wise TS booking Barchart -->
+                                <div id="chartTransshipmentsGoogle" style="border: 2px solid lightblue;"><canvas id="chartTransshipmentsGoogle"></canvas></div>
+                                <!-- FDN wise TS booking Barchart -->
+                                <br />
+                                <div class="table-container">
+                                    
+                                    <table class="color-bordered-table red-bordered-table" id="tbFDNTransshipments" style="width:100%">
+                                        <!-- ============================================================== -->
+                                        <!-- Orginal details Strat -->
+                                        <!-- ============================================================== -->
+                                        <thead>
+                                            <tr>
+
+                                                <th>
+                                                    FDN
+                                                </th>
+                                                <th>
+                                                    CBM
+                                                </th>
+                                                <th>
+                                                    Weight
+                                                </th>
+                                                <th>
+                                                    Shipment
+                                                </th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody> 
+                                                                @foreach (var item in Model.ResultsFDNWiseTS)
+                                            {
+                                                
+                                                <tr>
+                                                    <td>@Html.DisplayFor(modelItem => item.Fdn)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.TotalCBM)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.TotalWeight)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.NumberOfShipments)</td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                        <!-- ============================================================== -->
+                                        <!-- Orginal details End -->
+                                        <!-- ============================================================== -->
+                                    </table>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="col-md-4">
+                    <b>FDN wise CBM -Local</b><br />
+                    <div class="row">
+                <div class="card">
+                <div class="card-body">
+                    <!-- FDN wise Local booking Barchart -->
+                    <div id="chartLocalBookingsGoogle" style="border: 2px solid lightblue;"><canvas id="chartLocalBookingsGoogle"></canvas></div>
+                    <!-- FDN wise Local booking Barchart -->
+                    <br />
+                              <div class="table-container">
+
+                                    <table class="color-bordered-table red-bordered-table" id="tbFDNLocalBookings" style="width:100%">
+                            <!-- ============================================================== -->
+                            <!-- Orginal details Strat -->
+                            <!-- ============================================================== -->
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        FDN
+                                    </th>
+                                    <th>
+                                        CBM
+                                    </th>
+                                    <th>
+                                        Weight(GR)
+                                    </th>
+                                    <th>
+                                        Shipment
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody> 
+                                @foreach (var item in Model.ResultsFDNWiseLocal)
+                                {
+                                                
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.Fdn)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.TotalCBM)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.TotalWeight)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.NumberOfShipments)</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <!-- ============================================================== -->
+                            <!-- Orginal details End -->
+                            <!-- ============================================================== -->
+                        </table>  
+
+                    </div>
+                </div>
+            </div>
+            </div>
+
+                </div>
+
+                 <div class="col-md-4">
+                    <b>FDN wise CBM -TS & Local </b><br />
+                    <div class="row">
+                <div class="card">
+                <div class="card-body">
+                    <!-- FDN wise Totla CBM Piechart -->
+                                <div id="chartTransshipmentsAndLocalBookingsGoogle" style="border: 2px solid lightblue;"><canvas id="chartTransshipmentsAndLocalBookingsGoogle"></canvas></div>
+                    <!-- END FDN wise Totla CBM Piechart -->
+                    <br />
+                   @* <div class="table-responsive">*@
+                     <div class="table-container">
+                                    
+                                    <table class="color-bordered-table red-bordered-table" id="tbFDNTransshipmentsAndLocalBookings" style="width:100%">
+                                   @*     <table class="table color-bordered-table red-bordered-table" id="tbFDNTransshipmentsAndLocalBookings">*@
+
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        FDN
+                                    </th>
+                                    <th>
+                                        CBM
+                                    </th>
+                                    <th>
+                                        Weight
+                                    </th>
+                                    <th>
+                                        Shipments
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.ResultsFDNWiseAll)
+                                {
+
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.Fdn)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.TotalCBM)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.TotalWeight)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.NumberOfShipments)</td>
+                                    </tr>
+                                }
+                        
+                            </tbody>
+                            <!-- ============================================================== -->
+                            <!-- Orginal details End -->
+                            <!-- ============================================================== -->
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+            </div>
+                </div>
+            </div>
+            <!--Vessel wise Table-->
+            <div class="row">     
+                <div class="col-md-6">
+                    <b>Vessel wise Transshipments Table</b><br />
+                    <div class="row">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table color-bordered-table red-bordered-table">
+                                        <!-- ============================================================== -->
+                                        <!-- Orginal details Strat -->
+                                        <!-- ============================================================== -->
+                                        <thead>
+                                            <tr>
+
+                                                <th>
+                                                   Vessel
+                                                </th>
+                                                <th>
+                                                    Voyage
+                                                </th>
+                                                <th>
+                                                    POD
+                                                </th>
+                                                <th>
+                                                    FDN
+                                                </th>
+                                                <th>
+                                                    CBM
+                                                </th>
+                                                <th>
+                                                    Weight
+                                                </th>
+                                                <th>
+                                                    Shipment
+                                                </th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody> 
+                                            <tr>
+
+                                                <td>Maersk Damietta</td>
+                                                <td>A34</td>
+                                                <td>CHENNAI</td>
+                                                <td>BANGLORE</td>
+                                                <td>12.33</td>
+                                                <td>4210</td>
+                                                <td>3</td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>Maersk Damietta</td>
+                                                <td>SINGAPORE</td>
+                                                <td>AUCKLAND</td>
+                                                <td>10.5</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Seaspan Zambezi</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>15.23</td>
+                                                <td>2001</td>
+                                                <td>2</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Al Manamah</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>4.52</td>
+                                                <td>800</td>
+                                                <td>4</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Zim Yokohama</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>8.52</td>
+                                                <td>1500</td>
+                                                <td>1</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Akinada Bridge</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>13.47</td>
+                                                <td>3580</td>
+                                                <td>5</td>
+                                            </tr>
+                        
+                                        </tbody>
+                                        <!-- ============================================================== -->
+                                        <!-- Orginal details End -->
+                                        <!-- ============================================================== -->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <b>Vessel wise Local Bookings</b><br />
+                    <div class="row">
+                            <div class="card">
+                            <div class="card-body">
+                   
+                                <div class="table-responsive">
+                                    <table class="table color-bordered-table red-bordered-table">
+                                        <!-- ============================================================== -->
+                                        <!-- Orginal details Strat -->
+                                        <!-- ============================================================== -->
+                                        <thead>
+                                            <tr>
+
+                                                <th>
+                                                   Vessel
+                                                </th>
+                                                <th>
+                                                    Voyage
+                                                </th>
+                                                <th>
+                                                    POD
+                                                </th>
+                                                <th>
+                                                    FDN
+                                                </th>
+                                                <th>
+                                                    CBM
+                                                </th>
+                                                <th>
+                                                    Weight
+                                                </th>
+                                                <th>
+                                                    Shipment
+                                                </th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody> 
+                                            <tr>
+
+                                                <td>Maersk Damietta</td>
+                                                <td>A34</td>
+                                                <td>CHENNAI</td>
+                                                <td>BANGLORE</td>
+                                                <td>12.33</td>
+                                                <td>4210</td>
+                                                <td>3</td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>Maersk Damietta</td>
+                                                <td>SINGAPORE</td>
+                                                <td>AUCKLAND</td>
+                                                <td>10.5</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Seaspan Zambezi</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>15.23</td>
+                                                <td>2001</td>
+                                                <td>2</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Al Manamah</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>4.52</td>
+                                                <td>800</td>
+                                                <td>4</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Zim Yokohama</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>8.52</td>
+                                                <td>1500</td>
+                                                <td>1</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Akinada Bridge</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>13.47</td>
+                                                <td>3580</td>
+                                                <td>5</td>
+                                            </tr>
+                        
+                                        </tbody>
+                                        <!-- ============================================================== -->
+                                        <!-- Orginal details End -->
+                                        <!-- ============================================================== -->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Container fluid  END -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper -  END style you can find in pages.scss -->
+<!-- ============================================================== -->
+<style>
+    .table-container {
+    height: 300px; /* Adjust the height as needed */
+    overflow: auto;
+    }
+
+    #tbFDNLocalBookings thead {
+            position: sticky;
+            top: 0;
+            background-color: #f8f8f8;
+            z-index: 1;
+        }
+
+    #tbFDNLocalBookings th {
+            white-space: nowrap;
+            /*set white-space: nowrap; on the th elements to prevent line breaks in the table header cells, ensuring that the header text stays visible even if the column width is reduced.
+                      Feel free to adjust the CSS properties and values according to your design requirements. */
+        }
+
+    #tbFDNTransshipments thead {
+            position: sticky;
+            top: 0;
+            background-color: #f8f8f8;
+            z-index: 1;
+        }
+
+    #tbFDNTransshipments th {
+            white-space: nowrap;
+            /*set white-space: nowrap; on the th elements to prevent line breaks in the table header cells, ensuring that the header text stays visible even if the column width is reduced.
+                      Feel free to adjust the CSS properties and values according to your design requirements. */
+        }
+
+       #tbFDNTransshipmentsAndLocalBookings thead {
+            position: sticky;
+            top: 0;
+            background-color: #f8f8f8;
+            z-index: 1;
+        }
+
+    #tbFDNTransshipmentsAndLocalBookings th {
+            white-space: nowrap;
+            /*set white-space: nowrap; on the th elements to prevent line breaks in the table header cells, ensuring that the header text stays visible even if the column width is reduced.
+                      Feel free to adjust the CSS properties and values according to your design requirements. */
+        }
+</style>
+@section Scripts{
+
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+        //display  function
+        document.getElementById("JNsearchOption").onclick = function () {
+            //alert("Jobno");
+            $('#searchString').show();
+ 
+
+        }
+
+        //display  function
+        document.getElementById("BLsearchOption").onclick = function () {
+            //alert("BLno");
+            $('#searchString').show();
+ 
+
+        }
+
+        //display  function
+        document.getElementById("TSsearchOption").onclick = function () {
+            //alert("TSdes");
+            $('#searchString').hide();
+ 
+
+        }
+
+        
+        function GetAndSetDestinationPortID() {// Get the TSDestination Portid and pass it through searchString
+
+            // Get the value of the selected search option
+            var searchOption = document.querySelector('input[name="searchOption"]:checked').value
+            //selected option's value is retrieved using this function value and stored in the searchOption variable.
+
+            if(searchOption === "TSDestination"){
+                var Portid = document.getElementById('TSDestinationid').value;
+                //alert("test"+Portid);
+
+    
+                // Get the textbox element of searchString
+                var textboxsearchString = document.getElementById("searchString");
+
+                // Set the value of the textbox of searchString
+                textboxsearchString.value = Portid;
+                }
+            }
+    </script>
+
+    <!--Google chart adding-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    
+    <script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawCharts);
+
+    function drawCharts() {
+        drawChartFDNTransshipments();
+        drawChartFDNLocalBookings();
+        drawChartFDNTransshipmentsAndLocalBookings();
+    }
+    <!--Google Chart for FDN Transhipment-->
+    function drawChartFDNTransshipments() {
+        // Create the data table
+        var data = new google.visualization.DataTable();
+        var table = document.getElementById('tbFDNTransshipments');
+        var rows = table.getElementsByTagName('tr');
+
+
+          // Add columns
+          var headers = rows[0].getElementsByTagName('th');
+          //for (var i = 0; i < headers.length; i++) 
+          for (var i = 0; i < 2; i++){
+          //var headerText = headers[i].innerHTML;
+          var headerText = headers[i].innerHTML.trim();
+
+            console.log(headerText);
+            if(i==0){
+                data.addColumn('string', headerText);
+
+            }else if(i==1){
+                data.addColumn('number', headerText);
+
+            }
+            
+          }
+
+        
+           //Add rows and values
+          for (var i = 1; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            var rowData = [];
+
+            //for (var j = 0; j < cells.length; j++) 
+                for (var j = 0; j < 2; j++){
+
+                        var cellsValue = cells[j].innerHTML.trim();
+
+                        //alert("cellsValue: " + cellsValue);
+
+                        if(j==1){
+                            var cellsValueNumber=parseFloat(cellsValue);;
+                            rowData.push(cellsValueNumber);
+                        
+                        }else{
+                            rowData.push(cellsValue);          
+                        }
+
+                  //rowData.push(cells[j].innerHTML);
+                  
+
+
+
+                }
+            data.addRow(rowData);
+          }
+
+        // Set chart options
+        var options = {
+            title: 'FDN wise Transshipments',
+            width: 400,
+            height: 300
+        };
+
+        // Instantiate and draw the chart
+        var chart = new google.visualization.BarChart(document.getElementById('chartTransshipmentsGoogle'));
+        chart.draw(data, options);
+    }
+
+    <!--Google Chart for local Bookings chart-->
+    function drawChartFDNLocalBookings() {
+        // Create the data table
+        var data = new google.visualization.DataTable();
+        var table = document.getElementById('tbFDNLocalBookings');
+        var rows = table.getElementsByTagName('tr');
+
+
+          // Add columns
+          var headers = rows[0].getElementsByTagName('th');
+          //for (var i = 0; i < headers.length; i++) 
+          for (var i = 0; i < 2; i++){
+          //var headerText = headers[i].innerHTML;
+          var headerText = headers[i].innerHTML.trim();
+
+            console.log(headerText);
+            if(i==0){
+                data.addColumn('string', headerText);
+
+            }else if(i==1){
+                data.addColumn('number', headerText);
+
+            }
+            
+          }
+
+        
+           //Add rows and values
+          for (var i = 1; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            var rowData = [];
+
+            //for (var j = 0; j < cells.length; j++) 
+                for (var j = 0; j < 2; j++){
+
+                        var cellsValue = cells[j].innerHTML.trim();
+
+                        //alert("cellsValue: " + cellsValue);
+
+                        if(j==1){
+                            var cellsValueNumber=parseFloat(cellsValue);;
+                            rowData.push(cellsValueNumber);
+                        
+                        }else{
+                            rowData.push(cellsValue);          
+                        }
+
+                  //rowData.push(cells[j].innerHTML);
+                  
+
+
+
+                }
+            data.addRow(rowData);
+          }
+
+        // Set chart options
+        var options = {
+            title: 'FDN wise Local Bookings',
+            width: 400,
+            height: 300
+        };
+
+        // Instantiate and draw the chart
+        var chart = new google.visualization.BarChart(document.getElementById('chartLocalBookingsGoogle'));
+        chart.draw(data, options);
+    }
+
+    <!--Google Chart for FDN Wise Transshipment & local Bookings chart-->
+    function drawChartFDNTransshipmentsAndLocalBookings() {
+        // Create the data table
+        var data = new google.visualization.DataTable();
+        var table = document.getElementById('tbFDNTransshipmentsAndLocalBookings');
+        var rows = table.getElementsByTagName('tr');
+
+
+          // Add columns
+          var headers = rows[0].getElementsByTagName('th');
+          //for (var i = 0; i < headers.length; i++) 
+          for (var i = 0; i < 2; i++){
+          //var headerText = headers[i].innerHTML;
+          var headerText = headers[i].innerHTML.trim();
+
+            console.log(headerText);
+            if(i==0){
+                data.addColumn('string', headerText);
+
+            }else if(i==1){
+                data.addColumn('number', headerText);
+
+            }
+            
+          }
+
+        
+           //Add rows and values
+          for (var i = 1; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            var rowData = [];
+
+                //for (var j = 0; j < cells.length; j++) 
+                for (var j = 0; j < 2; j++){
+
+                        var cellsValue = cells[j].innerHTML.trim();
+
+                        //alert("cellsValue: " + cellsValue);
+
+                        if(j==1){
+                            var cellsValueNumber=parseFloat(cellsValue);;
+                            rowData.push(cellsValueNumber);
+                        
+                        }else{
+                            rowData.push(cellsValue);          
+                        }
+
+                  //rowData.push(cells[j].innerHTML);
+                  
+
+
+
+                }
+            data.addRow(rowData);
+          }
+
+        // Set chart options
+        var options = {
+            title: 'FDN wise Transshipments And Local Bookings',
+            width: 400,
+            height: 300
+        };
+
+        // Instantiate and draw the chart
+        var chart = new google.visualization.PieChart(document.getElementById('chartTransshipmentsAndLocalBookingsGoogle'));
+        chart.draw(data, options);
+    }
+
+    </script>
+
+            
+}
+

@@ -1,0 +1,273 @@
+﻿@model List<CombinedTxnInvoiceExportAndTxnBookingExpModel>
+
+
+
+@{
+    ViewData["Title"] = "Invoice Export";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h4 class="text-themecolor">Master Reference</h4>
+                </div>
+                <div class="col-md-7 align-self-center text-right">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active">Master Reference</li>
+                        </ol>
+                        <button type="button" onclick="location.href='@Url.Action("Create", "TxnInvoiceExportHds")'" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Invoice</button>
+                        @*   <button type="button" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Staff</button>*@
+                        @* onclick="location.href='@Url.Action("Create", "User")'"*@
+                        @*asp-action="Create"*@
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row page-titles">
+                <div class="col-md-4 align-self-center">
+                    <h1 class="text-themecolor">INVOICE EXPORT</h1>
+                </div>
+                <div class="col-md-2 align-self-center text-right">
+                </div>
+                <!-- Search-->
+                <div class="row align-self-center text-right">
+                    @using (Html.BeginForm("Index", "TxnInvoiceExportHds", new { searchString = "" }, FormMethod.Get))
+                    {
+                        <div class="input-group">
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="searchType" id="searchByInvoice" value="Invoice" checked>
+                                <label class="form-check-label" for="searchByInvoice">Invoice</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="searchType" id="searchByJob" value="Job">
+                                <label class="form-check-label" for="searchByJob">Job Number</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="searchType" id="searchByApprove" value="Approve" >
+                                <label class="form-check-label" for="searchByApprove">Invoice to be Approved</label>
+                            </div>
+                            <input type="text" id="searchString" name="searchString" class="form-control" placeholder="Search..." />
+
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-info"><i class="fas fa-search-plus"></i> Go!</button>
+                            </div>
+                        </div>
+                        <label class="control-label text-right col-md-4" style="color: red;">@ViewBag.InvoiceFound</label>
+                    }
+                  
+                </div>
+                <!-- End Search-->
+            </div>
+             <form asp-action="Index" id="InvoiceHDForm">
+                <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table class="table color-bordered-table purple-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Invoice No
+                                    </th>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                       JobNo
+                                    </th>
+                                    <th>
+                                        BL No
+                                    </th>
+                                    <th>
+                                       Customer
+                                    </th>
+                                    <th>
+                                       Exchange Rate
+                                    </th>
+                                    <th>
+                                        Total LKR
+                                    </th>
+                                    <th>
+                                        Total USD
+                                    </th>
+                                    <th>
+                                        Approved
+                                    </th>
+                                    <th>
+                                        Canceled
+                                    </th>
+                                    <th>
+                                        BookingNo/RefNo
+                                    </th>
+                                        <th>
+                                        Bl Type
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                @item.Invoice.InvoiceNo
+                                        </td>
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                @Html.DisplayFor(modelItem => item.Invoice.Date)
+                                            </td>
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                @Html.DisplayFor(modelItem => item.Invoice.JobNo)
+                                            </td>
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                @if (item.Invoice.BLNoType == "TS")
+                                                {
+                                                    @item.HouseBl
+                                                   
+                                                } 
+                                                else
+                                                    {
+                                                    @item.BKBlNo
+                                                    }
+                                                   
+                                            </td>
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");" nowrap="">
+                                                @Html.DisplayFor(modelItem => item.Invoice.CustomerInvoiceExportHd.Name)
+                                            </td>
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                @Html.DisplayFor(modelItem => item.Invoice.ExchangeRate)
+                                            </td>
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                @Html.DisplayFor(modelItem => item.Invoice.TotalInvoiceAmountLkr)
+                                            </td>
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                @Html.DisplayFor(modelItem => item.Invoice.TotalInvoiceAmountUsd)
+                                            </td>
+
+
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                <select style="color: @(item.Invoice.Approved == true ? "black" : "black");" disabled>
+                                                    @if (item.Invoice.Approved == true)
+                                                    {
+                                                        <option value="true" selected>True</option>
+                                                        <option value="false" disabled>False</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="true" disabled>True</option>
+                                                        <option value="false" selected>False</option>
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white" );">
+                                                <select style="color: @(item.Invoice.Canceled == true ? "black" : "black");" disabled>
+                                                    @if (item.Invoice.Canceled == true)
+                                                    {
+                                                        <option value="true" selected>True</option>
+                                                        <option value="false" disabled>False</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="true" disabled>True</option>
+                                                        <option value="false" selected>False</option>
+                                                    }
+                                                </select>
+                                            </td>
+
+                                                                                          <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                    @if (item.Invoice.BLNoType == "TS")
+                                                    {
+                                                        @item.Invoice.BLNoTS
+                                                   
+                                                    } 
+                                                    else
+                                                        {
+                                                         @item.Invoice.Blno
+                                                        }
+                                            </td>
+                                            <td style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                @item.Invoice.BLNoType
+                                            </td>
+                                            <td nowrap="" style="background-color: @(item.Invoice.Approved == true ? "#ECFFDC" : "white");">
+                                                @{
+                                                    bool isEditEnabled = item.Invoice.Approved == false;
+                                                }
+
+                                                <a class="btn btn-sm btn-rounded btn-primary@(isEditEnabled ? "" : " disabled")"
+                                               asp-action="Edit" asp-route-id="@item.Invoice.InvoiceNo">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a> |
+
+                                                <a class="btn btn-sm btn-rounded btn-success"
+                                               asp-action="Details" asp-route-id="@item.Invoice.InvoiceNo">
+                                                    <i class="fa ti-view-list-alt"></i> Details
+                                                </a> |
+
+                                                <a class="btn btn-sm btn-rounded btn-danger@(isEditEnabled ? "" : " disabled")"
+                                               asp-action="Approve" asp-route-id="@item.Invoice.InvoiceNo">
+                                                    <i class="ti-check-box"></i> Approve
+                                                </a>
+                                                |
+                                                @{
+                                                    bool isPrintEnbled = item.Invoice.Approved == true;
+                                                }
+                                                <a class="btn btn-sm btn-rounded btn-warning @(isPrintEnbled ? "" : " disabled")"
+                                                   asp-action="RepPrintInvoice" asp-route-InvoiceNo="@item.Invoice.InvoiceNo">
+                                                    <i class="fa fa-print"></i> Print Invoice
+                                                </a>
+                                            </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Container fluid  END -->
+        <!-- ============================================================== -->
+        <div class="container">
+            @if (pager.TotalPages > 0)
+            {
+                <ul class="pagination justify-content-end">
+                    @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+                    {
+                        <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                            <a class="page-link" aps-controller="TxnBookingExp" asp-action="Index" asp-route-pg="@pge"> @pge </a>
+                        </li>
+                    }
+                </ul>
+                <ul class="pagination justify-content-end">
+                    <p> Page @(pager.TotalPages < pager.CurrentPage ? 0 : pager.CurrentPage) of @pager.TotalPages </p>
+                </ul>
+            }
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper -  END style you can find in pages.scss -->
+<!-- ============================================================== -->

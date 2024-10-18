@@ -1,0 +1,403 @@
+﻿@model FMS_DEV.ViewModel.DebitNoteImportViewModel
+@{
+    ViewData["Title"] = "RepPrintDebitNote";
+
+}
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid" id="printArea">
+            <div class="container">
+                <!--header row with logo-->
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="\assets\images\logo-icon.png" alt="FTL LOGO" width="120" height="120" />
+                            </div>
+                            <div class="col-md-8">
+                                <span style="font-size:24px"><b>FTL COLOMBO (PVT) LTD</b></span>
+                                <br />
+                                <span style="font-size:12px">NO 9, BARNES PLACE </span>
+                                <br />
+                                <span style="font-size:12px">COLOMBO 07</span>
+                                <br />
+                                <span style="font-size:12px"> SRI LANKA. </span>
+                                <br />
+                                <span style="font-size:12px"> Tel: +94 112 378500-19 /Fax: +94 114 641910</span>
+                                <br />
+                                <span style="font-size:12px"> Website: www.ftlcolombo.com</span>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <br />
+                        <div class="row"></div>
+                        <div class="row"></div>
+                        <div class="row ">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-5">
+                                <h3><b>DEBIT NOTE</b></h3>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-5">
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-5">
+                               @* <p>VAT REG : 114759783-7000</p>*@
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-5">
+                               @* <p>NBT REG:0</p>*@
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="container">
+                <hr style="border: 1px solid black; margin: 0;" /> <!--hr Border-->
+                <br />
+                <!--main part-->
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <p>To :</p>
+                        <p>
+                            @if (Model.DebitNoteHdMulti.FirstOrDefault().Type == "Local")
+                            {
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.Name))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.Name)
+
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.Address1))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.Address1)
+
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.Address2))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.Address2)
+
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.Address3))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.Address3)
+
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.City))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.City)
+
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.Country))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().ShippingLineDbitNoteImpNavigation.Country)
+
+                                    <br />
+                                }
+
+                            }
+                            else if (Model.DebitNoteHdMulti.FirstOrDefault().Type == "Overseas")
+                            {
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.AgentName))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.AgentName)
+
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.Address1))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.Address1)
+
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.Address2))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.Address2)
+
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.Address3))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.Address3)
+
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.City))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.City)
+
+                                    <br />
+                                }
+                                @if (!string.IsNullOrEmpty(Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.County))
+                                {
+                                    @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().AgentDebitNoteImportNavigation.County)
+                                    <br />
+                                }
+
+                            }
+                            <br />
+                        </p>
+                    </div>
+                    <div class="col-md-6" style="margin-bottom: 0px;">
+                        <div class="row">
+                            <div class="col-md-3 p-0">
+                                <span>Debit Note No</span>
+                                <br />
+                                <span>Date</span>
+                                <br />
+                                <span>Port Of Loading</span>
+                                <br />
+                                <span>POD</span>
+                                <br />
+                                <span>ETA</span>
+                                <br />
+                                <span>Exchange Rate</span>
+                                <br />
+                                <span>Vessel/Voyage</span>
+                                <br />
+                                <span>Job No</span>
+                                <br />
+                                
+                            </div>
+                            <div class="col-md-4 p-0">
+                                <span><b>: @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().DebitNoteNo)</b></span>
+                                <br />
+                                <span>: @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().Date)</span>
+                                <br />
+                                <span>: @ViewBag.POL</span>
+                                <br />
+                                <span>: @ViewBag.POD</span>
+                                <br />
+                                <span>: @ViewBag.ETA </span>
+                                <br />
+                                <span>: @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().ExchangeRate)</span>
+                                <br />
+                                <span>: @Html.DisplayFor(m => Model.ImportJobHdMulti.FirstOrDefault().VesselImportJobDtlNavigation.VesselName)/@Html.DisplayFor(m => Model.ImportJobHdMulti.FirstOrDefault().Voyage)</span>
+                                <br />
+                                <span>: @Html.DisplayFor(m => Model.DebitNoteHdMulti.FirstOrDefault().JobNo)</span>
+                                <br />
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!--Pkg,Weight,CBM-->
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <p>Container No : @ViewBag.ContainerNo</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6"></div>
+
+                </div>
+                <!-- ============================================================== -->
+                <!-- Second Border -->
+                <!-- ============================================================== -->
+                <!--Description and Amount Table-->
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th style="border-bottom: 1px solid black;border-left: 1px solid black; border-right: 1px solid black; padding: 5px; border-top: 1px solid black;">BL Number</th>
+                            <th style="border-bottom: 1px solid black;border-left: 1px solid black; border-right: 1px solid black; padding: 5px; border-top: 1px solid black;">Charge Item</th>
+                            <th style="border-bottom: 1px solid black;border-left: 1px solid black; border-right: 1px solid black; padding: 5px; border-top: 1px solid black;">Unit</th>
+                            <th style="border-bottom: 1px solid black;border-left: 1px solid black; border-right: 1px solid black; padding: 5px; border-top: 1px solid black;">Rate</th>
+                            <th style="border-bottom: 1px solid black;border-left: 1px solid black; border-right: 1px solid black; padding: 5px; border-top: 1px solid black;">Currency</th>
+                            <th style="border-bottom: 1px solid black;border-left: 1px solid black; border-right: 1px solid black; padding: 5px; border-top: 1px solid black;">Qty</th>
+                            <th style="border-bottom: 1px solid black;border-right: 1px solid black; border-left: 1px solid black; padding: 5px; border-top: 1px solid black; text-align:center;">Amount </th>
+                        </tr>
+                    </thead>
+                    <tbody id="ContainerDetailsBody">
+                        @foreach (var item in Model.DebitNoteDtlMulti)
+                        {
+                            <tr id="tablerow0" style="height: 30px; ">
+                                <td style="padding: 3px; margin: 0;border-left: 1px solid black;">
+                                    @item.BlContainerNo
+                                </td>
+                                <td style="padding: 3px; margin: 0;border-left: 1px solid black;">
+                                    @item.ChargeItemNavigation.Description
+                                </td>
+                                <td style="text-align:right; border-left: 1px solid black; padding: 3px; margin: 0; border-left: 1px solid black; border-right: 1px solid black;">
+                                    @item.Unit
+                                </td>
+                                <td style="text-align:right; border-left: 1px solid black; padding: 3px; margin: 0; border-left: 1px solid black;border-right: 1px solid black;">
+                                    @item.Rate
+                                </td>
+                                <td style="text-align:right; border-left: 1px solid black; padding: 3px; margin: 0;border-left: 1px solid black;border-right: 1px solid black;">
+                                    @item.Currency
+                                </td>
+                                <td style="text-align:right; border-left: 1px solid black; padding: 3px; margin: 0; border-left: 1px solid black;border-right: 1px solid black;">
+                                    @item.Qty
+                                </td>
+                                <td style="text-align:right; border-left: 1px solid black; padding: 3px; margin: 0; border-left: 1px solid black;border-right: 1px solid black;">
+                                    @string.Format("{0:#,##0.00}", item.Amount)
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td style="border-top: 2px solid black; font-weight:bold;border-left: 1px solid black;">
+                                Total Amount in LKR
+                            </td>
+                            <td style="border-top: 2px solid black; text-align:right; font-weight:bold;">
+                                <!-- Add an empty cell for alignment -->
+                            </td>
+                            <td style="border-top: 2px solid black;  text-align:right; font-weight:bold;">
+                                <!-- Add an empty cell for alignment -->
+                            </td>
+                            <td style="border-top: 2px solid black;  text-align:right; font-weight:bold;">
+                                <!-- Add an empty cell for alignment -->
+                            </td>
+                            <td style="border-top: 2px solid black;  text-align:right; font-weight:bold;">
+                                <!-- Add an empty cell for alignment -->
+                            </td>
+                            <td style="border-top: 2px solid black;  text-align:right; font-weight:bold;">
+                                <!-- Add an empty cell for alignment -->
+                            </td>
+                            <td style="border-top: 2px solid black; text-align:right; font-weight:bold; border-right: 1px solid black; border-left: 1px solid black;">
+                                <span style="color:black;">@string.Format("{0:#,##0.00}", Model.DebitNoteHdMulti.FirstOrDefault().TotalDebitAmountLkr)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 2px solid black; font-weight:bold; border-left: 1px solid black; border-bottom: 1px solid black;">
+                                Total Amount in USD
+                            </td>
+                            <td style="border-top: 2px solid black;  text-align:right; font-weight:bold; border-bottom: 1px solid black;">
+                                <!-- Add an empty cell for alignment -->
+                            </td>
+                            <td style="border-top: 2px solid black;  text-align:right; font-weight:bold; border-bottom: 1px solid black;">
+                                <!-- Add an empty cell for alignment -->
+                            </td>
+                            <td style="border-top: 2px solid black;  text-align:right; font-weight:bold; border-bottom: 1px solid black;">
+                                <!-- Add an empty cell for alignment -->
+                            </td>
+                            <td style="border-top: 2px solid black;  text-align:right; font-weight:bold; border-bottom: 1px solid black;">
+                                <!-- Add an empty cell for alignment -->
+                            </td>
+                            <td style="border-top: 2px solid black;  text-align:right; font-weight:bold; border-bottom: 1px solid black;">
+                                <!-- Add an empty cell for alignment -->
+                            </td>
+                            <td style="border-top: 2px solid black; text-align:right;border-right: 1px solid black;border-bottom: 1px solid black; font-weight:bold; border-left: 1px solid black;">
+                                <span style="color:black;">@string.Format("{0:#,##0.00}", Model.DebitNoteHdMulti.FirstOrDefault().TotalDebitAmountUsd)</span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <!-- ============================================================== -->
+                <!-- End of Second Border -->
+                <!-- ============================================================== -->
+                <br />
+                <br />
+                <br />
+                <div class="container">
+                    <!-- Adding Container -->
+                    <div class="row" style="margin: 0;">
+                        <div class="col-md-3" style="padding: 0; display: flex; flex-direction: column; align-items: flex-start;">
+@*                            <div style="display: flex; flex-direction: column; align-items: center; padding-bottom: 2px;">
+                                <hr style="border: none; border-top: 1px dotted black; margin: 0; width: 100%;" /> <!-- Dotted hr Border (inline CSS) -->
+                                <span style="margin: 0; text-align: center;">Prepared By</span>
+                            </div>*@
+                        </div>
+
+                        <div class="col-md-5">
+                        </div>
+                        <div class="col-md-4" style="padding: 0; display: flex; flex-direction: column; align-items: flex-start;">
+                            <div style="display: flex; flex-direction: column; align-items: center; padding-bottom: 2px;">
+                                <hr style="border: none; border-top: 1px dotted black; margin: 0; width: 100%;" /> <!-- Dotted hr Border (inline CSS) -->
+                                <span style="margin: 0; text-align: center;">Authorized Signature</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div> <!-- Container Ending -->
+                <div class="container">
+                    <p>All Cheques Should be Crossed 'A/C PAYEE ONLY'</p>
+                    <p>E.&Aacute;.O.E. and mad payble to FTL Colombo (PVT) LTD</p>
+                    <p>ANY DISPUTE OF THE INVOICE SHOULD BE COMMUNICATED TO FTL IN WRITING WITH 14 DAYS OF THE INVOICE DATE</p>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- Container fluid  END -->
+            <!-- ============================================================== -->
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 text-Center">
+    </div>
+    <div class="col-md-3 text-Center">
+        <button id="printButton" onclick="submitForm(this)" class="btn btn-warning"><i class="fa  fa-print"></i>Print - Invoice</button>
+    </div>
+    <div class="col-md-3 text-Center">
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+</div>
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            // Print button click event handler
+            $('#printButton').click(function () {
+                var printContents = $('#printArea').html(); // Get the HTML content of the selected area
+                var originalContents = document.body.innerHTML; // Store the original body content
+
+                // Replace the body content with the selected area content
+                document.body.innerHTML = printContents;
+
+                // Trigger the browser's print dialog
+                window.print();
+
+                // Restore the original body content
+                document.body.innerHTML = originalContents;
+            });
+        });
+    </script>
+}
+

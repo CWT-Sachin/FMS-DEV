@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cancellation- FTL Colombo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f8fb;
+        }
+
+        .card {
+            margin: 20px;
+            max-width: 600px;
+        }
+
+        .card-header {
+            background-color: #3E88D5;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .card-title {
+            margin-bottom: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #3E88D5;
+            border-color: #3E88D5;
+        }
+
+            .btn-primary:hover {
+                background-color: #2370a7;
+                border-color: #2370a7;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="\assets\images\logo-icon.png" alt="FTL LOGO" />
+                            </div>
+                            <div class="col-md-10">
+                                <h2 class="card-title">Cancellation- FTL Colombo</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Are you sure you want to cancel your Shipment?</p>
+                        <form action="/Cancellation/Confirm" method="post">
+                            <div class="form-group">
+                                <label for="reason">Reason for Cancellation:</label>
+                                <select id="reason" name="reason" class="form-control">
+                                    <option value="1">Change of plans</option>
+                                    <option value="2">Found a better alternative</option>
+                                    <option value="3">Financial reasons</option>
+                                    <option value="4">Unsatisfactory service</option>
+                                    <option value="5">Delay or Non-Delivery</option>
+                                    <option value="6">Incorrect or Incomplete Address</option>
+                                    <option value="7">Item Unavailable or Out of Stock</option>
+                                    <option value="8">Change in Requirements</option>
+                                    <option value="9">Damage or Loss</option>
+                                    <option value="10">Other</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="reason">Canceled By:</label>
+                                <select id="reason" name="reason" class="form-control">
+                                    <option value="1">Person 01</option>
+                                    <option value="2">Person 02</option>
+                                    <option value="3">Person 03</option>
+                                    <option value="4">Person 04</option>
+                                    <option value="5">Person 05</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="comments">Additional Comments:</label>
+                                <textarea id="comments" name="comments" class="form-control" rows="4"></textarea>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="refund" name="refund" class="form-check-input">
+                                <label for="refund" class="form-check-label">Request Shipment Refund</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="subscribe" name="subscribe" class="form-check-input">
+                                <label for="subscribe" class="form-check-label">Subscribe to Shipment Updates</label>
+                            </div>
+                            <input type="submit" value="Confirm Cancellation" class="btn btn-primary" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

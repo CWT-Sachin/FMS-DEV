@@ -1,0 +1,114 @@
+﻿@model FMS_DEV.ViewModel.DebitNoteFCLViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<style>
+    .short-input {
+        width: 130px; /* Adjust the width as needed */
+    }
+</style>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h4 class="m-b-0 text-white">Finance Department</h4>
+                    <h6 class="m-b-0 text-white">Invoice Approval</h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="row" style="margin-top:200px;"></div>
+                    <form asp-action="Approve" asp-controller="TxnDebitNoteFCLHds" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        @if (Model.DebitNoteFCLHdMulti.Any())
+                        {
+                            <input type="hidden" asp-for="DebitNoteFCLHdMulti.First().DebitNoteNo" />
+                            <div class="row">
+                                <div class="col-md-2"> </div>
+                                <div class="col-md-7">
+                                    <!-- Blue Card -->
+                                    <div class="card bg-primary text-white" style="height:200px; display: flex; ">
+                                        <div class="card-body">
+                                            <div class="row" style="margin-top:50px;"></div>
+
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="approvalCheckbox">
+                                                    Are You Sure?<br>
+                                                    Do you want to approve the Debit Note:
+                                                    <input type="text" asp-for="DebitNoteFCLHdMulti.FirstOrDefault().DebitNoteNo" class="form-control short-input bg-primary text-white border border-primary" readonly />
+                                                    <input type="hidden" asp-for="DebitNoteFCLHdMulti.FirstOrDefault().Approved" id="approvalCheckbox" />
+                                                    <input class="form-check-input ml-2 form-check-input-lg" type="checkbox" id="approvalCheckboxCheckbox" style="transform: scale(2.1); margin-top:10px;" value="true" />
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-3"> </div>
+                            </div>
+                        }
+
+                        <div class="row">
+                            <div class="col-md-4"> </div>
+                            <div class="col-md-3">
+                                <!-- Buttons -->
+                                <div class="mt-3 text-right">
+                                    <button type="submit" id="approveButton" class="btn btn-success" disabled>Approve</button>
+                                </div>
+                            </div>
+                            <div class="col-md-1"> </div>
+                            <div class="mt-3 text-right">
+                                <a asp-action="Index" class="btn btn-danger">Back To List</a>
+                            </div>
+                            <div class="col-md-4"> </div>
+                        </div>
+                    </form>
+                    <div class="row" style="margin-bottom:200px;"></div>
+                </div>
+
+
+
+
+
+
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Orginal details End -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- Container fluid  END -->
+    <!-- ============================================================== -->
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('approvalCheckboxCheckbox').addEventListener('change', function () {
+            var approvalCheckbox = document.getElementById('approvalCheckbox');
+
+            // Set the value of the hidden input based on checkbox state
+            approvalCheckbox.value = this.checked;
+
+            var approveButton = document.getElementById('approveButton');
+
+            // Enable or disable the "Approve" button based on checkbox state
+            approveButton.disabled = !this.checked;
+        });
+    </script>
+
+}
+

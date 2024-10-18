@@ -1,0 +1,132 @@
+﻿@* @model FMS_DEV.Models.TxnPrePandLHD *@
+
+@model IEnumerable<FMS_DEV.Models.TxnPrePandLHD>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor"><b>P & L Import</b></h3>
+                </div>
+                <div class="col-md-7 align-self-center text-right">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active">P & L Import</li>
+                        </ol>
+                        <button type="button" onclick="location.href='@Url.Action("Create", "TxnPrePandLImportHDs")'" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Import P & L</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    @*<h1 class="text-themecolor">Ports</h1>*@
+                </div>
+                <div class="col-md-3 align-self-center text-right">
+                </div>
+                <!-- Search-->
+                <div class="col-md-4 align-self-center text-right">
+                    @using (Html.BeginForm("Index", "TxnPrePandLHDs", new { searchString = "" }, FormMethod.Post))
+                    {
+                        <div class="input-group">
+
+                            <input type="text" id="searchString" name="searchString" class="form-control" placeholder="Search by P & L No..." />
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-info"> <i class="fas fa-search-plus"></i> Go!</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- End Search-->
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <!-- ============================================================== -->
+                        <!-- Orginal code Start  -->
+                        <!-- ============================================================== -->
+                        <table class="table color-bordered-table purple-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.PrePnLNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Date)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.StufPlnNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CBM)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.KG)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.LocalNoOfBL)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TSNoOfBL)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TotCBM)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.BoxRateUSD)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.EXPCostACEStuffing)
+                                    </th>
+
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    
+                                }
+                            </tbody>
+                        </table>
+                        <!-- ============================================================== -->
+                        <!-- Orginal code END  -->
+                        <!-- ============================================================== -->
+                    </div>
+                </div>
+            </div>
+@*             <div class="container">
+                @if (pager.TotalPages > 0)
+                {
+                    <ul class="pagination justify-content-end">
+                        @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+                        {
+                            <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                                <a class="page-link" aps-controller="RefPorts" asp-action="Index" asp-route-pg="@pge"> @pge </a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="pagination justify-content-end">
+                        <p> Page @(pager.TotalPages < pager.CurrentPage ? 0 : pager.CurrentPage) of @pager.TotalPages </p>
+                    </ul>
+                }
+            </div> *@
+        </div>
+    </div>
+</div>
+</div>

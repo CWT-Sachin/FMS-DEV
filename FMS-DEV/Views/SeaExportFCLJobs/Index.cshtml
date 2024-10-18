@@ -1,0 +1,160 @@
+﻿@model IEnumerable<FMS_DEV.Models.TxnFCLJob>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor"><b>FCL Jobs</b></h3>
+                </div>
+                <div class="col-md-7 align-self-center text-right">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active">FCL Jobs</li>
+                        </ol>
+                        <button type="button" onclick="location.href='@Url.Action("Create", "SeaExportFCLJobs")'" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New FCL Job</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    
+                </div>
+                <div class="col-md-3 align-self-center text-right">
+                </div>
+                <!-- Search-->
+                <div class="col-md-4 align-self-center text-right">
+                    @using (Html.BeginForm("Index", "SeaExportFCLJobs", new { searchString = "" }, FormMethod.Post))
+                    {
+                        <div class="input-group">
+
+                            <input type="text" id="searchString" name="searchString" class="form-control" placeholder="Search by FCL Job No..." />
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-info"> <i class="fas fa-search-plus"></i> Go!</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- End Search-->
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <!-- ============================================================== -->
+                        <!-- Orginal code Start  -->
+                        <!-- ============================================================== -->
+                        <table class="table color-bordered-table purple-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.JobNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Date)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.JobType)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ExchangeRate)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Voyage)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.BLType)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ETA)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ETD)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Remarks)
+                                    </th>
+
+
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.JobNo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Date)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.JobType)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ExchangeRate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Voyage)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BLType)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ETA)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ETD)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Remarks)
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <!-- ============================================================== -->
+                        <!-- Orginal code END  -->
+                        <!-- ============================================================== -->
+                    </div>
+                </div>
+            </div>
+@*             <div class="container">
+                @if (pager.TotalPages > 0)
+                {
+                    <ul class="pagination justify-content-end">
+                        @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+                        {
+                            <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                                <a class="page-link" aps-controller="RefPorts" asp-action="Index" asp-route-pg="@pge"> @pge </a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="pagination justify-content-end">
+                        <p> Page @(pager.TotalPages < pager.CurrentPage ? 0 : pager.CurrentPage) of @pager.TotalPages </p>
+                    </ul>
+                }
+            </div> *@
+        </div>
+    </div>
+</div>
+

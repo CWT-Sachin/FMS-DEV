@@ -1,0 +1,244 @@
+﻿@model IEnumerable<FMS_DEV.Models.TxnPaymentVoucherFCLHd>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@*{
+    ViewData["Title"] = "Agent";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}*@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h4 class="text-themecolor">Transaction Accounts</h4>
+                </div>
+                <div class="col-md-7 align-self-center text-right">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active">Transaction Accounts</li>
+                        </ol>
+                        <button type="button" onclick="location.href='@Url.Action("Create", "TxnPaymentVoucherFCLHds")'" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Payment Voucher</button>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row page-titles">
+                <div class="col-md-3 align-self-center">
+                    <h2 class="m-b-0 text-blue">PAYMENT VOUCHER FCL</h2>
+
+                </div>
+                <div class="col-md-2 align-self-center text-right">
+                </div>
+                <!-- Search-->
+                <div class="row align-self-center text-right">
+                    @using (Html.BeginForm("Index", "TxnPaymentVoucherFCLHds", new { searchString = "" }, FormMethod.Get))
+                    {
+                        <div class="input-group">
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="searchType" id="searchByPaymentVoucher" value="PaymentVoucherNote" checked>
+                                <label class="form-check-label" for="searchByPaymentVoucher">Payment Vocher</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="searchType" id="searchByJob" value="Job">
+                                <label class="form-check-label" for="searchByJob">Job Number</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="searchType" id="searchByApprove" value="Approve" checked>
+                                <label class="form-check-label" for="searchByApprove">Payment Vocher to be Approved</label>
+                            </div>
+                            <input type="text" id="searchString" name="searchString" class="form-control" placeholder="Search..." />
+
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-info"><i class="fas fa-search-plus"></i> Go!</button>
+                            </div>
+                        </div>
+                        <label class="control-label text-right col-md-4" style="color: red;">@ViewBag.PayemntVocherFound</label>
+                    }
+                </div>
+                
+                <!-- End Search-->
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table color-bordered-table purple-bordered-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.PayVoucherNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Date)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.JobNo)
+                                    </th>
+                                                                        <th>
+                                        <text>Type</text>
+                                    </th>
+                                    <th>
+                                        <text>Liner/Agent</text>
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ExchangeRate)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TotalPayVoucherAmountLkr)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TotalPayVoucherAmountUsd)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Approved)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Canceled)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td style="background-color: @(item.Approved == true ? "#ECFFDC" : "white");">
+                                            @Html.DisplayFor(modelItem => item.PayVoucherNo)
+                                        </td>
+                                        <td style="background-color: @(item.Approved == true ? "#ECFFDC" : "white");">
+                                            @Html.DisplayFor(modelItem => item.Date)
+                                        </td>
+                                        <td style="background-color: @(item.Approved == true ? "#ECFFDC" : "white");">
+                                            @Html.DisplayFor(modelItem => item.JobNo)
+                                        </td>
+                                        <td style="background-color: @(item.Approved == true ? "#ECFFDC" : "white");">
+                                            @Html.DisplayFor(modelItem => item.Type)
+                                        </td>
+                                        <td style="background-color: @(item.Approved == true ? "#ECFFDC" : "white");" nowrap="">
+                                            @if (item.Type == "Local")
+                                            {
+                                                @Html.DisplayFor(modelItem => item.ShippingLinePaymentVoucherFCLNavigation.Name)
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.AgentPaymentVoucherFCLNavigation.AgentName)
+                                            }
+                                        </td>
+                                        <td style="background-color: @(item.Approved == true ? "#ECFFDC" : "white");">
+                                            @Html.DisplayFor(modelItem => item.ExchangeRate)
+                                        </td>
+                                        <td style="background-color: @(item.Approved == true ? "#ECFFDC" : "white");">
+                                            @Html.DisplayFor(modelItem => item.TotalPayVoucherAmountLkr)
+                                        </td>
+                                        <td style="background-color: @(item.Approved == true ? "#ECFFDC" : "white");">
+                                            @Html.DisplayFor(modelItem => item.TotalPayVoucherAmountUsd)
+                                        </td>
+
+                                        <td style="background-color: @(item.Approved == true ? "#ECFFDC" : "white");">
+                                            <select style="color: @(item.Approved == true ? "black" : "black");" disabled>
+                                                @if (item.Approved == true)
+                                                {
+                                                    <option value="true" selected>True</option>
+                                                    <option value="false" disabled>False</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="true" disabled>True</option>
+                                                    <option value="false" selected>False</option>
+                                                }
+                                            </select>
+                                        </td>
+                                        <td style="background-color: @(item.Approved == true ? "#ECFFDC" : "white" );">
+                                            <select style="color: @(item.Canceled == true ? "black" : "black");" disabled>
+                                                @if (item.Canceled == true)
+                                                {
+                                                    <option value="true" selected>True</option>
+                                                    <option value="false" disabled>False</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="true" disabled>True</option>
+                                                    <option value="false" selected>False</option>
+                                                }
+                                            </select>
+                                        </td>
+
+                                        <td nowrap="" style="background-color: @(item.Approved == true ? "#ECFFDC" : "white");">
+                                            @{
+                                                bool isEditEnabled = item.Approved == false;
+                                            }
+
+                                            <a class="btn btn-sm btn-rounded btn-primary@(isEditEnabled ? "" : " disabled")"
+                                           asp-action="Edit" asp-route-id="@item.PayVoucherNo">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a> |
+
+                                            <a class="btn btn-sm btn-rounded btn-success"
+                                               asp-action="Details" asp-route-id="@item.PayVoucherNo">
+                                                <i class="fa ti-view-list-alt"></i> Details
+                                            </a> |
+
+                                            <a class="btn btn-sm btn-rounded btn-danger@(isEditEnabled ? "" : " disabled")"
+                                           asp-action="Approve" asp-route-id="@item.PayVoucherNo">
+                                                <i class="ti-check-box"></i> Approve
+                                            </a>
+                                            |
+                                           @{
+                                                bool isApprovePrintInvoiceEnabled = item.Approved == true;
+                                            }
+                                           <a class="btn btn-sm btn-rounded btn-warning@(isApprovePrintInvoiceEnabled ? "" : " disabled")"
+                                            
+                                          
+
+                                           asp-action="RepPrintPaymentVoucher" asp-route-PayVoucherNo="@item.PayVoucherNo">
+                                                <i class="fa fa-print"></i> Print Payment Vocher
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- Container fluid  END -->
+        <!-- ============================================================== -->
+
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper -  END style you can find in pages.scss -->
+<!-- ============================================================== -->

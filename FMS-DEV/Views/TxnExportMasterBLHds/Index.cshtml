@@ -1,0 +1,73 @@
+﻿@model IEnumerable<FMS_DEV.Models.TxnInvoiceExportHd>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@*{
+    ViewData["Title"] = "Agent";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}*@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h4 class="text-themecolor">Master Reference</h4>
+                </div>
+                <div class="col-md-7 align-self-center text-right">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active">Master Reference</li>
+                        </ol>
+                        <button type="button" onclick="location.href='@Url.Action("Create", "TxnExportMasterBLHds")'" class="btn btn-info d-none d-lg-block m-l-15"><i class="fa fa-plus-circle"></i> Create New Master BL</button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row page-titles">
+                <div class="col-md-4 align-self-center">
+                    <h1 class="text-themecolor">Master BL</h1>
+                </div>
+                <div class="col-md-2 align-self-center text-right">
+                </div>
+
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                   
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- Container fluid  END -->
+        <!-- ============================================================== -->
+
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper -  END style you can find in pages.scss -->
+<!-- ============================================================== -->

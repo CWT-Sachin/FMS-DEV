@@ -1,0 +1,460 @@
+﻿@*@model IEnumerable<FMS_DEV.Models.TxnImportJobDtl>*@
+
+@model FMS_DEV.ViewModel.MasterBLExportViewModel
+@{
+    ViewData["Title"] = "MasterBL";
+
+}
+
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h4 class="m-b-0 text-white">Export-Master BL</h4>
+                </div>
+
+                <div class="card-body">
+                    <!--Job No.-->
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-2">
+                                    <label for="JobNo">Job No.</label>
+                                </div>  
+                                <div class="col-5">
+                                    <!-- Search-->
+                                    <div class="row align-self-center text-right">
+                                        @using (Html.BeginForm("Create", "TxnExportMasterBLHds", new { searchString = "" }, FormMethod.Get))
+                                        {
+                                            <div class="input-group">
+                                                <input type="text" id="searchString" name="searchString" class="form-control" />
+                                                <div class="input-group-append">
+                                                    <button type="submit" class="btn btn-info"> <i class="fas fa-search-plus"></i> Go!</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+@*                                     <div class="row align-self-center text-right">
+                                        @using (Html.BeginForm("Create", "TxnExportMasterBLHds", new { searchString = "" }, FormMethod.Get))
+                                        {
+                                            <div class="input-group">
+                                                <input type="text" id="searchString" name="searchString" class="form-control" />
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-info" onclick="submitSearchForm()"> <i class="fas fa-search-plus"></i> Go!</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div> *@
+                                    
+                                    <!-- End Search-->
+                                </div>
+                                <label class="control-label text-right col-md-4" style="color: red;">@ViewBag.JobFound</label>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-8"></div>
+
+                    </div><br />
+
+                    <!--Job Details-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Job Details</b>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+
+                    <div style="border:1px  solid black; padding: 10px 10px 10px 10px; background-color:#E5F2FB; border-radius:10px;">
+
+                        <!--Job No & Date-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Job No">Job No.</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span id="jobno">
+                                            <b>  @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().JobNo) </b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Date">Date</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().JobDate)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4"></div>
+
+                        </div><br />
+
+                        <!--Sales Person-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Vessel">Vessel</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().VesselExportJobDtlNavigation.VesselName)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+
+                        <br />
+                        <!--Vessel ,ETD (Date) & Shipper-->
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Vessel">Voyage</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().Voyage)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="ETD (Date)">Agent</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().AgentExportNavigation.AgentName)
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Shipper">Shipper</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().ShippingLineExportNavigation.Name)
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><br />
+
+                        <!--Final Destination & Consignee-->
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Final Destination">Final Destination</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().FDNExportJobNavigation.PortName)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Final Destination">Coloader</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().ColoaderExportNavigation.Name)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Consignee">Coload</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().IsCoLoad)
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br />
+                    </div>
+
+
+
+                    <form id="searchForm" method="get" action="/TxnExportMasterBLHds/Create" role="form">
+                        <hr>
+                    <!--Invoice-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>
+                                Master BL
+                            </h4>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+
+                    <br />
+                    
+
+                        <!-- SELECTED Ts and Loacl Cargo Table-->
+                        <div class="row">
+                            <!-- SELECTED TS Table-->
+                            <div class="col-md-6">
+                                
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <label for="TS Cargo"> <b> Local Cargo</b></label>
+                                        <div class="table-container">
+                                            <!--  TS Cargo-->
+                                            @* <table class=" container table table-hover border table-striped" id="tblContainer">*@
+                                            <table class=" full-color-table full-warning-table hover-table " id="tblContainer1" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Select</th>
+                                                        <th>Booking No</th>
+                                                        <th>Vessel</th>
+                                                        <th>Voyage</th>
+                                                        <th>POL</th>
+                                                        <th>FDN</th>
+                                                        <th>CBM</th>
+                                                        <th>Weight</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody id="ContainerDetailsBody1">
+                                                    @foreach (var MasterBL in Model.BookingExportMulti)
+                                                    {
+                                                        <tr>
+                                                            <td><input type="checkbox" name="" value="@MasterBL.BookingNo" /></td>
+
+                                                            <td>@MasterBL.BookingNo</td>
+                                                            <td>@MasterBL.Vessel</td>
+                                                            <td>@MasterBL.Voyage</td>
+                                                            <td>@MasterBL.Pol</td>
+                                                            <td>@MasterBL.Fdn</td>
+                                                            <td>@MasterBL.Cbm</td>
+                                                            <th>@MasterBL.GrossWeight</th>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br />
+
+                                    
+                                    </div>
+                                </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                    <div class="col-md-1" style="align-items:center">
+                                        <!-- Button to trigger moving selected rows to the second table -->
+                                        <input type="button" value="Select" id="selectButton" class="btn btn-primary" onclick="moveSelectedRows()" />
+                                    </div>
+                                    </div>
+
+                                </div>
+                            
+                            
+                            </div>
+
+
+                            
+                            <!-- SELECTED Local Table-->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <label for="Local Cargo"><b>Selected Local Cargo</b></label>
+                                        <div class="table-container">
+                                            <table class=" full-color-table full-success-table hover-table " id="tblContainer2" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Booking No</th>
+                                                        <th>Vessel</th>
+                                                        <th>Voyage</th>
+                                                        <th>POL</th>
+                                                        <th>FDN</th>
+                                                        <th>CBM</th>
+                                                        <th>Weight</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ContainerDetailsBody2">
+                                              @*       <tr>
+                                                    </tr> *@
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br />
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <br />
+                        <br />
+                        <br />
+                    <!--Save Button-->
+                    <div class="row">
+                        <div class="col-md-4">
+                           @*  <input hidden id="invoiceJobNo" type="text" asp-for="InvoiceHdMulti.FirstOrDefault().JobNo" value="@Model.ExportJobHdMulti.FirstOrDefault()?.JobNo" class="form-control" /> *@
+                            <input type="hidden" id="dtlItemsList" name="dtlItemsList" />
+                            <div class="form-group">
+                                    <input type="submit" id="saveButton" value="Save" onclick="submitForm(this)" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </form>
+
+            </div>
+
+
+        </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Orginal details End -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- Container fluid  END -->
+    <!-- ============================================================== -->
+</div>
+
+<!--Style and Script-->
+<style>
+    .table-container {
+    height: 200px; /* Adjust the height as needed */
+    overflow: auto;
+    }
+
+        #tblLocalCargoToBESelected thead {
+        position: sticky;
+        top: 0;
+        background-color: #f8f8f8;
+        z-index: 1;
+    }
+
+        #tblLocalCargoToBESelected th {
+        white-space: nowrap;
+            /*set white-space: nowrap; on the th elements to prevent line breaks in the table header cells, ensuring that the header text stays visible even if the column width is reduced.
+              Feel free to adjust the CSS properties and values according to your design requirements. */
+        
+    }
+
+        #tblTScargoToBESelected thead {
+            position: sticky;
+            top: 0;
+            background-color: #f8f8f8;
+            z-index: 1;
+        }
+
+        #tblTScargoToBESelected th {
+            white-space: nowrap;
+            /*set white-space: nowrap; on the th elements to prevent line breaks in the table header cells, ensuring that the header text stays visible even if the column width is reduced.
+                      Feel free to adjust the CSS properties and values according to your design requirements. */
+        }
+</style>
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+    <script>
+        // Create and submit Charge Items
+        function submitForm(e) {
+
+            const dtlItemsArray = [];
+            const tableRows = $("#tblContainer tbody tr");
+            var chkAmount = "";
+
+            tableRows.each(function (index) {
+                const trRow = $(this);
+                chkAmount = trRow.find('input[name="Amount"]').val();
+
+                if (chkAmount === "" || parseFloat(chkAmount) === 0) {
+                    // chkAmount is empty or zero
+                    //console.log("chkAmount is empty or zero");
+                } else {
+                    // chkAmount is not empty and not zero
+                    const dtlItemJson = buildItemsJson(trRow, index);
+                    dtlItemsArray.push(dtlItemJson);
+                }
+            });
+
+            $("#dtlItemsList").val(JSON.stringify(dtlItemsArray));
+            var jobNo = JobHdMulti.FirstOrDefault().JobNo;
+            alert("jobNo: " + jobNo);
+
+            // Assign the value to the hidden input field using jQuery
+            $('#invoiceJobNo').val(jobNo);
+        }
+
+        function submitSearchForm() {
+            alert("Search button clicked!");
+            document.getElementById("searchForm").submit();
+        }
+
+        function moveSelectedRows() {
+            var table1 = document.getElementById("tblContainer1");
+            var table2 = document.getElementById("tblContainer2");
+            var checkboxes = table1.querySelectorAll('input[type="checkbox"]:checked');
+
+            checkboxes.forEach(function (checkbox) {
+                var row = checkbox.parentNode.parentNode.cloneNode(true);
+                table2.querySelector("tbody").appendChild(row);
+
+                // Store the selected invoice number in hidden field
+                document.getElementById("selectedInvoices").value += checkbox.value + ",";
+
+                // Remove the selected row from table1
+                checkbox.parentNode.parentNode.remove();
+            });
+        }
+
+        function onRowSelect(checkbox) {
+            moveSelectedRows();
+        }
+
+    </script>
+}

@@ -1,0 +1,713 @@
+﻿@*@model IEnumerable<FMS_DEV.Models.TxnImportJobDtl>*@
+
+@model FMS_DEV.ViewModel.InvoiceExportViewModel
+@{
+    ViewData["Title"] = "Invoice";
+
+}
+
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h4 class="m-b-0 text-white">Export-Invoice</h4>
+                </div>
+
+                <div class="card-body">
+                    <!--Job No.-->
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-2">
+                                    <label for="JobNo">Job No.</label>
+                                </div>
+                                <div class="col-5">
+                                    <!-- Search-->
+                                    <div class="row align-self-center text-right">
+                                        @using (Html.BeginForm("Create", "TxnInvoiceExportHds", new { searchString = "" }, FormMethod.Get))
+                                        {
+                                            <div class="input-group">
+                                                <input type="text" id="searchString" name="searchString" class="form-control" />
+                                                <div class="input-group-append">
+                                                    <button type="submit" class="btn btn-info"> <i class="fas fa-search-plus"></i> Go!</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <!-- End Search-->
+                                </div>
+                                <label class="control-label text-right col-md-4" style="color: red;">@ViewBag.JobFound</label>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-8"></div>
+
+                    </div><br />
+
+                    <!--Job Details-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b>Job Details</b>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+
+                    <div style="border:1px  solid black; padding: 10px 10px 10px 10px; background-color:#E5F2FB; border-radius:10px;">
+
+                        <!--Job No & Date-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Job No">Job No.</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span id="jobno">
+                                            <b>  @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().JobNo) </b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Date">Date</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().JobDate)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4"></div>
+
+                        </div><br />
+
+                        <!--Sales Person-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Vessel">Vessel</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().VesselExportJobDtlNavigation.VesselName)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+
+                        <br />
+                        <!--Vessel ,ETD (Date) & Shipper-->
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Vessel">Voyage</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().Voyage)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="ETD (Date)">Agent</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().AgentExportNavigation.AgentName)
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Shipper">Shipper</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().ShippingLineExportNavigation.Name)
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><br />
+
+                        <!--Final Destination & Consignee-->
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Final Destination">Final Destination</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().FDNExportJobNavigation.PortName)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Final Destination">Coloader</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().ColoaderExportNavigation.Name)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Consignee">Coload</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.ExportJobHdMulti.FirstOrDefault().IsCoLoad)
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br />
+                    </div>
+
+                    <form asp-action="Create" id="InvoiceHDForm">
+                        <br />
+                        <br />
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="radio" id="LocalBL" name="BLNoType" value="Local" checked />
+                                    <label for="Cash">Local BL</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="radio" id="TSBL" name="BLNoType" value="TS" />
+                                    <label for="Cheque">TS BL</label>
+                                </div>
+                            </div>
+
+                            <div class="row" id="BLnumberLocal">
+                                <div class="col-md-4">
+                                    <label for="BL Number">Local BL Number</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select asp-for="InvoiceHdMulti.FirstOrDefault().Blno" class="form-control" asp-items="ViewBag.BLNumbers"></select>
+                                </div>
+                            </div>
+                            <div class="row" id="BLnumberTS">
+                                <div class="col-md-4">
+                                    <label for="BL Number">TS BL Number</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select asp-for="InvoiceHdMulti.FirstOrDefault().BLNoTS" class="form-control" asp-items="ViewBag.BLNumbersTS"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!--Invoice-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>
+                                    Invoice
+                                </h4>
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+
+                        <!--Invoice NO,Date,Customer & Exchange Rate-->
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="Date ">Date </label>
+                                    </div>
+                                    @{
+                                        // Get the current date
+                                        var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+                                    }
+                                    <div class="col-md-8">
+                                        <input type="date" asp-for="InvoiceHdMulti.FirstOrDefault().Date" class="form-control" value="@currentDate" />
+                                        <span asp-validation-for="InvoiceHdMulti.FirstOrDefault().Date" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="Customer">Customer</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <select id="IntendedVessel" asp-for="InvoiceHdMulti.FirstOrDefault().Customer" class="form-control" asp-items="ViewBag.Customer"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="Exchange Rate">Exchange Rate</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" asp-for="InvoiceHdMulti.FirstOrDefault().ExchangeRate" class="form-control" value="0.00" />
+                                        <span asp-validation-for="InvoiceHdMulti.FirstOrDefault().ExchangeRate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Invoice NO,Date,Customer & Exchange Rate-->
+
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">
+                            </div>
+
+                            <div class="col-md-4">
+                            </div>
+
+                            <div class="col-md-4">
+                                @*                                <div class="row">
+                                <div class="col-md-4">
+                                <label for="Customer">Debit Acc</label>
+                                </div>
+                                <div class="col-md-8">
+                                <select id="IntendedVessel" asp-for="InvoiceHdMulti.FirstOrDefault().DebitAcc" class="form-control" asp-items="ViewBag.AccountsCodes" readonly></select>
+                                </div>
+                                </div>*@
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-md-4">
+                            </div>
+
+                            <div class="col-md-4">
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    @*                                    <div class="col-md-4">
+                                    <label for="Customer">Credit Acc</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                    <select id="IntendedVessel" asp-for="InvoiceHdMulti.FirstOrDefault().CreditAcc" class="form-control" asp-items="ViewBag.AccountsCodes"></select>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                        <!--Table for Charge Items --><br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover border table-striped" id="tblContainer">
+                                        <thead>
+                                            <tr>
+                                                <th>Charge Item</th>
+                                                <th>Unit</th>
+                                                <th>Rate </th>
+                                                <th>Currency</th>
+                                                <th>Qty</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ContainerDetailsBody">
+                                            <tr id="tablerow0" hidden>
+                                                <td style="width:30%;"> <select id="ChargeItemRw" asp-for="InvoiceDtMulti.FirstOrDefault().ChargeItem" value="" name="ChargeItemRw" class="form-control" asp-items="ViewBag.ChargeItemsList"></select> </td>
+                                                <td style="width:10%;"> <select id="Unit" asp-for="InvoiceDtMulti.FirstOrDefault().Unit" value="" name="Unit" class="form-control" asp-items="ViewBag.UnitList"></select> </td>
+                                                <td style="width:10%;"> <input type="text" id="Rate" asp-for="InvoiceDtMulti.FirstOrDefault().Rate" name="Rate" value="" class="form-control" onchange="calculateAmount(this)"></td>
+                                                <td> <select id="Currency" asp-for="InvoiceDtMulti.FirstOrDefault().Currency" value="" name="Currency" class="form-control" asp-items="ViewBag.CurrencyList"></select> </td>
+                                                <td> <input type="text" id="Qty" asp-for="InvoiceDtMulti.FirstOrDefault().Qty" name="Qty" value="" class="form-control" onchange="calculateAmount(this)"></td>
+                                                <td> <input type="text" id="Amount" asp-for="InvoiceDtMulti.FirstOrDefault().Amount" name="Amount" value="" class="form-control" readonly></td>
+                                                <td> <input type="button" id="btnRemove" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" /></td>
+                                            </tr>
+                                            @foreach (var item in Model.InvoiceDtMulti)
+                                            {
+                                                <tr class="tablerow">
+
+                                                    <td>
+                                                        <select asp-for="InvoiceDtMulti.FirstOrDefault().ChargeItem" value="@item.ChargeItem" name="ChargeItemRw" class="form-control" asp-items="ViewBag.ChargeItemsList"></select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" asp-for="InvoiceDtMulti.FirstOrDefault().Unit" name="UnitRw" value="@item.Unit" class="form-control unit" asp-items="ViewBag.UnitList">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" asp-for="InvoiceDtMulti.FirstOrDefault().Rate" name="Rate" value="@item.Rate" class="form-control rate" style="text-align: right;">
+                                                    </td>
+                                                    <td>
+                                                        <select asp-for="InvoiceDtMulti.FirstOrDefault().Currency" name="Currency" value="@item.Currency" class="form-control" asp-items="ViewBag.CurrencyList"></select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" asp-for="InvoiceDtMulti.FirstOrDefault().Qty" name="Qty" value="@item.Qty" class="form-control qty" style="text-align: right;">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" asp-for="InvoiceDtMulti.FirstOrDefault().Amount" name="Amount" value="" class="form-control amount" style="text-align: right;" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="button" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!--Add button Charge Items-->
+                            <div class="col-md-4">
+                                <div class="form-group">
+
+                                    <input id="add" type="button" value="+ Charge Item" onclick="AddRow(this)"
+                                           class="btn btn-success" />
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <!--Total LKR-->
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="TotalAmount">Total Amount LKR:</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" asp-for="InvoiceHdMulti.FirstOrDefault().TotalInvoiceAmountLkr" class="form-control" id="TotalAmtLKR" readonly />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="TotalAmount">Total Amount USD:</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" asp-for="InvoiceHdMulti.FirstOrDefault().TotalInvoiceAmountUsd" class="form-control" id="TotalAmtUSD" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+
+                        <!--Remarks Textbox-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <h6 class="box-title">Remarks</h6>
+                                    <div class="col-md-12">
+                                        <textarea asp-for="InvoiceHdMulti.FirstOrDefault().Remarks" class="form-control" name="Remarks" type="text" placeholder="Type here your Remarks" rows="5"> </textarea>
+                                        @* <input asp-for="BLTypeID" class="form-control" />*@
+                                        <span asp-validation-for="InvoiceHdMulti.FirstOrDefault().Remarks" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br />
+
+                        <!--Save Button-->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="text" id="searchString" name="searchString" class="form-control" />
+
+                                <input hidden id="invoiceJobNo" type="text" asp-for="InvoiceHdMulti.FirstOrDefault().JobNo" value="@Model.ExportJobHdMulti.FirstOrDefault()?.JobNo" class="form-control" />
+                                <input type="hidden" id="dtlItemsList" name="dtlItemsList" />
+                                <div class="form-group">
+                                    <input type="submit" id="saveButton" value="Save" onclick="submitForm(this)" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Orginal details End -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- Container fluid  END -->
+    <!-- ============================================================== -->
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    // Create and submit Charge Items
+
+    function submitForm(e) {
+
+        const dtlItemsArray = [];
+        const tableRows = $("#tblContainer tbody tr");
+        var chkAmount = "";
+
+        tableRows.each(function (index) {
+            const trRow = $(this);
+            chkAmount = trRow.find('input[name="Amount"]').val();
+
+            if (chkAmount === "" || parseFloat(chkAmount) === 0) {
+                // chkAmount is empty or zero
+                //console.log("chkAmount is empty or zero");
+            } else {
+                // chkAmount is not empty and not zero
+                const dtlItemJson = buildItemsJson(trRow, index);
+                dtlItemsArray.push(dtlItemJson);
+            }
+        });
+
+        $("#dtlItemsList").val(JSON.stringify(dtlItemsArray));
+        var jobNo = JobHdMulti.FirstOrDefault().JobNo;
+        alert("jobNo: " + jobNo);
+
+        // Assign the value to the hidden input field using jQuery
+        $('#invoiceJobNo').val(jobNo);
+    }
+
+    // Json Var create
+    function buildItemsJson(trRow, id) {
+        return {
+            SerialNo: id,
+            Description: trRow.find('input[name="Description"]').val(),
+            Amount: trRow.find('input[name="Amount"]').val(),
+        };
+    }
+
+
+
+
+
+
+</script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Enter key blocking from submitig
+        document.getElementById("InvoiceHDForm").onkeypress = function (e) {
+
+            preventEnterSubmit(e);
+        }
+
+    </script>
+    <script>
+        function preventEnterSubmit(e) {
+            // Enter Key
+            if (e.which == 13) {
+                var $targ = $(e.target);
+                // alert(" Enter Key !" );
+                if (!$targ.is("textarea") && !$targ.is(":button,:submit")) {
+                    //alert(" Not Textarea !");
+                    e.preventDefault();
+                }
+
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function AddRow(e) {
+            // alert(" record(s) inserted.");
+            //clones the first row of the table
+            var newRow = $("#tblContainer tbody tr").first().clone();
+            //removes the 'hidden' attribute so it will be visible when added  to the table
+            newRow.removeAttr("hidden");
+
+            // Get No of rows
+            var NoOfRows = $("#tblContainer tbody tr").length
+            var counter = NoOfRows + 1;
+
+
+            // Update remove Button
+            var removeBtn = newRow.find('input[name="RemoveBttn"]');
+            var RemoveBtnVal = 'RemoveRow(' + counter + ')';
+            $(removeBtn).attr('onclick', RemoveBtnVal);
+
+            //Update Row id (for remove)
+            var RowID = "tablerow" + counter;
+            newRow.attr("id", RowID);
+            //add/append new row to the table
+
+            $("tbody").append(newRow);
+
+            return false;
+
+        }
+
+        function RemoveRow(index) {
+            // alert(" record remove: " + index);
+            $('#tablerow' + index).remove();
+            calculateTotalAmount();
+            return false;
+        }
+    </script>
+    <script>
+        // Create and submit Charge Items
+
+        function submitForm(e) {
+
+            const dtlItemsArray = [];
+            const tableRows = $("#tblContainer tbody tr");
+            var chkAmount = "";
+
+            tableRows.each(function (index) {
+                //alert("Test in tbl ROW");
+                const trRow = $(this);
+                chkAmount = trRow.find('input[name="Amount"]').val();
+                // Check if chkAmount is empty or zero
+                if (chkAmount === "" || parseFloat(chkAmount) === 0) {
+                    // chkAmount is empty or zero
+                    //console.log("chkAmount is empty or zero");
+                } else {
+                    // chkAmount is not empty and not zero
+                    const dtlItemJson = buildItemsJson(trRow, index);
+                    dtlItemsArray.push(dtlItemJson);
+                }
+            });
+            $("#dtlItemsList").val(JSON.stringify(dtlItemsArray));
+        }
+        // Json Var create
+        function buildItemsJson(trRow, id) {
+            return {
+                SerialNo: id,
+                ChargeItem: trRow.find('select[name="ChargeItemRw"]').val(),
+                Unit: trRow.find('select[name="Unit"]').val(),
+                Rate: trRow.find('input[name="Rate"]').val(),
+                Currency: trRow.find('select[name="Currency"]').val(),
+                Qty: trRow.find('input[name="Qty"]').val(),
+                Amount: trRow.find('input[name="Amount"]').val(),
+            };
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add event listener to the parent table
+            var containerTable = document.querySelector("#ContainerDetailsBody");
+            containerTable.addEventListener("input", function (event) {
+                var target = event.target;
+
+                // Check if the input is in a row and has the relevant IDs
+                if (target.closest("tr") && (target.id === "Rate" || target.id === "Qty" || target.id === "Currency")) {
+                    calculateAmount(target);
+                }
+            });
+
+            containerTable.addEventListener("change", function (event) {
+                var target = event.target;
+
+                // Check if the change event is for the Currency dropdown
+                if (target.closest("tr") && target.id === "Currency") {
+                    calculateTotalAmount();
+                }
+            });
+
+            // Add event listeners to all remove buttons
+            var removeButtons = document.querySelectorAll("#ContainerDetailsBody #btnRemove");
+            removeButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    // Remove the row and recalculate total amount
+                    var row = this.parentNode.parentNode;
+                    row.parentNode.removeChild(row);
+                    calculateTotalAmount();
+                });
+            });
+        });
+
+        function calculateAmount(element) {
+            // Calculate amount for the current row
+            var row = element.closest("tr");
+            var rate = parseFloat(row.querySelector("#Rate").value);
+            var qty = parseFloat(row.querySelector("#Qty").value);
+            var amount = rate * qty;
+
+            if (!isNaN(amount)) {
+                row.querySelector("#Amount").value = amount.toFixed(2);
+            }
+
+            // Calculate total amount for all rows
+            calculateTotalAmount();
+        }
+
+        function calculateTotalAmount() {
+            // Calculate total amount for all rows
+            var totalAmount = 0;
+            var totalUSD = 0;
+            var totalLKR = 0;
+            var exchangeRate = parseFloat(document.querySelector("#ExchangeRate").value);
+
+            var rows = document.querySelectorAll("#ContainerDetailsBody tr");
+
+            rows.forEach(function (row) {
+                var amount = parseFloat(row.querySelector("#Amount").value);
+                var currency = row.querySelector("#Currency").value;
+
+                if (!isNaN(amount)) {
+                    totalAmount += amount;
+
+                    if (currency === "USD") {
+                        totalUSD += amount;
+                        totalLKR += amount * exchangeRate;
+                    } else if (currency === "LKR") {
+                        totalLKR += amount;
+                        totalUSD += amount / exchangeRate;
+                    }
+                }
+            });
+
+            // Set the total amount in the TotalAmt input field
+            document.querySelector("#TotalAmtLKR").value = totalLKR.toFixed(2);
+            document.querySelector("#TotalAmtUSD").value = totalUSD.toFixed(2);
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const localBLRadio = document.getElementById('LocalBL');
+            const tsBLRadio = document.getElementById('TSBL');
+            const blNumberLocal = document.getElementById('BLnumberLocal');
+            const blNumberTS = document.getElementById('BLnumberTS');
+
+            function toggleBLNumberFields() {
+                if (localBLRadio.checked) {
+                    blNumberLocal.style.display = 'block';
+                    blNumberTS.style.display = 'none';
+                } else if (tsBLRadio.checked) {
+                    blNumberLocal.style.display = 'none';
+                    blNumberTS.style.display = 'block';
+                }
+            }
+
+            localBLRadio.addEventListener('change', toggleBLNumberFields);
+            tsBLRadio.addEventListener('change', toggleBLNumberFields);
+
+            // Initial toggle based on the default checked radio button
+            toggleBLNumberFields();
+        });
+    </script>
+
+
+
+}

@@ -1,0 +1,123 @@
+﻿@model FMS_DEV.Models.RefAgent
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Row  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Edit</h2>
+                    <div class="card">
+                        <div class="card-header bg-primary">
+                            <h4 class="m-b-0 text-white">Agents - Masterf Reference</h4>
+                        </div>
+                        <div class="card-body">
+                            <!-- ============================================================== -->
+                            <!-- Orginal details Strat -->
+                            <!-- ============================================================== -->
+                            <div class="col-md-4">
+                                <form asp-action="Edit">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="AgentId" />
+
+                                    <div class="form-group">
+                                        <label asp-for="AgentName" class="control-label"></label>
+                                        <input asp-for="AgentName" class="form-control" />
+                                        <span asp-validation-for="AgentName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="control-label">Port</label>
+                                        <select asp-for="PortId" class="form-control" asp-items="ViewBag.PortId"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Address1" class="control-label"></label>
+                                        <input asp-for="Address1" class="form-control" />
+                                        <span asp-validation-for="Address1" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Address2" class="control-label"></label>
+                                        <input asp-for="Address2" class="form-control" />
+                                        <span asp-validation-for="Address2" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Address3" class="control-label"></label>
+                                        <input asp-for="Address3" class="form-control" />
+                                        <span asp-validation-for="Address3" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="City" class="control-label"></label>
+                                        <input asp-for="City" class="form-control" />
+                                        <span asp-validation-for="City" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="County" class="control-label"></label>
+                                        <input asp-for="County" class="form-control" />
+                                        <span asp-validation-for="County" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="TelNo" class="control-label"></label>
+                                        <input asp-for="TelNo" class="form-control" />
+                                        <span asp-validation-for="TelNo" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Email" class="control-label"></label>
+                                        <input asp-for="Email" class="form-control" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Remarks" class="control-label"></label>
+                                        <input asp-for="Remarks" class="form-control" />
+                                        <span asp-validation-for="Remarks" class="text-danger"></span>
+                                    </div>
+                                   <div class="form-group">
+                                        <label asp-for="IsActive" class="control-label"></label>
+                                        <input type="checkbox" asp-for="IsActive" class="form-control"  />
+                                        <span asp-validation-for="IsActive" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- ============================================================== -->
+                            <!-- Orginal details End -->
+                            <!-- ============================================================== -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- Row END  -->
+            <!-- ============================================================== -->
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- Container fluid  END -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Main wrapper -  END style you can find in pages.scss -->
+<!-- ============================================================== -->
+@section Scripts {
+@{
+await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

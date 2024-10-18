@@ -1,0 +1,1566 @@
+﻿@* @model FMS_DEV.Models.TxnPrePandLHD *@
+@using System.Globalization
+@model FMS_DEV.ViewModel.PrePandLViewModel
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" >
+</style>
+
+
+<style>
+    .progress {
+        width: 100%;
+        background-color: #f3f3f3;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 10px 0;
+    }
+
+    .pl-container {
+        border: 1px solid #ccc;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle outline */
+    }
+
+    .pl-label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .pl-input {
+        border: 1px solid #ccc;
+        padding: 5px;
+        width: 80px;
+        text-align: right;
+    }
+</style>
+
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="card">
+            <!--Heading-->
+             <div class="card-header bg-info">
+                    <h4 class="m-b-0 text-white">Export Department</h4>
+                    <h6 class="m-b-0 text-white">P & L- CREATE</h6>
+             </div>
+
+            
+
+            <div class="card-body">
+                
+                <!--stuffing planno search-->
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-2">
+                                    <label for="PlanId">Plan No.</label>
+                                </div>
+                                <div class="col-5">
+
+                                    <div class="row align-self-center text-right">
+                                        @using (Html.BeginForm("Create", "TxnPrePandLHDs", new { searchString = "" }, FormMethod.Get))
+                                        {
+                                            <div class="input-group">
+                                                <input type="text" id="searchString" name="searchString" class="form-control" />
+                                                <div class="input-group-append">
+                                                    <button type="submit" class="btn btn-info"> <i class="fas fa-search-plus"></i> Go!</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+
+                                </div>
+                                <label class="control-label text-right col-md-4" style="color: red;">@ViewBag.PlanFound</label>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-8"></div>
+
+                    </div><br />
+
+                <!--stuffing plan details-->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="Plan Id">Stuffing Plan No.</label>
+                                </div>
+                                <div class="col-md-6">
+
+                                    @Html.DisplayFor(m => Model.txnStuffingPlanHdMulti.FirstOrDefault().PlanId)
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="Date">Date</label>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.DisplayFor(m => Model.txnStuffingPlanHdMulti.FirstOrDefault().PlaneDate)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4"></div>
+
+                    </div><br />
+
+                    <form asp-action="Create" asp-controller="TxnPrePandLHDs">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <br />
+                        <h6 class="box-title"></h6>
+
+                        @*                         <div class="row">
+                        <div class="col-md-3">
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Plan Date</label>
+                        <div class="col-md-9">
+
+                        <input type="date" asp-for="txnPrePandLHDMulti.FirstOrDefault().Date" class="form-control" />
+                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().Date" class="text-danger"></span>
+
+
+                        </div>
+                        </div>
+                        </div>
+                        </div> *@
+
+
+                        <div class="line" style="border-top: 1px solid #999999;"></div>
+                        <br />
+
+
+                        @*                         <div class="row">
+                        <div class="col-md-4">
+                        <div class="row">
+                        <div class="col-md-6">
+                        <label for="Plan Id">Stuffing Plan No.</label>
+                        </div>
+                        <div class="col-md-6">
+                        <span id="PlanId">
+                        <b>
+                        @Html.DisplayFor(m => Model.txnStuffingPlanHdMulti.FirstOrDefault().PlanId)
+                        </b>
+                        </span>
+                        </div>
+                        </div>
+                        </div>
+
+                        <div class="col-md-4">
+                        <div class="row">
+                        <div class="col-md-6">
+                        <label for="Date">Date</label>
+                        </div>
+                        <div class="col-md-6">
+                        @Html.DisplayFor(m => Model.txnStuffingPlanHdMulti.FirstOrDefault().PlaneDate)
+                        </div>
+                        </div>
+                        </div>
+
+                        <div class="col-md-4"></div>
+
+                        </div><br /> *@
+
+
+                        @*  <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Vessel</label>
+                        <div class="col-md-9">
+
+                        <select id="IntendedVessel" class="form-control" asp-items="ViewBag.Vessel"></select>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">POD</label>
+                        <div class="col-md-9">
+
+                        <select id="POD" class="form-control" asp-items="ViewBag.POD"></select>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Shipping Line</label>
+                        <div class="col-md-9">
+
+                        <select id="Shipping Line" class="form-control" asp-items="ViewBag.ShippingLine"></select>
+                        </div>
+                        </div>
+                        </div>
+                        </div> *@
+
+                        <br />
+
+                        @* <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Voyage</label>
+                        <div class="col-md-9">
+
+                        <select id="Voyage" class="form-control" asp-items="ViewBag.Voyage"></select>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">FDN</label>
+                        <div class="col-md-9">
+
+                        <select id="FDN" class="form-control" asp-items="ViewBag.FDN"></select>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Agent</label>
+                        <div class="col-md-9">
+
+                        <select id="Agent" class="form-control" asp-items="ViewBag.Agent"></select>
+                        </div>
+                        </div>
+                        </div>
+                        </div> *@
+
+                        <div class="line" style="border-top: 1px solid #999999;"></div>
+                        <br />
+
+
+
+                        <div class="row">
+                            <h5 class="box-title"><b>Container</b></h5>
+                        </div>
+
+                        <br />
+
+                        @*                         <div class="row">
+                        <div class="col-md-3">
+
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Size</label>
+                        <div class="col-md-9">
+
+                        <select id="Size" class="form-control" asp-items="ViewBag.Size"></select>
+                        </div>
+                        </div>
+
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Container </label>
+                        <div class="col-md-9">
+
+                        <input id="Container" type="text" class="form-control" />
+
+                        </div>
+                        </div>
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Seal </label>
+                        <div class="col-md-9">
+
+                        <input id="Seal" type="text" class="form-control" />
+
+                        </div>
+                        </div>
+                        </div>
+
+
+
+                        <div class="col-md-9">
+                        <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Local -No of BL </label>
+                        <div class="col-md-9">
+
+                        <input id="LocalNoofBL" type="text" class="form-control" />
+
+                        </div>
+                        </div>
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">TS -No of BL </label>
+                        <div class="col-md-9">
+
+                        <input id="TSNoofBL" type="text" class="form-control" />
+
+                        </div>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Tot CBM </label>
+                        <div class="col-md-9">
+
+                        <input id="TotCBM" type="text" class="form-control" />
+
+                        </div>
+                        </div>
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Tot CBM </label>
+                        <div class="col-md-9">
+
+                        <input id="TotCBM" type="text" class="form-control" />
+
+                        </div>
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="form-group row"></div>
+                        <div class="form-group row"></div>
+                        <div class="form-group row"></div>
+                        <div class="form-group row"></div>
+                        <div class="form-group row"></div>
+                        <div class="form-group row">
+                        <label class="control-label text-left col-md-3">Box Rate USD </label>
+                        <div class="col-md-9">
+
+                        <input id="BoxRateUSD" type="text" class="form-control" />
+
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div> *@
+
+
+
+                        <div class="line" style="border-top: 1px solid #999999;"></div>
+                        <br />
+
+                        <div class="row">
+                            <div class="col-md-6"><h4 class="box-title"><b>Expenses</b></h4></div>
+                            <div class="col-md-6"><h4 class="box-title"><b>Income</b></h4></div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6"><h5 class="box-title"><b>Export Cost-Colombo</b></h5></div>
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">ACE Stuffing </label>
+                                    <div class="col-md-4">
+
+                                        @*   <input id="ACEStuffing" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostACEStuffing" class="form-control text-right Exp-cost-colombo-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostACEStuffing" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Rework </label>
+                                    <div class="col-md-4">
+
+                                        @*  <input id="Rework" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostRework" class="form-control text-right Exp-cost-colombo-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostRework" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">PORT Stuffing </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="PORTStuffing" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostPORTStuffing" class="form-control text-right Exp-cost-colombo-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostPORTStuffing" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">SLPA </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="SLPA" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostSLPA" class="form-control text-right Exp-cost-colombo-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostSLPA" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">TS Cost-IMP </label>
+                                    <div class="col-md-4">
+
+                                        @*  <input id="TSCostIMP" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostTSImpCost" class="form-control text-right Exp-cost-colombo-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostTSImpCost" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">MCC </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="MCC" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostMCC" class="form-control text-right Exp-cost-colombo-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostMCC" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">AMJ (Empty Cnt Transport) </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="AMJ" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostAMJ" class="form-control text-right Exp-cost-colombo-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostAMJ" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6"><b>Total Export Cost Colombo</b> </label>
+                                    <div class="col-md-4">
+                                        <input id="TotalExportCostColombo" asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPCostTotalExportCostColombo" type="text" class="form-control text-right" readonly />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">TS Rate received from POL for Transshipments (w/m) </label>
+                                    <div class="col-md-4">
+
+                                        @*  <input id="TSRatereceivedfromPOLforTransshipments" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCFstTSRateRcvdFromPOLTS" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCFstTSRateRcvdFromPOLTS" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Local Rate received from local shipper for Locals(w/m) </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="LocalRatereceivedfromlocalshipperforLocals" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCFstLocalRateRcvdLocalShipper" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCFstLocalRateRcvdLocalShipper" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Freight collect amount for Nominations (w/m) </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="FreightcollectamountforNominations" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCFstFreightCollectAmtNominations" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCFstFreightCollectAmtNominations" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">TS Rate received from POL for Transshipments /BL </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="TSRatereceivedfromPOLforTransshipmentsBL" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCFstTSRateRcvdFromPOLTSBL" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCFstTSRateRcvdFromPOLTSBL" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6"><h4 class="box-title"><b>Handling System</b></h4></div>
+                            <div class="col-md-6"><h4 class="box-title"><b>Handling System</b></h4></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Destuffing Cost </label>
+                                    <div class="col-md-4">
+
+                                        @*  <input id="DestuffingCost" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPHndDestuffingCost" class="form-control text-right Handling-cost-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPHndDestuffingCost" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Linear Cost </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="LinearCost" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPHndLinearCost" class="form-control text-right Handling-cost-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPHndLinearCost" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Handling Fee </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="HandlingFee" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPHndHandlingFee" class="form-control text-right Handling-cost-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPHndHandlingFee" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Handling Fee </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="HandlingFee" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPHndHandlingFee" class="form-control text-right Handling-cost-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPHndHandlingFee" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6"><b>Total Handling System cost</b> </label>
+                                    <div class="col-md-4">
+                                        <input id="TotalHandlingSystemcost" type="text" class="form-control text-right" readonly />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Destination charges collection /BL </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="DestinationchargescollectionBL" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCHndDestinationChargesCollectionBL" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCHndDestinationChargesCollectionBL" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6"><h4 class="box-title"><b>Rebate System</b></h4></div>
+                            <div class="col-md-6"><h4 class="box-title"><b>Rebate System</b></h4></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">T/S Cost </label>
+                                    <div class="col-md-4">
+
+                                        @*  <input id="TSCost" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPRbtTSCost" class="form-control text-right Rebate-cost-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPRbtTSCost" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Door Cost  </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="DoorCost" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPRbtDoorCost" class="form-control text-right Rebate-cost-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPRbtDoorCost" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Destination Charges </label>
+                                    <div class="col-md-4">
+
+                                        @*  <input id="DestinationCharges" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPRbtDestinationCharges" class="form-control text-right Rebate-cost-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPRbtDestinationCharges" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">1St Leg Cost  </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="1StLegCost" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPRbtFirstLegCost" class="form-control text-right Rebate-cost-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPRbtFirstLegCost" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6"><b>Total Rebate System cost</b> </label>
+                                    <div class="col-md-4">
+                                        <input id="TotalRebateSystemcost" asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPRbtTotalRebateSystemCost" type="text" class="form-control text-right text-right" readonly />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Trucking (on carriage cost)  </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="Trucking" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPTruckingOnCarriageCost" class="form-control text-right Trucking-cost-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().EXPTruckingOnCarriageCost" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" style="display:none;">
+                                    <label class="control-label text-left col-md-6"> </label>
+                                    <div class="col-md-4">
+                                        <input id="TruckingCost" type="text" class="form-control" readonly />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Remate for CBM  </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="RemateforCBM" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtRemateForCBM" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtRemateForCBM" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Remate for BL </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="RemateforBL" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtRemateForBL" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtRemateForBL" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6"><h4 class="box-title"><b>Aditionals</b></h4></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Less (If any)  </label>
+                                    <div class="col-md-4">
+
+                                        @*   <input id="Less" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtLess" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtLess" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">Difference of Destination Charges(If any)   </label>
+                                    <div class="col-md-4">
+
+                                        @*  <input id="DifferenceofDestinationCharges" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtDiffOfDestinationCharges" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtDiffOfDestinationCharges" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">ISF (If any) etc.  </label>
+                                    <div class="col-md-4">
+
+                                        @*  <input id="ISFetc" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtISF" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtISF" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">LSS  </label>
+                                    <div class="col-md-4">
+
+                                        @* <input id="LSS" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtLSS" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtLSS" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6">PSS  </label>
+                                    <div class="col-md-4">
+
+                                        @*  <input id="PSS" type="text" class="form-control" /> *@
+                                        <input asp-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtPSS" class="form-control text-right income-input" />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().INCRbtPSS" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" style="display:none;">
+                                    <label class="control-label text-left col-md-6"> </label>
+                                    <div class="col-md-4">
+                                        <input id="IncomeWithoutOtherincome" type="text" class="form-control" readonly />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="ExpensesJson" name="ExpensesJson" />
+                        <input type="hidden" id="IncomesJson" name="IncomesJson" />
+
+
+                        <div class="row">
+
+                            <div class="col-md-5">
+                                <div class="form-group row">
+                                    <h4>Other Expenses</h4>
+                                    <table id="otherExpensesTable" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Initial row template for other expenses -->
+                                            <tr>
+                                                <td><input type="text" class="form-control text-right" name="ExpenseDescription" /></td>
+                                                <td><input type="text" class="form-control text-right" name="ExpenseAmount" /></td>
+                                                <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td><b>Total Other Expenses</b></td>
+                                                <td>
+                                                    <input type="text" id="TotalOtherExpenses" asp-for="txnPrePandLHDMulti.FirstOrDefault().EXPOtherExpensesTotal" class="form-control" readonly style="text-align: right;" />
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <button type="button" id="addExpenseRow" class="btn btn-success">Add Expense</button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1"></div>
+
+                            <div class="col-md-5">
+                                <div class="form-group row">
+                                    <h4>Other Incomes</h4>
+                                    <table id="otherIncomesTable" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Initial row template for other incomes -->
+                                            <tr>
+                                                <td><input type="text" class="form-control text-right" name="IncomeDescription" /></td>
+                                                <td><input type="text" class="form-control text-right" name="IncomeAmount" /></td>
+                                                <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td><b>Total Other Incomes</b></td>
+                                                <td>
+                                                    <input type="text" id="TotalOtherIncomes" asp-for="txnPrePandLHDMulti.FirstOrDefault().INCOtherIncomeTotal" class="form-control" readonly style="text-align: right;" />
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <button type="button" id="addIncomeRow" class="btn btn-success">Add Income</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                @*                                     <div class="form-group row">
+                                <label class="control-label text-left col-md-6"><b>Total Expenses</b></label>
+                                <div class="col-md-4">
+                                <input id="TotalExpenses" asp-for="txnPrePandLHDMulti.FirstOrDefault().TotalExpenses" class="form-control text-right" readonly />
+                                <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().TotalExpenses" class="text-danger"></span>
+                                </div>
+                                </div> *@
+
+                                @{
+                                    var totalExpenses = Model.txnPrePandLHDMulti.FirstOrDefault()?.TotalExpenses;
+                                    var formattedTotalExpenses = totalExpenses.HasValue ? $"LKR {totalExpenses.Value:N2}" : "LKR 0.00";
+                                }
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6"><b>Total Expenses</b></label>
+                                    <div class="col-md-4">
+                                        <input id="TotalExpenses" value="@formattedTotalExpenses" class="form-control text-right" readonly />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().TotalExpenses" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-6"><b>Total Income</b> </label>
+                                    <div class="col-md-4">
+
+                                        <input id="TotalIncome" asp-for="txnPrePandLHDMulti.FirstOrDefault().TotalIncome" type="text" class="form-control text-right" readonly />
+                                        <span asp-validation-for="txnPrePandLHDMulti.FirstOrDefault().TotalIncome" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <div class="pl-container">
+                                    <label class="pl-label">P&L</label>
+                                    <input id="PLValue" asp-for="txnPrePandLHDMulti.FirstOrDefault().PandL" type="text" class="pl-input text-right" value="0.00" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+
+
+                        <br />
+                        <br />
+
+                        <!--Save Button-->
+                        <div class="form-group">
+                            <!-- Hidden field to store JSON data -->
+                            <input type="hidden" name="dtlItemsJson" id="dtlItemsJson" />
+                            @* <input type="submit" onclick="submitForm(this)" value="Create P & L" class="btn btn-primary" /> *@
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+
+                        <br />
+                    </form>
+                    <br />
+
+
+
+
+            </div>
+            </div>
+
+            </div>
+
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+
+        // Function to calculate P&L (Profit and Loss)
+        function calculatePnL() {
+            let totalIncome = parseFloat(document.getElementById('TotalIncome').value) || 0;
+            let totalExpenses = parseFloat(document.getElementById('TotalExpenses').value) || 0;
+            let plValue = totalIncome - totalExpenses;
+
+            //document.getElementById('PLValue').value = plValue.toFixed(2);
+
+            let plInput = document.getElementById('PLValue');
+            plInput.value = plValue.toFixed(2);
+
+            // Change color based on P&L value
+            if (plValue < 0) {
+                // Negative value: red background and white text
+                plInput.style.backgroundColor = 'red';
+                plInput.style.color = 'white';
+            } else if (plValue > 0) {
+                // Positive value: light green background and default text color
+                plInput.style.backgroundColor = 'lightgreen';
+                plInput.style.color = '';
+            } else {
+                // Value is 0: reset colors
+                plInput.style.backgroundColor = '';
+                plInput.style.color = '';
+            }
+        }
+
+        // Function to calculate the total expenses including all fields
+        function calculateTotalExpenses() {
+            let totalHandling = parseFloat(document.getElementById('TotalHandlingSystemcost').value) || 0;
+            let totalRebate = parseFloat(document.getElementById('TotalRebateSystemcost').value) || 0;
+            let totalTrucking = parseFloat(document.getElementById('TruckingCost').value) || 0;
+            let totalExportColombo = parseFloat(document.getElementById('TotalExportCostColombo').value) || 0;
+            let totalOtherExpenses = calculateOtherExpensesTotal();
+
+            // Sum all totals
+            let grandTotal = totalHandling + totalRebate + totalTrucking + totalExportColombo + totalOtherExpenses;
+
+            // Update the Total Expenses field
+            document.getElementById('TotalExpenses').value = grandTotal.toFixed(2);
+            calculatePnL();
+        }
+
+        // Function to calculate the total for "Other Expenses"
+        function calculateOtherExpensesTotal() {
+            let total = 0;
+            document.querySelectorAll('#otherExpensesTable tbody tr input[name="ExpenseAmount"]').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            // Update the total for "Other Expenses"
+            document.getElementById('TotalOtherExpenses').value = total.toFixed(2);
+            return total;
+        }
+
+        // Function to calculate the total income from individual inputs
+        function calculateIncomeWithoutOtherincome() {
+            let total = 0;
+            document.querySelectorAll('.income-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0; // Convert input value to a float, or 0 if NaN
+                total += value; // Add each value to the total
+            });
+            document.getElementById('IncomeWithoutOtherincome').value = total.toFixed(2); // Update the total in the readonly input
+        }
+
+        // Function to calculate the total income from "Other Incomes"
+        function calculateOtherIncomesTotal() {
+            let total = 0;
+            document.querySelectorAll('#otherIncomesTable tbody tr input[name="IncomeAmount"]').forEach(function (input) {
+                let value = parseFloat(input.value) || 0; // Convert input value to a float, or 0 if NaN
+                total += value; // Add each value to the total
+            });
+            // Update the total for "Other Incomes"
+            document.getElementById('TotalOtherIncomes').value = total.toFixed(2);
+            return total;
+        }
+
+        // Function to calculate the grand total income including other incomes
+        function calculateTotalIncome() {
+            let incomeWithoutOther = parseFloat(document.getElementById('IncomeWithoutOtherincome').value) || 0;
+            let otherIncomesTotal = calculateOtherIncomesTotal();
+            let grandTotalIncome = incomeWithoutOther + otherIncomesTotal;
+
+            document.getElementById('TotalIncome').value = grandTotalIncome.toFixed(2);
+            calculatePnL();
+            //document.querySelector('input[asp-for="txnPrePandLHDMulti.FirstOrDefault().TotalIncome"]').value = grandTotalIncome.toFixed(2);
+        }
+
+        // Attach event listeners to update totals
+        function attachEventListeners() {
+            document.querySelectorAll('.Handling-cost-input, .Rebate-cost-input, .Trucking-cost-input, .Exp-cost-colombo-input').forEach(function (input) {
+                input.addEventListener('input', function () {
+                    calculateIndividualTotals(); // Recalculate individual totals
+                    calculateTotalExpenses(); // Update overall total
+                });
+            });
+
+            document.querySelectorAll('.income-input').forEach(function (input) {
+                input.addEventListener('input', function () {
+                    calculateIncomeWithoutOtherincome(); // Recalculate income without other income
+                    calculateTotalIncome(); // Update total income
+                });
+            });
+
+            // Trigger calculation on input change in "Other Expenses"
+            document.querySelectorAll('#otherExpensesTable tbody').forEach(function (tbody) {
+                tbody.addEventListener('input', function () {
+                    calculateTotalExpenses(); // Update total expenses
+                });
+            });
+
+            // Trigger calculation on input change in "Other Incomes"
+            document.querySelectorAll('#otherIncomesTable tbody').forEach(function (tbody) {
+                tbody.addEventListener('input', function () {
+                    calculateOtherIncomesTotal(); // Update total other incomes
+                    calculateTotalIncome(); // Update total income
+                });
+            });
+
+            // Calculate totals on page load to handle any pre-filled values
+            window.onload = function () {
+                calculateIndividualTotals();
+                calculateTotalExpenses();
+                calculateIncomeWithoutOtherincome();
+                calculateOtherIncomesTotal();
+                calculateTotalIncome();
+                calculatePnL();
+            };
+        }
+
+        // Recalculate each individual total
+        function calculateIndividualTotals() {
+            calculateTotalHandlingSystemCost();
+            calculateTotalRebateSystemCost();
+            calculateTruckingCost();
+            calculateTotalExportCostColombo();
+        }
+
+        // Recalculate handling system cost
+        function calculateTotalHandlingSystemCost() {
+            let total = 0;
+            document.querySelectorAll('.Handling-cost-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TotalHandlingSystemcost').value = total.toFixed(2);
+        }
+
+        // Recalculate rebate system cost
+        function calculateTotalRebateSystemCost() {
+            let total = 0;
+            document.querySelectorAll('.Rebate-cost-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TotalRebateSystemcost').value = total.toFixed(2);
+        }
+
+        // Recalculate trucking cost
+        function calculateTruckingCost() {
+            let total = 0;
+            document.querySelectorAll('.Trucking-cost-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TruckingCost').value = total.toFixed(2);
+        }
+
+        // Recalculate export cost Colombo
+        function calculateTotalExportCostColombo() {
+            let total = 0;
+            document.querySelectorAll('.Exp-cost-colombo-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TotalExportCostColombo').value = total.toFixed(2);
+        }
+
+        $(document).ready(function () {
+            // Add new row for "Other Expenses"
+            $('#addExpenseRow').click(function () {
+                var newRow = `<tr>
+                                        <td><input type="text" class="form-control" name="ExpenseDescription" /></td>
+                                        <td><input type="number" class="form-control" name="ExpenseAmount" /></td>
+                                        <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                                      </tr>`;
+                $('#otherExpensesTable tbody').append(newRow);
+                calculateTotalExpenses(); // Recalculate total when new row is added
+            });
+
+            // Add new row for "Other Incomes"
+            $('#addIncomeRow').click(function () {
+                var newRow = `<tr>
+                                        <td><input type="text" class="form-control" name="IncomeDescription" /></td>
+                                        <td><input type="number" class="form-control" name="IncomeAmount" /></td>
+                                        <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                                      </tr>`;
+                $('#otherIncomesTable tbody').append(newRow);
+                calculateTotalIncome(); // Recalculate total income when new row is added
+            });
+
+            // Remove a row from "Other Expenses" or "Other Incomes"
+            $(document).on('click', '.removeRow', function () {
+                $(this).closest('tr').remove();
+                calculateTotalExpenses(); // Recalculate total expenses when a row is removed
+                calculateTotalIncome(); // Recalculate total income when a row is removed
+            });
+
+            // Calculate totals on form submission
+            $('form').submit(function () {
+                var expenses = [];
+                $('#otherExpensesTable tbody tr').each(function () {
+                    var description = $(this).find('input[name="ExpenseDescription"]').val();
+                    var amount = $(this).find('input[name="ExpenseAmount"]').val();
+                    if (description && amount) {
+                        expenses.push({ Description: description, Amount: amount });
+                    }
+                });
+
+                var incomes = [];
+                $('#otherIncomesTable tbody tr').each(function () {
+                    var description = $(this).find('input[name="IncomeDescription"]').val();
+                    var amount = $(this).find('input[name="IncomeAmount"]').val();
+                    if (description && amount) {
+                        incomes.push({ Description: description, Amount: amount });
+                    }
+                });
+
+                $('#ExpensesJson').val(JSON.stringify(expenses));
+                $('#IncomesJson').val(JSON.stringify(incomes));
+            });
+
+            attachEventListeners(); // Attach all event listeners on page load
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+@* @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Function to calculate the total income without other income
+        function calculateIncomeWithoutOtherincome() {
+            let total = 0;
+            document.querySelectorAll('.income-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0; // Convert input value to a float, or 0 if NaN
+                total += value; // Add each value to the total
+            });
+            document.getElementById('IncomeWithoutOtherincome').value = total.toFixed(2); // Update the total in the readonly input
+        }
+
+        // Function to attach event listeners
+        function attachIncomeListeners() {
+            document.querySelectorAll('.income-input').forEach(function (input) {
+                input.addEventListener('input', calculateIncomeWithoutOtherincome); // Recalculate income on input change
+            });
+
+            // Calculate totals on page load to handle pre-filled values
+            window.onload = function () {
+                calculateIncomeWithoutOtherincome();
+            };
+        }
+
+        attachIncomeListeners(); // Attach the event listeners on page load
+    </script>
+
+
+
+
+    <script>
+        // Calculate the total expenses including all fields
+        function calculateTotalExpenses() {
+            // Get values of each individual total
+            let totalHandling = parseFloat(document.getElementById('TotalHandlingSystemcost').value) || 0;
+            let totalRebate = parseFloat(document.getElementById('TotalRebateSystemcost').value) || 0;
+            let totalTrucking = parseFloat(document.getElementById('TruckingCost').value) || 0;
+            let totalExportColombo = parseFloat(document.getElementById('TotalExportCostColombo').value) || 0;
+            let totalOtherExpenses = calculateOtherExpensesTotal();
+
+            // Sum all totals
+            let grandTotal = totalHandling + totalRebate + totalTrucking + totalExportColombo + totalOtherExpenses;
+
+            // Update the Total Expenses field
+            document.getElementById('TotalExpenses').value = grandTotal.toFixed(2);
+        }
+
+        // Function to calculate the total for "Other Expenses"
+        function calculateOtherExpensesTotal() {
+            let total = 0;
+            document.querySelectorAll('#otherExpensesTable tbody tr input[name="ExpenseAmount"]').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            return total;
+        }
+
+        // Attach event listeners to update totals
+        function attachEventListeners() {
+            document.querySelectorAll('.Handling-cost-input, .Rebate-cost-input, .Trucking-cost-input, .Exp-cost-colombo-input').forEach(function (input) {
+                input.addEventListener('input', function () {
+                    calculateIndividualTotals(); // Recalculate individual totals
+                    calculateTotalExpenses(); // Update overall total
+                });
+            });
+
+            // Trigger calculation on input change in "Other Expenses"
+            document.querySelectorAll('#otherExpensesTable tbody').forEach(function (tbody) {
+                tbody.addEventListener('input', calculateTotalExpenses);
+            });
+
+            // Calculate totals on page load to handle any pre-filled values
+            window.onload = function () {
+                calculateIndividualTotals();
+                calculateTotalExpenses();
+                
+            };
+        }
+
+        // Recalculate each individual total
+        function calculateIndividualTotals() {
+            calculateTotalHandlingSystemCost();
+            calculateTotalRebateSystemCost();
+            calculateTruckingCost();
+            calculateTotalExportCostColombo();
+        }
+
+        attachEventListeners(); // Attach all event listeners on page load
+    </script>
+
+    <!-- Individual Calculation Scripts -->
+
+
+
+    <script>
+        function calculateTruckingCost() {
+            let total = 0;
+            document.querySelectorAll('.Trucking-cost-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TruckingCost').value = total.toFixed(2);
+        }
+    </script>
+
+    <script>
+        function calculateTotalRebateSystemCost() {
+            let total = 0;
+            document.querySelectorAll('.Rebate-cost-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TotalRebateSystemcost').value = total.toFixed(2);
+        }
+    </script>
+
+    <script>
+        function calculateTotalHandlingSystemCost() {
+            let total = 0;
+            document.querySelectorAll('.Handling-cost-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TotalHandlingSystemcost').value = total.toFixed(2);
+        }
+    </script>
+
+    <script>
+        function calculateTotalExportCostColombo() {
+            let total = 0;
+            document.querySelectorAll('.Exp-cost-colombo-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TotalExportCostColombo').value = total.toFixed(2);
+        }
+    </script>
+
+    <!-- Scripts for dynamically adding/removing rows and calculating totals -->
+    <script>
+        $(document).ready(function () {
+            $('#addExpenseRow').click(function () {
+                var newRow = `<tr>
+                            <td><input type="text" class="form-control" name="ExpenseDescription" /></td>
+                            <td><input type="number" class="form-control" name="ExpenseAmount" /></td>
+                            <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                        </tr>`;
+                $('#otherExpensesTable tbody').append(newRow);
+                calculateTotalExpenses(); // Recalculate total when new row is added
+            });
+
+            $('#addIncomeRow').click(function () {
+                var newRow = `<tr>
+                            <td><input type="text" class="form-control" name="IncomeDescription" /></td>
+                            <td><input type="number" class="form-control" name="IncomeAmount" /></td>
+                            <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                        </tr>`;
+                $('#otherIncomesTable tbody').append(newRow);
+            });
+
+            $(document).on('click', '.removeRow', function () {
+                $(this).closest('tr').remove();
+                calculateTotalExpenses(); // Recalculate total when a row is removed
+            });
+
+            $('form').submit(function () {
+                var expenses = [];
+                $('#otherExpensesTable tbody tr').each(function () {
+                    var description = $(this).find('input[name="ExpenseDescription"]').val();
+                    var amount = $(this).find('input[name="ExpenseAmount"]').val();
+                    if (description && amount) {
+                        expenses.push({ Description: description, Amount: amount });
+                    }
+                });
+
+                var incomes = [];
+                $('#otherIncomesTable tbody tr').each(function () {
+                    var description = $(this).find('input[name="IncomeDescription"]').val();
+                    var amount = $(this).find('input[name="IncomeAmount"]').val();
+                    if (description && amount) {
+                        incomes.push({ Description: description, Amount: amount });
+                    }
+                });
+
+                $('#ExpensesJson').val(JSON.stringify(expenses));
+                $('#IncomesJson').val(JSON.stringify(incomes));
+            });
+        });
+    </script>
+} *@
+
+
+
+
+
+
+
+
+
+
+
+@* @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function calculateTotalExpenses() {
+            // Get values of each individual total
+            let totalHandling = parseFloat(document.getElementById('TotalHandlingSystemcost').value) || 0;
+            let totalRebate = parseFloat(document.getElementById('TotalRebateSystemcost').value) || 0;
+            let totalTrucking = parseFloat(document.getElementById('TruckingCost').value) || 0;
+            let totalExportColombo = parseFloat(document.getElementById('TotalExportCostColombo').value) || 0;
+
+            // Sum all totals
+            let grandTotal = totalHandling + totalRebate + totalTrucking + totalExportColombo;
+
+            // Update the Total Expenses field
+            document.getElementById('TotalExpenses').value = grandTotal.toFixed(2);
+        }
+
+        // Update the Total Expenses whenever any individual total changes
+        function attachEventListeners() {
+            document.querySelectorAll('.Handling-cost-input, .Rebate-cost-input, .Trucking-cost-input, .Exp-cost-colombo-input').forEach(function (input) {
+                input.addEventListener('input', function () {
+                    calculateTotalHandlingSystemCost();
+                    calculateTotalRebateSystemCost();
+                    calculateTruckingCost();
+                    calculateTotalExportCostColombo();
+                    calculateTotalExpenses();
+                });
+            });
+
+            // Also calculate total on page load to handle pre-filled values
+            window.onload = function () {
+                calculateTotalHandlingSystemCost();
+                calculateTotalRebateSystemCost();
+                calculateTruckingCost();
+                calculateTotalExportCostColombo();
+                calculateTotalExpenses();
+            };
+        }
+
+        attachEventListeners();
+    </script>
+
+
+    <script>
+        function calculateTruckingCost() {
+            let total = 0;
+            document.querySelectorAll('.Trucking-cost-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TruckingCost').value = total.toFixed(2);
+        }
+
+        document.querySelectorAll('.Trucking-cost-input').forEach(function (input) {
+            input.addEventListener('input', calculateTruckingCost);
+        });
+
+        // Call calculateTotalRebateSystemCost on page load to handle any pre-filled values
+        window.onload = calculateTruckingCost;
+    </script>
+
+    <script>
+        function calculateTotalRebateSystemCost() {
+            let total = 0;
+            document.querySelectorAll('.Rebate-cost-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TotalRebateSystemcost').value = total.toFixed(2);
+        }
+
+        document.querySelectorAll('.Rebate-cost-input').forEach(function (input) {
+            input.addEventListener('input', calculateTotalRebateSystemCost);
+        });
+
+        // Call calculateTotalRebateSystemCost on page load to handle any pre-filled values
+        window.onload = calculateTotalRebateSystemCost;
+    </script>
+
+    <script>
+        function calculateTotalHandlingSystemCost() {
+            let total = 0;
+            document.querySelectorAll('.Handling-cost-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TotalHandlingSystemcost').value = total.toFixed(2);
+        }
+
+        document.querySelectorAll('.Handling-cost-input').forEach(function (input) {
+            input.addEventListener('input', calculateTotalHandlingSystemCost);
+        });
+
+        // Call calculateTotalHandlingSystemCost on page load to handle any pre-filled values
+        window.onload = calculateTotalHandlingSystemCost;
+    </script>
+
+    <script>
+        function calculateTotalExportCostColombo() {
+            let total = 0;
+            document.querySelectorAll('.Exp-cost-colombo-input').forEach(function (input) {
+                let value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            document.getElementById('TotalExportCostColombo').value = total.toFixed(2);
+        }
+
+        document.querySelectorAll('.Exp-cost-colombo-input').forEach(function (input) {
+            input.addEventListener('input', calculateTotalExportCostColombo);
+        });
+
+        // Call calculateTotalExportCostColombo on page load to handle any pre-filled values
+        window.onload = calculateTotalExportCostColombo;
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#addExpenseRow').click(function () {
+                var newRow = `<tr>
+                    <td><input type="text" class="form-control" name="ExpenseDescription" /></td>
+                    <td><input type="number" class="form-control" name="ExpenseAmount" /></td>
+                    <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                </tr>`;
+                $('#otherExpensesTable tbody').append(newRow);
+            });
+
+            $('#addIncomeRow').click(function () {
+                var newRow = `<tr>
+                    <td><input type="text" class="form-control" name="IncomeDescription" /></td>
+                    <td><input type="number" class="form-control" name="IncomeAmount" /></td>
+                    <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                </tr>`;
+                $('#otherIncomesTable tbody').append(newRow);
+            });
+
+            $(document).on('click', '.removeRow', function () {
+                $(this).closest('tr').remove();
+            });
+
+            $('form').submit(function () {
+                var expenses = [];
+                $('#otherExpensesTable tbody tr').each(function () {
+                    var description = $(this).find('input[name="ExpenseDescription"]').val();
+                    var amount = $(this).find('input[name="ExpenseAmount"]').val();
+                    if (description && amount) {
+                        expenses.push({ Description: description, Amount: amount });
+                    }
+                });
+
+                var incomes = [];
+                $('#otherIncomesTable tbody tr').each(function () {
+                    var description = $(this).find('input[name="IncomeDescription"]').val();
+                    var amount = $(this).find('input[name="IncomeAmount"]').val();
+                    if (description && amount) {
+                        incomes.push({ Description: description, Amount: amount });
+                    }
+                });
+
+                $('#ExpensesJson').val(JSON.stringify(expenses));
+                $('#IncomesJson').val(JSON.stringify(incomes));
+            });
+        });
+
+
+    </script>
+} *@
