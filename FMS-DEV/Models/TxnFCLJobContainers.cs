@@ -33,6 +33,9 @@ namespace FMS_DEV.Models
 
         [Column(TypeName = "datetime")]
         public DateTime? LastUpdatedDateTime { get; set; }
+
+        // Navigation property back to TxnFCLJob
+        public virtual TxnFCLJob TxnFCLJob { get; set; }
     }
 }
 

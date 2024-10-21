@@ -1,0 +1,326 @@
+﻿@model FMS_DEV.ViewModel.TxnFCLBLViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Details</h2>
+                    <div class="card">
+                        <div class="card-header bg-info">
+                            <h4 class="m-b-0 text-white">FCL JOB</h4>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="Details">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <!--Job date -->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <dl class="row">
+                                            <dt class="col-sm-4">
+                                                <strong>Job Number</strong>
+                                            </dt>
+                                            <dd class="col-sm-4">
+                                                <span id="PassJobNumber" class="JobNumber" style="color: darkmagenta">
+                                                    <strong>
+                                                        @Html.DisplayFor(m => Model.FCLBLsMulti.FirstOrDefault().JobNo)
+                                                    </strong>
+                                                </span>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                 <div class="col-md-3">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <label for="Customer">B/L Number</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().BLNo" class="form-control" readonly/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h3><b>Cargo Details</b></h3>
+                                <br />
+
+                                <!-- Cargo Details Section -->
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="GrossWeightKg">Gross weight Kg</label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().GrossWeight" type="text" id="GrossWeight" name="GrossWeight" class="form-control" readonly/>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="CBM">CBM</label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().CBM" type="text" id="CBM" name="CBM" class="form-control" readonly/>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="NoOfPackages">No of Packages</label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().NoofPackages" type="text" id="NoofPackages" name="NoofPackages" class="form-control" readonly />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="PackageType">Package Type</label>
+                                            @*                                 <select id="PackageType" name="PackageType" class="form-control">
+                                            </select> *@
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().PackageType" type="text" id="PackageType" name="PackageType" class="form-control" readonly/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-3">
+                                        <div class="col-md-2">
+                                            <label for="NetWeightKg">Net Weight Kg</label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().NetWeight" type="text" id="NetWeight" name="NetWeight" class="form-control" readonly />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="Mod">Commodity</label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().Commodity" type="text" id="Commodity" name="Commodity" class="form-control" readonly />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="HSCode">HS Code</label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().HSCode" type="text" id="HSCode" name="HSCode" class="form-control" readonly />
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <br />
+                                <div class="line" style="border-top: 1px solid #999999;"></div>
+                                <br />
+
+                                <!-- Shipper, Consignee, Notify Party Section -->
+                                <div class="row mt-4">
+                                    <!-- Shipper Section -->
+                                    <div class="col-md-4">
+                                        <h4><b>Shipper</b></h4>
+                                        <div class="form-group">
+                                            <label for="ShippreName"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ShippreName" type="text" id="ShippreName" name="ShippreName" class="form-control" placeholder="Enter Shipper Name" readonly/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ShippreAddress1"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ShippreAddress1" type="text" id="ShippreAddress1" name="ShippreAddress1" class="form-control" placeholder="Address 1" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ShippreAddress2"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ShippreAddress2" type="text" id="ShippreAddress2" name="ShippreAddress2" class="form-control" placeholder="Address 2" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ShippreAddress3"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ShippreAddress3" type="text" id="ShippreAddress3" name="ShippreAddress3" class="form-control" placeholder="Address 3" readonly/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ShipperCity"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ShipperCity" type="text" id="ShipperCity" name="ShipperCity" class="form-control" placeholder="City" readonly/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ShipperCountry"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ShipperCountry" type="text" id="ShipperCountry" name="ShipperCountry" class="form-control" placeholder="Country" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ShipperTel"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ShipperTel" type="text" id="ShipperTel" name="ShipperTel" class="form-control" placeholder="Tel" readonly/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ShipperEmail"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ShipperEmail" type="email" id="ShipperEmail" name="ShipperEmail" class="form-control" placeholder="Email" readonly/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Consignee Section -->
+                                    <div class="col-md-4">
+                                        <h4><b>Consignee</b></h4>
+                                        <div class="form-group">
+                                            <label for="ConsigneeName"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeName" type="text" id="ConsigneeName" name="ConsigneeName" class="form-control" placeholder="Enter Consignee Name" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ConsigneeAddress1"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeAddress1" type="text" id="ConsigneeAddress1" name="ConsigneeAddress1" class="form-control" placeholder="Address 1" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ConsigneeAddress2"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeAddress2" type="text" id="ConsigneeAddress2" name="ConsigneeAddress2" class="form-control" placeholder="Address 2" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ConsigneeAddress3"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeAddress3" type="text" id="ConsigneeAddress3" name="ConsigneeAddress3" class="form-control" placeholder="Address 3" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ConsigneeCity"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeCity" type="text" id="ConsigneeCity" name="ConsigneeCity" class="form-control" placeholder="City" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ConsigneeCountry"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeCountry" type="text" id="ConsigneeCountry" name="ConsigneeCountry" class="form-control" placeholder="Country" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ConsigneeTel"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeTel" type="text" id="ConsigneeTel" name="ConsigneeTel" class="form-control" placeholder="Tel" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ConsigneeEmail"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeEmail" type="email" id="ConsigneeEmail" name="ConsigneeEmail" class="form-control" placeholder="Email" readonly />
+                                        </div>
+                                    </div>
+
+                                    <!-- Notify Party Section -->
+                                    <div class="col-md-4">
+                                        <h4><b>Notify Party</b></h4>
+                                        <div class="form-group">
+                                            <label for="NotifyPartyName"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyName" type="text" id="NotifyPartyName" name="NotifyPartyName" class="form-control" placeholder="Enter Notify Party Name" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="NotifyPartyAddress1"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyAddress1" type="text" id="NotifyPartyAddress1" name="NotifyPartyAddress1" class="form-control" placeholder="Address 1" readonly/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="NotifyPartyAddress2"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyAddress2" type="text" id="NotifyPartyAddress2" name="NotifyPartyAddress2" class="form-control" placeholder="Address 2" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="NotifyPartyAddress3"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyAddress3" type="text" id="NotifyPartyAddress3" name="NotifyPartyAddress3" class="form-control" placeholder="Address 3" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="NotifyPartyCity"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyCity" type="text" id="NotifyPartyCity" name="NotifyPartyCity" class="form-control" placeholder="City" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="NotifyPartyCountry"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyCountry" type="text" id="NotifyPartyCountry" name="NotifyPartyCountry" class="form-control" placeholder="Country" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="NotifyPartyTel"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyTel" type="text" id="NotifyPartyTel" name="NotifyPartyTel" class="form-control" placeholder="Tel" readonly />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="NotifyPartyEmail"></label>
+                                            <input asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyEmail" type="email" id="NotifyPartyEmail" name="NotifyPartyEmail" class="form-control" placeholder="Email" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--Marks&No and Description-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <h6 class="box-title"><b>Marks & Nos</b></h6>
+                                            <div class="col-md-12">
+                                                <textarea asp-for="FCLBLsMulti.FirstOrDefault().MarksAndNos" class="form-control" name="MarksAndNos" type="text" placeholder="Type Marks & Nos" rows="8"> </textarea>
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().MarksAndNos" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <h6 class="box-title"><b>Cargo Description</b></h6>
+                                            <div class="col-md-12">
+                                                <textarea asp-for="FCLBLsMulti.FirstOrDefault().Description" class="form-control" name="Description" type="text" placeholder="Description of BL" rows="8"> </textarea>
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--TickBox and RadioButtons-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="control-label col-md-2" for="localCharges">Local Charges</label>
+                                            <div class="col-md-6">
+                                                <input type="checkbox" id="chkLocalCharges" name="LocalCharges" asp-for="FCLBLsMulti.FirstOrDefault().LocalCharges" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().LocalCharges" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <label class="control-label text-left col-md-2">Freight :</label>
+                                            <div class="col-md-10">
+                                                <div class="form-group row">
+                                                    <input type="radio" id="Prepaid" name="Freight" value="Prepaid" checked />
+                                                    <label for="Prepaid">Prepaid</label>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <input type="radio" id="Collect" name="Freight" value="Collect" />
+                                                    <label for="Collect">Collect</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <br />
+                                <!--dynamic table start-->
+
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <h4><b>Containers</b></h4>
+                                            <table id="tblContainer" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Containers</th>
+                                                        <th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.FCLJobContainersMulti)
+                                                    {
+                                                        <tr id="tablerow0">
+                                                            <td> <input type="text" id="ContainerNo" asp-for="FCLJobContainersMulti.FirstOrDefault().ContainerNo" name="ContainerNo" value="@item.ContainerNo" class="form-control" disabled></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--dynamic table end-->
+
+                                <br />
+                                <br />
+                                <br />
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+
+
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Orginal details End -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- Container fluid  END -->
+    <!-- ============================================================== -->
+</div>

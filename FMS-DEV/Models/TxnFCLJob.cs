@@ -43,12 +43,16 @@ namespace FMS_DEV.Models
         public string? Voyage { get; set; }
 
         [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+
         public DateTime? ETD { get; set; }
 
         [StringLength(20)]
         public string? POD { get; set; }
 
         [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+
         public DateTime? ETA { get; set; }
 
         [StringLength(50)]
@@ -90,6 +94,9 @@ namespace FMS_DEV.Models
         [ForeignKey("ShippingLineID")]
         [InverseProperty("TxnFCLJob")]
         public virtual RefShippingLine? ShippingLineFCLJobExportNavigation { get; set; }
+
+        // Navigation property for related FCLJobContainers
+        public virtual ICollection<TxnFCLJobContainers> FCLJobContainers { get; set; }
 
 
     }

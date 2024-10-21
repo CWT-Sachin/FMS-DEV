@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FMS_DEV.Models
 {
+    [PrimaryKey("JobNo", "BLNo")]
     [Table("Txn_FCLBL")]
     public partial class TxnFCLBL
     {
-        [Key, Column(Order = 0)]
         [StringLength(20)]
         public string JobNo { get; set; } = null!;
 
@@ -74,6 +75,10 @@ namespace FMS_DEV.Models
         [StringLength(250)]
         public string? ShipperEmail { get; set; }
 
+        [Column("ConsigneeID")]
+        [StringLength(20)]
+        public string? ConsigneeID { get; set; }
+
         [StringLength(300)]
         public string? ConsigneeName { get; set; }
 
@@ -97,6 +102,10 @@ namespace FMS_DEV.Models
 
         [StringLength(250)]
         public string? ConsigneeEmail { get; set; }
+
+        [Column("NotifyPartyID")]
+        [StringLength(20)]
+        public string? NotifyPartyID { get; set; }
 
         [StringLength(300)]
         public string? NotifyPartyName { get; set; } // Notify Party Name
@@ -130,9 +139,7 @@ namespace FMS_DEV.Models
         [StringLength(20)]
         public string? Forwader { get; set; } // Forwarder "Local" (FK Ref_Customer)
 
-        public bool? LocalCharges { get; set; } // BL Printing Option "Local Charges"
-
-
+        public bool LocalCharges { get; set; } // BL Printing Option "Local Charges"
 
         public string? MarksAndNos { get; set; } // Marks and Nos
 

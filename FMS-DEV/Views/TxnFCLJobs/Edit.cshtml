@@ -1,0 +1,720 @@
+﻿@model FMS_DEV.ViewModel.TxnFCLJobsViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="card">
+                <!--Heading-->
+                <div class="card-header bg-info">
+                    <h4 class="m-b-0 text-white">Sea-Export-FCL-Job</h4>
+
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="Edit" id="FCLJobForm" asp-controller="TxnFCLJobs" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" name="JobNo" asp-for="FCLJobs.FirstOrDefault().JobNo"   />
+                        <input type="hidden" name="SerialNo" asp-for="FCLJobContainers.FirstOrDefault().SerialNo" />
+                        <input type="hidden" name="ContainerNo" asp-for="FCLJobContainers.FirstOrDefault().ContainerNo" />
+                        <input type="hidden" name="Size" asp-for="FCLJobContainers.FirstOrDefault().Size" />
+                     
+                        <!--Job date -->
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-3">Job Date</label>
+                                    <div class="col-md-9">
+
+                                        <input asp-for="FCLJobs.FirstOrDefault().Date" type="date" class="form-control" />
+                                        <span asp-validation-for="FCLJobs.FirstOrDefault().Date" class="text-danger"></span>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Type Section Selection Start -->
+                        <div class="row">
+                            <label class="control-label text-left col-md-1">Type :</label>
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="radio" id="FCL" name="JobType" value="FCL" checked />
+                                                <label for="FCL">FCL</label>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <input type="radio" id="SOC" name="JobType" value="SOC" />
+                                                <label for="SOC">SOC</label>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <input type="radio" id="CoLoad" name="JobType" value="Co-Load" />
+                                                <label for="CoLoad">Co-Load</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Type Section Selection End -->
+                        <!-- Shipper,exchangerate,hadleby,sales person Start  -->
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="selectedShippingLine" id="Label">Shipper</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <select asp-for="FCLJobs.FirstOrDefault().ShipperID" id="selectedShippingLine" class="form-control" asp-items="ViewBag.Customers"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-3">Exchange Rate </label>
+                                    <div class="col-md-5">
+
+
+                                        <input asp-for="FCLJobs.FirstOrDefault().ExchangeRate" class="form-control text-right Exp-cost-colombo-input" />
+                                        <span asp-validation-for="FCLJobs.FirstOrDefault().ExchangeRate" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="HandleBy">Handle By</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <select asp-for="FCLJobs.FirstOrDefault().HandleBy" id="HandleBy" class="form-control" asp-items="ViewBag.HandleBy"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="SalesPersonID">Sales Person</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <select asp-for="FCLJobs.FirstOrDefault().SalesPersonID" id="SalesPersonID" class="form-control" asp-items="ViewBag.SalesPerson"></select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <!-- Shipper,exchangerate,hadleby,sales person End  -->
+
+                        <div class="line" style="border-top: 1px solid #999999;"></div>
+                        <br />
+
+                        <!--Shipping Line-->
+                        <div class="row">
+                            <div class="col-md-6"><h5 class="box-title"><b>Shipping Line</b></h5></div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="ShippingLineID" id="Label">Shipping Line</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <select asp-for="FCLJobs.FirstOrDefault().ShippingLineID" id="ShippingLineID" class="form-control" asp-items="ViewBag.ShippingLines"></select> <!-- Updated `id` attribute -->
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-3">Master B/L </label>
+                                    <div class="col-md-5">
+
+
+                                        <input asp-for="FCLJobs.FirstOrDefault().MasterBL" class="form-control text-right Exp-cost-colombo-input" />
+                                        <span asp-validation-for="FCLJobs.FirstOrDefault().MasterBL" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--vessel Details-->
+                        <div class="row">
+                            <div class="col-md-6"><h5 class="box-title"><b>Vessel Details</b></h5></div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="VesselId" id="Label">Vessel</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <select asp-for="FCLJobs.FirstOrDefault().VesselId" id="VesselId" class="form-control" asp-items="ViewBag.IntendedVessel"></select> <!-- Updated `id` attribute -->
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="Agent" id="Label">Voyage</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="FCLJobs.FirstOrDefault().Voyage" class="form-control" />
+                                        <span asp-validation-for="FCLJobs.FirstOrDefault().Voyage" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-3">ETD </label>
+                                    <div class="col-md-5">
+
+                                        <input asp-for="FCLJobs.FirstOrDefault().ETD" type="date" class="form-control" />
+                                        <span asp-validation-for="FCLJobs.FirstOrDefault().ETD" class="text-danger"></span>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="POD" id="Label">POD</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <select asp-for="FCLJobs.FirstOrDefault().POD" id="POD" class="form-control" asp-items="ViewBag.POD"></select> <!-- Updated `id` attribute -->
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-2">ETA </label>
+                                    <div class="col-md-6">
+
+                                        <input asp-for="FCLJobs.FirstOrDefault().ETA" type="date" class="form-control" />
+                                        <span asp-validation-for="FCLJobs.FirstOrDefault().ETA" class="text-danger"></span>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3"></div>
+
+                        </div>
+
+                        <br />
+
+                        <!--BL Type Start-->
+                        <div class="row">
+                            <label class="control-label text-left col-md-1">B/L Type :</label>
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <!-- Corrected 'name' attribute to 'BLType' -->
+                                                <input type="radio" id="DirectBL" name="BLType" value="DirectBL" checked />
+                                                <label for="DirectBL">Direct B/L</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <!-- Corrected 'name' attribute to 'BLType' -->
+                                                <input type="radio" id="HBL" name="BLType" value="HBL" />
+                                                <label for="HBL">HBL</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <!--BL Type End-->
+                        <!--Agent Start-->
+                        <div class="row">
+
+                            <div class="col-md-6" id="AgentSection">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="AgentId" id="Label">Agent</label> <!-- Updated `for` attribute -->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- Corrected `asp-for` and removed conflicting `name` attribute -->
+                                        <select asp-for="FCLJobs.FirstOrDefault().AgentId" id="AgentId" class="form-control" asp-items="ViewBag.AgentIDNomination"></select> <!-- Updated `id` attribute -->
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6"></div>
+
+                        </div>
+
+                        <br />
+                        <div class="line" style="border-top: 1px solid #999999;"></div>
+                        <br />
+
+                        <!--table and remarks-->
+                        <div class="row">
+
+                            <div class="col-md-5">
+                                <div class="form-group row">
+                                    <h4>Container Details</h4>
+                            @*         @{
+                                        var containersList = Model.FCLJobContainers.ToList(); // Convert to List
+                                    } *@
+
+
+
+                                    <table class="table table-hover border table-striped" id="tblContainer">
+                                        <thead>
+                                            <tr>
+                                                <th>Container No</th>
+                                                <th>Size</th>
+                                                <th>Seal No</th>
+                                                <th></th> <!-- Remove button -->
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ContainerDetailsBody">
+                                            <!-- Template row for new containers (hidden by default) -->
+                                            <tr id="tablerow0" hidden>
+                                                <td style="width:30%;">
+                                                    <input type="text" id="ContainerNo0" name="ContainerNo[0]" value="" class="form-control">
+                                                </td>
+                                                <td style="width:20%;">
+                                                    <select id="Size0" name="Size[0]" class="form-control" asp-items="ViewBag.ContainerSize"></select>
+                                                </td>
+                                                <td style="width:30%;">
+                                                    <input type="text" id="Seal0" name="Seal[0]" value="" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="button" id="btnRemove" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" />
+                                                </td>
+                                            </tr>
+
+                                            <!-- Dynamically generated rows from FCLJobContainers using foreach loop -->
+                                            @{
+                                                var i = 0;
+                                                foreach (var item in Model.FCLJobContainers)
+                                                {
+                                                    i++;
+                                                    <tr class="tablerow@i">
+                                                        <td style="width:30%;">
+                                                            <input type="text" id="ContainerNo@i" name="ContainerNo[@i]" value="@item.ContainerNo" class="form-control">
+                                                        </td>
+                                                        <td style="width:20%;">
+                                                            <select id="Size@i" name="Size[@i]" class="form-control" asp-items="ViewBag.ContainerSize"></select>
+                                                        </td>
+                                                        <td style="width:30%;">
+                                                            <input type="text" id="Seal@i" name="Seal[@i]" value="@item.Seal" class="form-control">
+                                                        </td>
+                                                        <td>
+                                                            <input type="button" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(@i)" />
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+
+
+
+
+
+
+@* 
+                                    <table class="table table-hover border table-striped" id="tblContainer">
+                                        <thead>
+                                            <tr>
+                                                <th>Container No</th>
+                                                <th>Size</th>
+                                                <th>Seal No</th>
+                                                <th></th> <!-- Remove button -->
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ContainerDetailsBody">
+                                            <!-- Template row for new containers (hidden by default) -->
+                                            <tr id="tablerow0" hidden>
+                                                <td style="width:30%;">
+                                                    <input type="text" id="ContainerNo" name="ContainerNo" value="" class="form-control">
+                                                </td>
+                                                <td style="width:20%;">
+                                                    <select id="Size" name="Size" class="form-control" asp-items="ViewBag.ContainerSize"></select>
+                                                </td>
+                                                <td style="width:30%;">
+                                                    <input type="text" id="Seal" name="Seal" value="" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="button" id="btnRemove" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" />
+                                                </td>
+                                            </tr>
+
+                                            <!-- Dynamically generated rows from FCLJobContainers using foreach loop -->
+                  
+                                            @{
+                                                var i = 0;
+                                                foreach (var item in Model.FCLJobContainers)
+                                                {
+                                                    i++;
+                                                    <tr class="tablerow@i">
+                                                        <td style="width:30%;">
+                                                            <input type="text" id="ContainerNo" asp-for="@item.ContainerNo" name="ContainerNo" value="@item.ContainerNo" class="form-control">
+                                                        </td>
+                                                        <td style="width:20%;">
+                                                            <select id="Size" asp-for="@item.Size" name="Size" class="form-control" asp-items="ViewBag.ContainerSize"></select>
+                                                        </td>
+                                                        <td style="width:30%;">
+                                                            <input type="text" id="Seal" asp-for="@item.Seal" name="Seal" value="@item.Seal" class="form-control">
+                                                        </td>
+                                                        <td>
+                                                            <input type="button" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(@i)" />
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+ *@
+
+
+
+
+
+
+
+                    @*                 <table id="tblContainer" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Container No</th>
+                                                <th>Size</th>
+                                                <th>Seal No</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ContainerDetailsBody">
+                                            <!-- Initial row template for new expenses -->
+                                            <tr id="tablerow0" hidden>
+                                                <td><input type="text" id="ContainerNo" name="FCLJobContainers[0].ContainerNo" value="" class="form-control"></td>
+                                                <td>
+                                                    <select id="Size" name="FCLJobContainers[0].Size" class="form-control" asp-items="ViewBag.ContainerSize"></select>
+   
+
+                                                </td>
+                                                <td><input type="text" id="Seal" name="FCLJobContainers[0].Seal" value="" class="form-control"></td>
+                                                <td><input type="button" id="btnRemove" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" /></td>
+                                            </tr>
+
+                                            @for (int i = 0; i < containersList.Count; i++)
+                                            {
+                                                <tr id="tablerow@i">
+                                                    <td><input type="text" id="ContainerNo" name="FCLJobContainers[@i].ContainerNo" value="@containersList[i].ContainerNo" class="form-control"></td>
+                                                    <td>
+                                                        <select id="Size" name="FCLJobContainers[@i].Size" class="form-control" asp-items="ViewBag.ContainerSize" value="@containersList[i].Size"></select>
+                                               
+
+
+
+                                                    </td>
+                                                    <td><input type="text" id="Seal" name="FCLJobContainers[@i].Seal" value="@containersList[i].Seal" class="form-control"></td>
+                                                    <td>
+                                                        <input type="button" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table> *@
+
+
+
+                                </div>
+                                <!--Add button Charge Items-->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+
+                                        <input id="add" type="button" value="+ Container" onclick="AddRow(this)"
+                                               class="btn btn-success" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1"></div>
+
+                            <div class="col-md-5">
+
+                                <div class="form-group row">
+                                    <h6 class="box-title">Remarks</h6>
+                                    <div class="col-md-12">
+                                        <textarea asp-for="FCLJobs.FirstOrDefault().Remarks" class="form-control" name="Remarks" type="text" placeholder="Type here your Remarks" rows="5"> </textarea>
+                                        <span asp-validation-for="FCLJobs.FirstOrDefault().Remarks" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <br />
+                        <!-- Save Button -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="hidden" name="dtlItemsList" id="dtlItemsList" />
+                                <div class="form-group">
+                                  @*   <input type="submit" value="Edit" class="btn btn-primary" onclick="submitForm(this)" /> *@
+                                    <input type="submit" value="Edit" class="btn btn-primary" id="submitBtn" />
+
+                               
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    function AddRow(e) {
+        var newRow = $("#tblContainer tbody tr").first().clone();
+        newRow.removeAttr("hidden");
+        var NoOfRows = $("#tblContainer tbody tr").length;
+        var counter = NoOfRows + 1;
+
+        var removeBtn = newRow.find('input[name="RemoveBttn"]');
+        var RemoveBtnVal = 'RemoveRow(' + counter + ')';
+        $(removeBtn).attr('onclick', RemoveBtnVal);
+
+        var RowID = "tablerow" + counter;
+        newRow.attr("id", RowID);
+        $("tbody").append(newRow);
+        return false;
+    }
+
+    function RemoveRow(index) {
+        $('#tablerow' + index).remove();
+        calculateTotalAmount();
+        return false;
+    }
+
+    function buildItemsJson(trRow, index) {
+        const containerNo = trRow.find('input[name="ContainerNo"]').val();
+        // Assuming you have other fields to include
+        return {
+            ContainerNo: containerNo,
+            RowIndex: index
+        };
+    }
+
+    document.getElementById('submitBtn').addEventListener('click', submitForm);
+
+    function submitForm(e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        alert("Test submit");
+
+        const dtlItemsArray = [];
+        const tableRows = $("#tblContainer tbody tr:visible");
+        var chkContainerNo = "";
+
+        console.log("Number of visible rows detected:", tableRows.length);
+
+        tableRows.each(function (index) {
+            const trRow = $(this);
+            const containerInput = trRow.find('input[name="ContainerNo"]');
+
+            if (containerInput.length === 0) {
+                console.log("Row " + index + " does not have a ContainerNo input.");
+                return; // Skip this row if no ContainerNo input is found
+            }
+
+            chkContainerNo = containerInput.val(); // Get ContainerNo field value
+
+            alert("Test loop, ContainerNo: " + chkContainerNo);
+
+            if (chkContainerNo === "" || chkContainerNo === undefined) {
+                console.log("Skipping row " + index + ", ContainerNo is empty or undefined.");
+            } else {
+                const dtlItemJson = buildItemsJson(trRow, index); // Build JSON object
+                dtlItemsArray.push(dtlItemJson); // Add it to the array
+            }
+        });
+
+        console.log("Final list of items:", dtlItemsArray);
+        $("#dtlItemsList").val(JSON.stringify(dtlItemsArray));
+        alert("Test list after");
+
+        e.target.closest('form').submit(); // Now, submit the form after processing the data
+    }
+</script>
+
+
+
+
+<!-- Add remove rows -->
+<script type="text/javascript">
+    function AddRow(e) {
+         //alert(" record(s) Started");
+        //clones the first row of the table
+        var newRow = $("#tblContainer tbody tr").first().clone();
+        //removes the 'hidden' attribute so it will be visible when added  to the table
+        newRow.removeAttr("hidden");
+
+        // Get No of rows
+        var NoOfRows = $("#tblContainer tbody tr").length
+        var counter = NoOfRows + 1;
+
+        // Update remove Button
+        var removeBtn = newRow.find('input[name="RemoveBttn"]');
+        var RemoveBtnVal = 'RemoveRow(' + counter + ')';
+        $(removeBtn).attr('onclick', RemoveBtnVal);
+
+        //Update Row id (for remove)
+        var RowID = "tablerow" + counter;
+        newRow.attr("id", RowID);
+        //add/append new row to the table
+
+        $("tbody").append(newRow);
+        return false;
+
+    }
+
+    function RemoveRow(index) {
+        // alert(" record remove: " + index);
+        $('#tablerow' + index).remove();
+        calculateTotalAmount();
+        return false;
+    }
+</script>
+
+
+
+
+@* <script>
+
+    // Add the event listener for the submit button
+    document.getElementById('submitBtn').addEventListener('click', submitForm);
+
+    function submitForm(e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        alert("Test submit");
+
+        const dtlItemsArray = [];
+        const tableRows = $("#tblContainer tbody tr:visible"); // Select only visible rows
+        var chkContainerNo = "";
+
+        // Check how many rows are found
+        console.log("Number of visible rows detected:", tableRows.length);
+
+        tableRows.each(function (index) {
+            const trRow = $(this); // Get the current row
+            const containerInput = trRow.find('input[name="ContainerNo"]');
+
+            // Check if the ContainerNo input exists and has a value
+            if (containerInput.length === 0) {
+                console.log("Row " + index + " does not have a ContainerNo input.");
+                return; // Skip this row if no ContainerNo input is found
+            }
+
+            chkContainerNo = containerInput.val(); // Get ContainerNo field value
+
+            alert("Test loop, ContainerNo: " + chkContainerNo); // Debugging to see if the loop is working
+
+            if (chkContainerNo === "" || chkContainerNo === undefined) {
+                console.log("Skipping row " + index + ", ContainerNo is empty or undefined.");
+            } else {
+                const dtlItemJson = buildItemsJson(trRow, index); // Build JSON object
+                dtlItemsArray.push(dtlItemJson); // Add it to the array
+            }
+        });
+
+        console.log("Final list of items:", dtlItemsArray); // Check final list of items before submitting
+
+        $("#dtlItemsList").val(JSON.stringify(dtlItemsArray)); // Store the JSON data in the hidden input field
+        alert("Test list after");
+
+        e.target.closest('form').submit(); // Now, submit the form after processing the data
+    }
+
+
+
+
+</script> *@
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Function to check the selected radio button and toggle the visibility of the AgentSection
+        function toggleAgentSection() {
+            //alert("Test 1");
+            var hblRadio = document.getElementById('HBL');
+            var agentSection = document.getElementById('AgentSection');
+
+            // Show AgentSection if HBL is selected, otherwise hide it
+            if (hblRadio.checked) {
+                agentSection.style.display = 'block';
+            } else {
+                agentSection.style.display = 'none';
+            }
+        }
+
+        // Initial call to set the correct visibility on page load
+        toggleAgentSection();
+
+        // Add event listeners to radio buttons to detect changes
+        document.querySelectorAll('input[name="BLType"]').forEach(function (radio) {
+            radio.addEventListener('change', toggleAgentSection);
+        });
+    });
+</script>
