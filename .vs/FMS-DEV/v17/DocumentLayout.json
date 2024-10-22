@@ -3,36 +3,24 @@
   "WorkspaceRootPath": "D:\\FMS DEV\\FMS-DEV\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\controllers\\txnfclblscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\controllers\\txnfclblscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\views\\txnfclbls\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\views\\txnfclbls\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\views\\txnfclbls\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\views\\txnfclbls\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\views\\txnfclbls\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\views\\txnfclbls\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\controllers\\txnfcljobscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\controllers\\txnfcljobscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\views\\txnfcljobs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\views\\txnfcljobs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\views\\txnfcljobs\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\views\\txnfcljobs\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\views\\txnfcljobs\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\views\\txnfcljobs\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\models\\txnfcljobcontainers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\models\\txnfcljobcontainers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\controllers\\txninvoicefclhds.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\controllers\\txninvoicefclhds.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\viewmodel\\txnfcljobsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\viewmodel\\txnfcljobsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\models\\txnfcljob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\models\\txnfcljob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -41,105 +29,69 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 274,
-          "SelectedChildIndex": 6,
+          "DockedHeight": 126,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "TxnInvoiceFCLHds.cs",
-              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Controllers\\TxnInvoiceFCLHds.cs",
-              "RelativeDocumentMoniker": "FMS-DEV\\Controllers\\TxnInvoiceFCLHds.cs",
-              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Controllers\\TxnInvoiceFCLHds.cs",
-              "RelativeToolTip": "FMS-DEV\\Controllers\\TxnInvoiceFCLHds.cs",
-              "ViewState": "AgIAAAgBAAAAAAAAAAAwwPEAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-18T10:28:52.204Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "TxnFCLJobsViewModel.cs",
-              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\ViewModel\\TxnFCLJobsViewModel.cs",
-              "RelativeDocumentMoniker": "FMS-DEV\\ViewModel\\TxnFCLJobsViewModel.cs",
-              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\ViewModel\\TxnFCLJobsViewModel.cs",
-              "RelativeToolTip": "FMS-DEV\\ViewModel\\TxnFCLJobsViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-18T10:23:18.721Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml",
-              "RelativeDocumentMoniker": "FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml",
-              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml",
-              "RelativeToolTip": "FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml",
-              "ViewState": "AgIAAFgBAAAAAAAAAAAUwGkBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-18T10:08:47.476Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Index.cshtml",
-              "RelativeDocumentMoniker": "FMS-DEV\\Views\\TxnFCLJobs\\Index.cshtml",
-              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Index.cshtml",
-              "RelativeToolTip": "FMS-DEV\\Views\\TxnFCLJobs\\Index.cshtml",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAAAFcAAAB9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-18T09:59:29.334Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "TxnFCLJob.cs",
-              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Models\\TxnFCLJob.cs",
-              "RelativeDocumentMoniker": "FMS-DEV\\Models\\TxnFCLJob.cs",
-              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Models\\TxnFCLJob.cs",
-              "RelativeToolTip": "FMS-DEV\\Models\\TxnFCLJob.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAAAGIAAABWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-18T09:57:54.619Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "TxnFCLJobContainers.cs",
-              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Models\\TxnFCLJobContainers.cs",
-              "RelativeDocumentMoniker": "FMS-DEV\\Models\\TxnFCLJobContainers.cs",
-              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Models\\TxnFCLJobContainers.cs",
-              "RelativeToolTip": "FMS-DEV\\Models\\TxnFCLJobContainers.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAADwvyIAAAA5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-18T09:57:17.033Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "TxnFCLJobsController.cs",
               "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Controllers\\TxnFCLJobsController.cs",
               "RelativeDocumentMoniker": "FMS-DEV\\Controllers\\TxnFCLJobsController.cs",
               "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Controllers\\TxnFCLJobsController.cs",
               "RelativeToolTip": "FMS-DEV\\Controllers\\TxnFCLJobsController.cs",
-              "ViewState": "AgIAAJgCAAAAAAAAAAAuwJ4CAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAALoAAAAAAAAAAAAowKkAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-18T09:42:05.843Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-22T04:54:47.153Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLBLs\\Index.cshtml",
+              "RelativeDocumentMoniker": "FMS-DEV\\Views\\TxnFCLBLs\\Index.cshtml",
+              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLBLs\\Index.cshtml",
+              "RelativeToolTip": "FMS-DEV\\Views\\TxnFCLBLs\\Index.cshtml",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAiwGYAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-22T04:47:55.116Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLBLs\\Edit.cshtml",
+              "RelativeDocumentMoniker": "FMS-DEV\\Views\\TxnFCLBLs\\Edit.cshtml",
+              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLBLs\\Edit.cshtml",
+              "RelativeToolTip": "FMS-DEV\\Views\\TxnFCLBLs\\Edit.cshtml",
+              "ViewState": "AgIAAOYAAAAAAAAAAAAiwIYAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-22T04:27:57.047Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Create.cshtml",
-              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Create.cshtml",
-              "RelativeDocumentMoniker": "FMS-DEV\\Views\\TxnFCLJobs\\Create.cshtml",
-              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Create.cshtml",
-              "RelativeToolTip": "FMS-DEV\\Views\\TxnFCLJobs\\Create.cshtml",
-              "ViewState": "AgIAAEgBAAAAAAAAAAAmwFEBAAA+AAAAAAAAAA==",
+              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLBLs\\Create.cshtml",
+              "RelativeDocumentMoniker": "FMS-DEV\\Views\\TxnFCLBLs\\Create.cshtml",
+              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLBLs\\Create.cshtml",
+              "RelativeToolTip": "FMS-DEV\\Views\\TxnFCLBLs\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-18T09:40:17.382Z"
+              "WhenOpened": "2024-10-22T04:27:19.012Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TxnFCLBLsController.cs",
+              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Controllers\\TxnFCLBLsController.cs",
+              "RelativeDocumentMoniker": "FMS-DEV\\Controllers\\TxnFCLBLsController.cs",
+              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Controllers\\TxnFCLBLsController.cs",
+              "RelativeToolTip": "FMS-DEV\\Controllers\\TxnFCLBLsController.cs",
+              "ViewState": "AgIAAHkAAAAAAAAAAAAkwOwAAAB1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-22T04:25:49.668Z",
+              "EditorCaption": ""
             }
           ]
         },

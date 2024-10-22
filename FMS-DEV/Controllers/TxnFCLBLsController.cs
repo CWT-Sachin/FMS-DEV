@@ -96,6 +96,151 @@ namespace FMS_DEV.Controllers
 
 
 
+        public IActionResult Edit(string jobNo, string pBLnumber)
+        {
+            if (string.IsNullOrEmpty(jobNo))
+            {
+                return NotFound(); // Handle missing job number
+            }
+
+            // Find the BL record associated with the jobNo
+            var txnFCLBL = _context.TxnFCLBLs.FirstOrDefault(b => b.JobNo == jobNo);
+            if (txnFCLBL == null)
+            {
+                return NotFound(); // Handle job not found
+            }
+
+            var tables = new TxnFCLBLViewModel
+            {
+                FCLBLsMulti = _context.TxnFCLBLs.Where(p => p.JobNo == jobNo).ToList(),
+                FCLJobsMulti = _context.TxnFCLJobs.Where(t => t.JobNo == jobNo).ToList(),
+                FCLJobContainersMulti = _context.TxnFCLJobContainers.Where(c => c.JobNo == jobNo).ToList()
+            };
+
+            // Load necessary ViewData for dropdown lists
+            ViewData["Shipper"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.ShipperId);
+            ViewData["Consignee"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.ConsigneeName);
+            ViewData["NotifyParty"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.NotifyPartyName);
+            ViewData["BLTypeID"] = new SelectList(_context.RefBLTypes.Where(bt => bt.IsActive.Equals(true)).OrderBy(sl => sl.Description), "BLTypeID", "Description", txnFCLBL.BLTypeID);
+            ViewData["BLStatus"] = new SelectList(_context.RefBLStatus.Where(bs => bs.IsActive.Equals(true)).OrderBy(sl => sl.Description), "BLStatusID", "Description", txnFCLBL.BLStatus);
+            ViewData["ShipmentTerm"] = new SelectList(_context.RefShipmentTerms.Where(s => s.IsActive.Equals(true)).OrderBy(sl => sl.Description), "TermID", "Description", txnFCLBL.ShipmentTerm);
+            ViewData["PackageType"] = new SelectList(_context.RefPackages.Where(pt => pt.IsActive.Equals(true)).OrderBy(pkt => pkt.Description), "PackageId", "Description", txnFCLBL.PackageType);
+            ViewData["FCLContainer"] = new SelectList(_context.TxnFCLJobContainers.Where(p => p.JobNo == jobNo).OrderBy(p => p.ContainerNo), "SerialNo", "ContainerNo", txnFCLBL.JobNo);
+            ViewData["IntendedVessel"] = new SelectList(_context.RefVessels.Where(v => v.IsActive.Equals(true)).OrderBy(s => s.VesselName), "VesselId", "VesselName", txnFCLBL.JobNo);
+            ViewData["POD"] = new SelectList(_context.RefPorts.OrderBy(p => p.PortName), "PortCode", "PortName", txnFCLBL.JobNo);
+            ViewData["Customers"] = new SelectList(_context.RefCustomers.OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.JobNo);
+            ViewData["ShippingLines"] = new SelectList(_context.RefShippingLines.OrderBy(c => c.Name), "ShippingLineId", "Name", "ShippingLineId");
+            ViewData["Agents"] = new SelectList(_context.RefAgents.OrderBy(c => c.AgentName), "AgentId", "AgentName", "AgentId");
+            ViewData["HandleBy"] = new SelectList(_context.RefStaffs.Where(h => h.IsSalesPerson.Equals(false) && h.IsActive.Equals(true)).OrderBy(st => st.StaffName), "SatffId", "StaffName", "SatffId");
+            ViewData["SalesPerson"] = new SelectList(_context.RefStaffs.Where(s => s.IsSalesPerson.Equals(true) && s.IsActive.Equals(true)).OrderBy(sl => sl.StaffName), "SatffId", "StaffName", "SatffId");
+            ViewData["AgentIDNomination"] = new SelectList(_context.RefAgents.Join(_context.RefPorts,
+
+                a => a.PortId,
+                b => b.PortCode,
+                (a, b) => new
+                {
+                    AgentId = a.AgentId,
+                    AgentName = a.AgentName + " - " + b.PortName,
+                    IsActive = a.IsActive
+                }).Where(a => a.IsActive.Equals(true)).OrderBy(a => a.AgentName), "AgentId", "AgentName", "AgentId");
+
+            return View(tables); // Pass the view model to the edit view
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string jobNo, string dtlItemsList, [Bind("JobNo,BLNo,BLTypeID,BLStatus,ShipmentTerm,GrossWeight,CBM,NetWeight,NoofPackages,PackageType,Commodity,HSCode,ShipperID,ShippreName,ShippreAddress1,ShippreAddress2,ShippreAddress3,ShipperCity,ShipperCountry,ShipperTel,ShipperEmail,ConsigneeName,ConsigneeAddress1,ConsigneeAddress2,ConsigneeAddress3,ConsigneeCity,ConsigneeCountry,ConsigneeTel,ConsigneeEmail,NotifyPartyName,NotifyPartyAddress1,NotifyPartyAddress2,NotifyPartyAddress3,NotifyPartyCity,NotifyPartyCountry,NotifyPartyTel,NotifyPartyEmail,Freight,Forwading,Forwader,LocalCharges,MarksAndNos,Description,CreatedBy,CreatedDateTime,LastUpdatedBy,LastUpdatedDateTime,Canceled,CanceledBy,CanceledDateTime,CanceledReson")] TxnFCLBL txnFCLBL)
+        {
+            if (jobNo != txnFCLBL.JobNo)
+            {
+                return BadRequest(); // If the JobNo doesn't match, return a bad request
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Update the main BL record
+                    _context.Update(txnFCLBL);
+
+                    // Deserialize and update container records
+                    if (!string.IsNullOrWhiteSpace(dtlItemsList))
+                    {
+                        var containerData = JsonConvert.DeserializeObject<List<TxnFCLJobContainers>>(dtlItemsList);
+                        if (containerData != null)
+                        {
+                            foreach (var item in containerData)
+                            {
+                                item.JobNo = txnFCLBL.JobNo; // Assign JobNo to each container
+                                var existingEntity = _context.TxnFCLJobContainers.Where(e => e.JobNo == jobNo && e.SerialNo == item.SerialNo).FirstOrDefault();
+
+                                if (existingEntity != null)
+                                {
+                                    // Update the existing container record
+                                    existingEntity.BLNumber = txnFCLBL.BLNo;
+                                    existingEntity.LastUpdatedDateTime = DateTime.Now;
+                                    _context.TxnFCLJobContainers.Update(existingEntity);
+                                }
+                            }
+                        }
+                    }
+
+                    await _context.SaveChangesAsync(); // Save changes to the database
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.TxnFCLBLs.Any(e => e.JobNo == txnFCLBL.JobNo))
+                    {
+                        return NotFound(); // Handle job not found during update
+                    }
+                    else
+                    {
+                        throw; // Rethrow the exception if it's not related to concurrency
+                    }
+                }
+
+                return RedirectToAction(nameof(Index)); // Redirect to index after updating
+            }
+
+            // Reload ViewData for the view in case of model errors
+            var viewModel = new TxnFCLBLViewModel
+            {
+                FCLJobsMulti = _context.TxnFCLJobs.ToList(),
+                FCLJobContainersMulti = _context.TxnFCLJobContainers.ToList(),
+                FCLBLsMulti = _context.TxnFCLBLs.ToList()
+            };
+
+            ViewData["Shipper"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.ShipperId);
+            ViewData["Consignee"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.ConsigneeName);
+            ViewData["NotifyParty"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.NotifyPartyName);
+            ViewData["BLTypeID"] = new SelectList(_context.RefBLTypes.Where(bt => bt.IsActive.Equals(true)).OrderBy(sl => sl.Description), "BLTypeID", "Description", txnFCLBL.BLTypeID);
+            ViewData["BLStatus"] = new SelectList(_context.RefBLStatus.Where(bs => bs.IsActive.Equals(true)).OrderBy(sl => sl.Description), "BLStatusID", "Description", txnFCLBL.BLStatus);
+            ViewData["ShipmentTerm"] = new SelectList(_context.RefShipmentTerms.Where(s => s.IsActive.Equals(true)).OrderBy(sl => sl.Description), "TermID", "Description", txnFCLBL.ShipmentTerm);
+            ViewData["PackageType"] = new SelectList(_context.RefPackages.Where(pt => pt.IsActive.Equals(true)).OrderBy(pkt => pkt.Description), "PackageId", "Description", txnFCLBL.PackageType);
+            ViewData["FCLContainer"] = new SelectList(_context.TxnFCLJobContainers.Where(p => p.JobNo == jobNo).OrderBy(p => p.ContainerNo), "SerialNo", "ContainerNo", txnFCLBL.JobNo);
+            ViewData["IntendedVessel"] = new SelectList(_context.RefVessels.Where(v => v.IsActive.Equals(true)).OrderBy(s => s.VesselName), "VesselId", "VesselName", txnFCLBL.JobNo);
+            ViewData["POD"] = new SelectList(_context.RefPorts.OrderBy(p => p.PortName), "PortCode", "PortName", txnFCLBL.JobNo);
+            ViewData["Customers"] = new SelectList(_context.RefCustomers.OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.JobNo);
+            ViewData["ShippingLines"] = new SelectList(_context.RefShippingLines.OrderBy(c => c.Name), "ShippingLineId", "Name", "ShippingLineId");
+            ViewData["Agents"] = new SelectList(_context.RefAgents.OrderBy(c => c.AgentName), "AgentId", "AgentName", "AgentId");
+            ViewData["HandleBy"] = new SelectList(_context.RefStaffs.Where(h => h.IsSalesPerson.Equals(false) && h.IsActive.Equals(true)).OrderBy(st => st.StaffName), "SatffId", "StaffName", "SatffId");
+            ViewData["SalesPerson"] = new SelectList(_context.RefStaffs.Where(s => s.IsSalesPerson.Equals(true) && s.IsActive.Equals(true)).OrderBy(sl => sl.StaffName), "SatffId", "StaffName", "SatffId");
+            ViewData["AgentIDNomination"] = new SelectList(_context.RefAgents.Join(_context.RefPorts,
+
+                a => a.PortId,
+                b => b.PortCode,
+                (a, b) => new
+                {
+                    AgentId = a.AgentId,
+                    AgentName = a.AgentName + " - " + b.PortName,
+                    IsActive = a.IsActive
+                }).Where(a => a.IsActive.Equals(true)).OrderBy(a => a.AgentName), "AgentId", "AgentName", "AgentId");
+
+            return View(viewModel); // Return the view with errors and necessary data
+        }
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(string dtlItemsList, [Bind("JobNo,BLNo,BLTypeID,BLStatus,ShipmentTerm,GrossWeight,CBM,NetWeight,NoofPackages,PackageType,Commodity,HSCode,ShipperID,ShippreName,ShippreAddress1,ShippreAddress2,ShippreAddress3,ShipperCity,ShipperCountry,ShipperTel,ShipperEmail,ConsigneeName,ConsigneeAddress1,ConsigneeAddress2,ConsigneeAddress3,ConsigneeCity,ConsigneeCountry,ConsigneeTel,ConsigneeEmail,NotifyPartyName,NotifyPartyAddress1,NotifyPartyAddress2,NotifyPartyAddress3,NotifyPartyCity,NotifyPartyCountry,NotifyPartyTel,NotifyPartyEmail,Freight,Forwading,Forwader,LocalCharges,MarksAndNos,Description,CreatedBy,CreatedDateTime,LastUpdatedBy,LastUpdatedDateTime,Canceled,CanceledBy,CanceledDateTime,CanceledReson")] TxnFCLBL txnFCLBL)
@@ -168,14 +313,14 @@ namespace FMS_DEV.Controllers
             return View(viewModel); // Return the view with errors and necessary data
         }
 
-        public async Task<IActionResult> Details(string pjobno, string pBLnumber)
+        public async Task<IActionResult> Details(string id, string pBLnumber)
         {
             var FcljobNo = "xxx";
             var FclBLNo = "xxx";
 
-            if (!string.IsNullOrEmpty(pjobno))
+            if (!string.IsNullOrEmpty(id))
             {
-                FcljobNo = pjobno;
+                FcljobNo = id;
                 FclBLNo = pBLnumber;
 
                 if (_context.TxnFCLJobs.Any(t => t.JobNo == FcljobNo))
@@ -184,7 +329,7 @@ namespace FMS_DEV.Controllers
                 }
                 else
                 {
-                    ViewData["FcljobFound"] = "Fcljob Number: " + pjobno + " not found";
+                    ViewData["FcljobFound"] = "Fcljob Number: " + id + " not found";
                 }
             }
 

@@ -1,0 +1,961 @@
+﻿@model FMS_DEV.ViewModel.TxnFCLBLViewModel
+
+
+@{
+    ViewBag.Title = "SeaExportFCLBL";
+}
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="card">
+                <!--Heading-->
+                <div class="card-header bg-info">
+                    <h4 class="m-b-0 text-white">FCL-BL</h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <!--FCL Job No.-->
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-8"></div>
+
+                    </div><br />
+
+
+                    <!--details Start-->
+                    <div style="border:1px  solid black; padding: 10px 10px 10px 10px; background-color:#f3f3f3 ; border-radius:10px;">
+
+
+                        <!--Job date -->
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-4">FCLJob No</label>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-7">
+                                        @Html.DisplayFor(m => Model.FCLJobsMulti.FirstOrDefault().JobNo)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-3">Job Date</label>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-8">
+                                        @Html.DisplayFor(m => Model.FCLJobsMulti.FirstOrDefault().Date)
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Type Section Selection Start  -->
+                        <div class="row">
+                            <label class="control-label text-left col-md-1">Type :</label>
+                            <div class="col-md-5">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @* <input type="radio" id="FCL" name="JobType" value="FCL"/> *@
+                                                <label for="FCL">
+                                                    @Html.DisplayFor(m => Model.FCLJobsMulti.FirstOrDefault().JobType)
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Type Section Selection End  -->
+                        <!-- Shipper,exchangerate,hadleby,sales person Start  -->
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="Agent" id="Label">Shipper</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select asp-for="FCLJobsMulti.FirstOrDefault().ShipperID" id="selectedShippingLine" class="form-control" asp-items="ViewBag.Customers" disabled></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="Agent" id="Label">Shipping Line</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <select asp-for="FCLJobsMulti.FirstOrDefault().ShippingLineID" id="ShippingLineID" class="form-control" asp-items="ViewBag.ShippingLines" disabled></select> <!-- Updated `id` attribute -->
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-3">Exchange Rate </label>
+                                    <div class="col-md-5">
+                                        @Html.DisplayFor(m => Model.FCLJobsMulti.FirstOrDefault().ExchangeRate)
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="Agent" id="Label">Handle By</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select asp-for="FCLJobsMulti.FirstOrDefault().HandleBy" id="HandleBy" class="form-control" asp-items="ViewBag.HandleBy" disabled></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="Agent" id="Label">Sales Person</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select asp-for="FCLJobsMulti.FirstOrDefault().SalesPersonID" id="SalesPersonID" class="form-control" asp-items="ViewBag.SalesPerson" disabled></select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- Shipper,exchangerate,hadleby,sales person End  -->
+                        <!--vessel Details-->
+                        <div class="row">
+                            <div class="col-md-6"><h5 class="box-title"><b>Vessel Details</b></h5></div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="Agent" id="Label">Vessel</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select asp-for="FCLJobsMulti.FirstOrDefault().VesselId" id="VesselId" class="form-control" asp-items="ViewBag.IntendedVessel" disabled></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="Agent" id="Label">Voyage</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.DisplayFor(m => Model.FCLJobsMulti.FirstOrDefault().Voyage)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-3">ETD </label>
+                                    <div class="col-md-5">
+                                        @* @Html.DisplayFor(m => Model.FCLJobs.FirstOrDefault().ETD) *@
+                                        @Model.FCLJobsMulti.FirstOrDefault()?.ETD?.ToString("yyyy-MM-dd")
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="Agent" id="Label">POD</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select asp-for="FCLJobsMulti.FirstOrDefault().POD" id="POD" class="form-control" asp-items="ViewBag.POD" disabled></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-2">ETA </label>
+                                    <div class="col-md-6">
+                                        @* @Html.DisplayFor(m => Model.FCLJobs.FirstOrDefault().ETA) *@
+                                        @Model.FCLJobsMulti.FirstOrDefault()?.ETA?.ToString("yyyy-MM-dd")
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3"></div>
+
+                        </div>
+
+                        <br />
+
+                        <!--Agent-->
+
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label for="Agent" id="Label">Agent</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select asp-for="FCLJobsMulti.FirstOrDefault().AgentId" id="AgentId" class="form-control" asp-items="ViewBag.AgentIDNomination" disabled></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6"></div>
+
+                        </div>
+                        <br />
+
+                    </div>
+                    <!--details End-->
+                    <br />
+
+                    <form asp-action="Edit" asp-controller="TxnFCLBLs" id="FCLJobForm" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" name="JobNo" asp-for="FCLBLsMulti.FirstOrDefault().JobNo" />
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <div class="col-md-4">
+                                        <label for="Customer">B/L Number</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input asp-for="FCLBLsMulti.FirstOrDefault().BLNo" class="form-control" />
+                                        <span asp-validation-for="FCLBLsMulti.FirstOrDefault().BLNo" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-4">FCLJob No</label>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-7">
+                                        @Html.DisplayFor(m => Model.FCLJobsMulti.FirstOrDefault().JobNo)
+                                        <!-- Add a hidden input to include JobNo in the form submission -->
+                                        <input type="hidden" asp-for="FCLJobsMulti.FirstOrDefault().JobNo" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--row - BL N and Type-->
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    @*  <label class="control-label text-right col-md-3">Date of Birth</label>*@
+                                    <label class="control-label text-left col-md-3">BL Type</label>
+                                    <div class="col-md-9">
+                                        <select asp-for="FCLBLsMulti.FirstOrDefault().BLTypeID" class="form-control" asp-items="ViewBag.BLTypeID" placeholder="Select BL Type"></select>
+                                        @*                               <input asp-for="BLTypeID" class="form-control" />
+                                        <span asp-validation-for="BLTypeID" class="text-danger"></span>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    @*  <label class="control-label text-right col-md-3">Date of Birth</label>*@
+                                    <label class="control-label text-left col-md-3">BL Status</label>
+                                    <div class="col-md-9">
+                                        <select asp-for="FCLBLsMulti.FirstOrDefault().BLStatus" class="form-control" asp-items="ViewBag.BLStatus" placeholder="Select BL status"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--END of row - BL N and Type-->
+                        <!--row - Shipment Terms -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <label class="control-label text-left col-md-3">Shipment Term</label>
+                                    <div class="col-md-9">
+                                        <select asp-for="FCLBLsMulti.FirstOrDefault().ShipmentTerm" class="form-control" asp-items="ViewBag.ShipmentTerm" placeholder="Select BL Type"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--END of row - Shipment Terms -->
+
+                        <h3><b>Cargo Details</b></h3>
+                        <br />
+
+                        <!-- Cargo Details Section -->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="GrossWeightKg">Gross weight Kg</label>
+                                    <input asp-for="FCLBLsMulti.FirstOrDefault().GrossWeight" type="text" id="GrossWeight" name="GrossWeight" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="CBM">CBM</label>
+                                    <input asp-for="FCLBLsMulti.FirstOrDefault().CBM" type="text" id="CBM" name="CBM" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="NoOfPackages">No of Packages</label>
+                                    <input asp-for="FCLBLsMulti.FirstOrDefault().NoofPackages" type="text" id="NoofPackages" name="NoofPackages" class="form-control" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="PackageType">Package Type</label>
+                                    <select asp-for="FCLBLsMulti.FirstOrDefault().PackageType" class="form-control" asp-items="ViewBag.PackageType"></select>
+
+
+                                    @*                                    <input asp-for="FCLBLsMulti.FirstOrDefault().PackageType" type="text" id="PackageType" name="PackageType" class="form-control" />
+                                    *@
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-2">
+                                    <label for="NetWeightKg">Net Weight Kg</label>
+                                    <input asp-for="FCLBLsMulti.FirstOrDefault().NetWeight" type="text" id="NetWeight" name="NetWeight" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="Mod">Commodity</label>
+                                    <input asp-for="FCLBLsMulti.FirstOrDefault().Commodity" type="text" id="Commodity" name="Commodity" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="HSCode">HS Code</label>
+                                    <input asp-for="FCLBLsMulti.FirstOrDefault().HSCode" type="text" id="HSCode" name="HSCode" class="form-control" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="line" style="border-top: 1px solid #999999;"></div>
+                        <br />
+
+                        <!-- Shipper/ Consignee/ Notify -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Shipper/ Consignee/ Notify -->
+                                <div class="row">
+                                    <!-- Shipper -->
+                                    <div class="col-md-4">
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <h4><b>Shipper</b></h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="control-label text-left col-md-3">
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <select id="ShipperIdSelect" asp-for="FCLBLsMulti.FirstOrDefault().ShipperId" class="form-control"
+                                                            asp-items="ViewBag.Shipper"></select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="control-label text-left col-md-3">
+                                                    Name
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input id="ShipperName" asp-for="FCLBLsMulti.FirstOrDefault().ShippreName" class="form-control" placeholder="Enter Shipper Name" />
+                                                    <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ShippreName" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="control-label text-left col-md-3">
+                                                    Adress1
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input id="ShipperAdd1" asp-for="FCLBLsMulti.FirstOrDefault().ShippreAddress1" class="form-control" placeholder="Address 1" />
+                                                    <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ShippreAddress1" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="control-label text-left col-md-3">
+                                                    Adress2
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input id="ShipperAdd2" asp-for="FCLBLsMulti.FirstOrDefault().ShippreAddress2" class="form-control" placeholder="Address 2" />
+                                                    <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ShippreAddress2" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="control-label text-left col-md-3">
+                                                    Adress3
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input id="ShipperAdd3" asp-for="FCLBLsMulti.FirstOrDefault().ShippreAddress3" class="form-control" placeholder="Address 3" />
+                                                    <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ShippreAddress3" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="control-label text-left col-md-3">
+                                                    City
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input id="ShipperCity" asp-for="FCLBLsMulti.FirstOrDefault().ShipperCity" class="form-control" placeholder="City" />
+                                                    <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ShipperCity" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="control-label text-left col-md-3">
+                                                    Country
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input id="ShipperCountry" asp-for="FCLBLsMulti.FirstOrDefault().ShipperCountry" class="form-control" placeholder="Country" />
+                                                    <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ShipperCountry" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="control-label text-left col-md-3">
+                                                    TelNo
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input id="ShipperTel" asp-for="FCLBLsMulti.FirstOrDefault().ShipperTel" class="form-control" placeholder="Tel" />
+                                                    <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ShipperTel" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="control-label text-left col-md-3">
+                                                    Email
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input id="ShipperEmail" asp-for="FCLBLsMulti.FirstOrDefault().ShipperEmail" class="form-control" placeholder="Email" />
+                                                    <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ShipperEmail" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Shipper -->
+                                    <!-- Consignee -->
+                                    <div class="col-md-4">
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <h4><b>Consignee</b></h4>
+                                                @*                                                <label class="control-label text-left col-md-3">Consignee</label>
+                                                *@
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <select id="ConsigneeIdSelect" asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeID" class="form-control"
+                                                        asp-items="ViewBag.Consignee"></select>
+
+                                            </div>
+                                            <div class="form-group row">
+                                                <input id="ConsigneeName" asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeName" class="form-control" placeholder="Enter Consignee Name" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ConsigneeName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="ConsigneeAdd1" asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeAddress1" class="form-control" placeholder="Address 1" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ConsigneeAddress1" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="ConsigneeAdd2" asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeAddress2" class="form-control" placeholder="Address 2" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ConsigneeAddress2" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="ConsigneeAdd3" asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeAddress3" class="form-control" placeholder="Address 3" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ConsigneeAddress3" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="ConsigneeCity" asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeCity" class="form-control" placeholder="City" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ConsigneeCity" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="ConsigneeCountry" asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeCountry" class="form-control" placeholder="Country" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ConsigneeCountry" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="ConsigneeTel" asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeTel" class="form-control" placeholder="Tel" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ConsigneeTel" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="ConsigneeEmail" asp-for="FCLBLsMulti.FirstOrDefault().ConsigneeEmail" class="form-control" placeholder="Email" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ConsigneeEmail" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Consignee -->
+                                    <!-- Notify -->
+                                    <div class="col-md-4">
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <h4><b>Notify Party</b></h4>
+                                                @*                                                <label class="control-label text-left col-md-3">NotifyParty</label>
+                                                *@
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <select id="NotifyPartyIdSelect" asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyID" class="form-control"
+                                                        asp-items="ViewBag.NotifyParty"></select>
+
+                                            </div>
+                                            <div class="form-group row">
+                                                <input id="NotifyPartyName" asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyName" class="form-control" placeholder="Enter NotifyParty Name" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().NotifyPartyName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="NotifyPartyAdd1" asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyAddress1" class="form-control" placeholder="Address 1" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().NotifyPartyAddress1" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="NotifyPartyAdd2" asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyAddress2" class="form-control" placeholder="Address 2" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().NotifyPartyAddress2" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="NotifyPartyAdd3" asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyAddress3" class="form-control" placeholder="Address 3" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().ConsigneeAddress3" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="NotifyPartyCity" asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyCity" class="form-control" placeholder="City" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().NotifyPartyCity" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="NotifyPartyCountry" asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyCountry" class="form-control" placeholder="Country" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().NotifyPartyCountry" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="NotifyPartyTel" asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyTel" class="form-control" placeholder="Tel" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().NotifyPartyTel" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <input id="NotifyPartyEmail" asp-for="FCLBLsMulti.FirstOrDefault().NotifyPartyEmail" class="form-control" placeholder="Email" />
+                                                <span asp-validation-for="FCLBLsMulti.FirstOrDefault().NotifyPartyEmail" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Notify -->
+                                </div>
+                                <!-- END Shipper/ Consignee/ Notify -->
+                            </div>
+                        </div>
+
+
+
+
+
+                        <!--Marks&No and Description-->
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <h6 class="box-title"><b>Marks & Nos</b></h6>
+                                    <div class="col-md-12">
+                                        <textarea asp-for="FCLBLsMulti.FirstOrDefault().MarksAndNos" class="form-control" name="MarksAndNos" type="text" placeholder="Type Marks & Nos" rows="8"> </textarea>
+                                        <span asp-validation-for="FCLBLsMulti.FirstOrDefault().MarksAndNos" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <h6 class="box-title"><b>Cargo Description</b></h6>
+                                    <div class="col-md-12">
+                                        <textarea asp-for="FCLBLsMulti.FirstOrDefault().Description" class="form-control" name="Description" type="text" placeholder="Description of BL" rows="8"> </textarea>
+                                        <span asp-validation-for="FCLBLsMulti.FirstOrDefault().Description" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--TickBox and RadioButtons-->
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label col-md-2" for="localCharges">Local Charges</label>
+                                    <div class="col-md-6">
+                                        <input type="checkbox" id="chkLocalCharges" name="LocalCharges" asp-for="FCLBLsMulti.FirstOrDefault().LocalCharges" />
+                                        <span asp-validation-for="FCLBLsMulti.FirstOrDefault().LocalCharges" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="row">
+
+                                    <label class="control-label text-left col-md-2">Freight :</label>
+
+                                    <div class="col-md-10">
+                                        <div class="form-group row">
+                                            <input type="radio" id="Prepaid" name="Freight" value="Prepaid" checked />
+                                            <label for="Prepaid">Prepaid</label>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <input type="radio" id="Collect" name="Freight" value="Collect" />
+                                            <label for="Collect">Collect</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                        <br />
+                        <!--dynamic table start-->
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="form-group row">
+                                    <h4><b>Containers</b></h4>
+                                <table id="tblContainer" class="table table-hover border table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Containers</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ContainerDetailsBody">
+                                        <!-- Hidden row template for other expenses -->
+                                        <tr id="tablerow0" hidden>
+                                            <td>
+                                                <select id="ContainerNo" name="ContainerNo" asp-items="ViewBag.FCLContainer" class="form-control"></select>
+                                            </td>
+                                            <td>
+                                                <input type="button" id="btnRemove" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" />
+                                            </td>
+                                        </tr>
+
+
+                                        @{
+                                            var i = 0;
+                                            foreach (var item in Model.FCLJobContainersMulti) // Assuming you have a list called FCLContainerList in the model
+                                            {
+                                                i++;
+                                                <tr id="tablerow@i">
+                                                    <td>
+                                                        <select id="ContainerNo" asp-for="@item.ContainerNo" name="ContainerNo" class="form-control" asp-items="ViewBag.FCLContainer">
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="button" id="btnRemove" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(@i)" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+
+                                            <input id="add" type="button" value="+ Container" onclick="AddRow(this)"
+                                                   class="btn btn-success" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--dynamic table end-->
+
+                        <br />
+                        <br />
+                        <br />
+
+
+                        <!-- Save Button -->
+                        <div class="form-group">
+                            <input type="hidden" name="dtlItemsList" id="dtlItemsList" />
+                            <input type="submit" value="Edit" class="btn btn-primary" onclick="submitForm(this)" />
+                        </div>
+
+
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <!-- Add remove rows -->
+    <script type="text/javascript">
+        function AddRow(e) {
+            //alert(" record(s) Started");
+            //clones the first row of the table
+            var newRow = $("#tblContainer tbody tr").first().clone();
+            //removes the 'hidden' attribute so it will be visible when added  to the table
+            newRow.removeAttr("hidden");
+
+            // Get No of rows
+            var NoOfRows = $("#tblContainer tbody tr").length
+            var counter = NoOfRows + 1;
+
+            // Update remove Button
+            var removeBtn = newRow.find('input[name="RemoveBttn"]');
+            var RemoveBtnVal = 'RemoveRow(' + counter + ')';
+            $(removeBtn).attr('onclick', RemoveBtnVal);
+
+            //Update Row id (for remove)
+            var RowID = "tablerow" + counter;
+            newRow.attr("id", RowID);
+            //add/append new row to the table
+
+            $("tbody").append(newRow);
+            return false;
+
+        }
+
+        function RemoveRow(index) {
+            // alert(" record remove: " + index);
+            $('#tablerow' + index).remove();
+            calculateTotalAmount();
+            return false;
+        }
+    </script>
+
+
+
+    <!--Create Container List and Submit-->
+    <script>
+        // Create and submit Charge Items
+
+        function submitForm(e) {
+            alert("Test submit");
+            const dtlItemsArray = [];
+            const tableRows = $("#tblContainer tbody tr");
+            var chkContainerNo = "";
+
+            tableRows.each(function (index) {
+                const trRow = $(this);
+                chkContainerNo = trRow.find('select[name="ContainerNo"]').val();
+
+                if (!trRow.is(':hidden')) {
+                    alert("Test loop: " + chkContainerNo);
+
+                    if (chkContainerNo === "") {
+                        // chkContainerNo is empty
+                    } else {
+                        // chkAmount is not empty
+                        const dtlItemJson = buildItemsJson(trRow, index);
+                        dtlItemsArray.push(dtlItemJson);
+                    }
+                }
+
+
+            });
+            //alert("Test list before");
+            $("#dtlItemsList").val(JSON.stringify(dtlItemsArray));
+            //alert("Test list after");
+
+        }
+
+        // Json Var create
+        function buildItemsJson(trRow, id) {
+            return {
+                SerialNo: trRow.find('select[name="ContainerNo"]').val(), // gives the serial number of the container number
+            };
+        }
+
+    </script>
+
+    <!--Fill Shipper details from the selected values -->
+    <script>
+        $(document).ready(function () {
+            $('#ShipperIdSelect').change(function () {
+                var shipperId = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("GetShipperDetails", "TxnImportJobDtls")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { shipperId: shipperId },
+                    success: function (data) {
+                        console.log(data);
+                        $('#ShipperName').val(data.name);
+                        $('#ShipperAdd1').val(data.address1);
+                        $('#ShipperAdd2').val(data.address2);
+                        $('#ShipperAdd3').val(data.address3);
+                        $('#ShipperCity').val(data.city);
+                        $('#ShipperCountry').val(data.county);
+                        $('#ShipperTel').val(data.telNo1);
+                        $('#ShipperEmail').val(data.email);
+                        // Update other fields as needed
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!--Fill Consignee details from the selected values -->
+    <script>
+        $(document).ready(function () {
+            $('#ConsigneeIdSelect').change(function () {
+                var consigneeId = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("GetConsigneeDetails", "TxnImportJobDtls")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { consigneeId: consigneeId },
+                    success: function (data) {
+                        console.log(data);
+                        $('#ConsigneeName').val(data.name);
+                        $('#ConsigneeAdd1').val(data.address1);
+                        $('#ConsigneeAdd2').val(data.address2);
+                        $('#ConsigneeAdd3').val(data.address3);
+                        $('#ConsigneeCity').val(data.city);
+                        $('#ConsigneeCountry').val(data.county);
+                        $('#ConsigneeTel').val(data.telNo1);
+                        $('#ConsigneeEmail').val(data.email);
+
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!--Fill NotifyParty details from the selected values -->
+    <script>
+        $(document).ready(function () {
+            $('#NotifyPartyIdSelect').change(function () {
+                var notifyPartyID = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("GetNotifyPartyDetails", "TxnImportJobDtls")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { notifyPartyID: notifyPartyID },
+                    success: function (data) {
+                        console.log(data);
+                        $('#NotifyPartyName').val(data.name);
+                        $('#NotifyPartyAdd1').val(data.address1);
+                        $('#NotifyPartyAdd2').val(data.address2);
+                        $('#NotifyPartyAdd3').val(data.address3);
+                        $('#NotifyPartyCity').val(data.city);
+                        $('#NotifyPartyCountry').val(data.county);
+                        $('#NotifyPartyTel').val(data.telNo1);
+                        $('#NotifyPartyEmail').val(data.email);
+
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+
+
+
