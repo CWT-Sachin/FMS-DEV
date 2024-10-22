@@ -19,8 +19,8 @@ namespace FMS_DEV.Models
         [StringLength(50)]
         public string? ContainerNo { get; set; }
 
-        [Column(TypeName = "numeric(6, 2)")]
-        public decimal? Size { get; set; }
+        [StringLength(50)]
+        public string? Size { get; set; }
 
         [StringLength(20)]
         public string? Seal { get; set; }

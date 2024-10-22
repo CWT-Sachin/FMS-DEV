@@ -16,7 +16,7 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
-             <div class="card">
+            <div class="card">
                 <!--Heading-->
                 <div class="card-header bg-info">
                     <h4 class="m-b-0 text-white">Sea-Export-FCL-Job</h4>
@@ -295,52 +295,54 @@
                         <div class="row">
 
                             <div class="col-md-5">
-                                    <div class="form-group row">
-                                        <h4>Container Details</h4>
-                                        <table id="tblContainer" class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Container No</th>
-                                                    <th>Size</th>
-                                                    <th>SealNo</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="ContainerDetailsBody">
-                                                <!-- Initial row template for other expenses -->
-                                                <tr id="tablerow0" hidden>
-                                                    <td> <input type="text" id="ContainerNo" asp-for="FCLJobContainers.FirstOrDefault().ContainerNo" name="ContainerNo" value="" class="form-control"></td>
+                                <div class="form-group row">
+                                    <h4>Container Details</h4>
+                                    <table id="tblContainer" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Container No</th>
+                                                <th>Size</th>
+                                                <th>SealNo</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ContainerDetailsBody">
+                                            <!-- Initial row template for other expenses -->
+                                            <tr id="tablerow0" hidden>
+                                                <td> <input type="text" id="ContainerNo" asp-for="FCLJobContainers.FirstOrDefault().ContainerNo" name="ContainerNo" value="" class="form-control"></td>
                                                 <td><select id="Size" asp-for="FCLJobContainers.FirstOrDefault().Size" name="Size" class="form-control" value="" asp-items="ViewBag.ContainerSize"></select> </td>
-@*                                                    <td> <input type="text" id="Size" asp-for="FCLJobContainers.FirstOrDefault().Size" name="Size" value="" class="form-control"></td>
-*@                                                    <td> <input type="text" id="Seal" asp-for="FCLJobContainers.FirstOrDefault().Seal" name="Seal" value="" class="form-control"></td>
-                                                    <td> <input type="button" id="btnRemove" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" /></td>
-                                                </tr>
+                                                @*                                                    <td> <input type="text" id="Size" asp-for="FCLJobContainers.FirstOrDefault().Size" name="Size" value="" class="form-control"></td>
+                                                *@
+                                                <td> <input type="text" id="Seal" asp-for="FCLJobContainers.FirstOrDefault().Seal" name="Seal" value="" class="form-control"></td>
+                                                <td> <input type="button" id="btnRemove" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" /></td>
+                                            </tr>
 
                                             @foreach (var item in Model.FCLJobContainers)
                                             {
-                                                        <tr id="tablerow0">
-                                                            <td> <input type="text" id="ContainerNo" asp-for="FCLJobContainers.FirstOrDefault().ContainerNo" name="ContainerNo" value="" class="form-control"></td>
+                                                <tr id="tablerow0">
+                                                    <td> <input type="text" id="ContainerNo" asp-for="FCLJobContainers.FirstOrDefault().ContainerNo" name="ContainerNo" value="" class="form-control"></td>
                                                     <td>  <select id="Size" asp-for="FCLJobContainers.FirstOrDefault().Size" name="Size" value="" class="form-control" asp-items="ViewBag.ContainerSize"></select> </td>
-@*                                                            <td> <input type="text" id="Size" asp-for="FCLJobContainers.FirstOrDefault().Size" name="Size" value="" class="form-control"></td>
-*@                                                            <td> <input type="text" id="Seal" asp-for="FCLJobContainers.FirstOrDefault().Seal" name="Seal" value="" class="form-control"></td>
-                                                            <td>
-                                                                <input type="button" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" />
-                                                            </td>
-                                                        </tr>
+                                                    @*                                                            <td> <input type="text" id="Size" asp-for="FCLJobContainers.FirstOrDefault().Size" name="Size" value="" class="form-control"></td>
+                                                *@
+                                                    <td> <input type="text" id="Seal" asp-for="FCLJobContainers.FirstOrDefault().Seal" name="Seal" value="" class="form-control"></td>
+                                                    <td>
+                                                        <input type="button" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" />
+                                                    </td>
+                                                </tr>
                                             }
 
-                                            </tbody>
-                                        </table>
+                                        </tbody>
+                                    </table>
 
-                                    </div>
-                                    <!--Add button Charge Items-->
-                                    <div class="col-md-4">
-                                        <div class="form-group">
+                                </div>
+                                <!--Add button Charge Items-->
+                                <div class="col-md-4">
+                                    <div class="form-group">
 
-                                            <input id="add" type="button" value="+ Container" onclick="AddRow(this)"
-                                                   class="btn btn-success" />
-                                        </div>
+                                        <input id="add" type="button" value="+ Container" onclick="AddRow(this)"
+                                               class="btn btn-success" />
                                     </div>
+                                </div>
                             </div>
 
                             <div class="col-md-1"></div>
@@ -365,95 +367,95 @@
                             <div class="col-md-4">
                                 <input type="hidden" name="dtlItemsList" id="dtlItemsList" />
                                 <div class="form-group">
-                                      <input type="submit" value="Create" class="btn btn-primary" onclick="submitForm(this)" />
-                                   @* <input type="submit" value="Create" class="btn btn-primary"  />*@
+                                    <input type="submit" value="Create" class="btn btn-primary" onclick="submitForm(this)" />
+                                    @* <input type="submit" value="Create" class="btn btn-primary"  />*@
                                 </div>
-                             </div>
+                            </div>
                         </div>
 
-                     </form>
-                    </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-                                   <!-- Add remove rows --> 
-    <script type="text/javascript">
-        function AddRow(e) {
-             //alert(" record(s) Started");
-            //clones the first row of the table
-            var newRow = $("#tblContainer tbody tr").first().clone();
-            //removes the 'hidden' attribute so it will be visible when added  to the table
-            newRow.removeAttr("hidden");
+<!-- Add remove rows -->
+<script type="text/javascript">
+    function AddRow(e) {
+        //alert(" record(s) Started");
+        //clones the first row of the table
+        var newRow = $("#tblContainer tbody tr").first().clone();
+        //removes the 'hidden' attribute so it will be visible when added  to the table
+        newRow.removeAttr("hidden");
 
-            // Get No of rows
-            var NoOfRows = $("#tblContainer tbody tr").length
-            var counter = NoOfRows + 1;
+        // Get No of rows
+        var NoOfRows = $("#tblContainer tbody tr").length
+        var counter = NoOfRows + 1;
 
-            // Update remove Button
-            var removeBtn = newRow.find('input[name="RemoveBttn"]');
-            var RemoveBtnVal = 'RemoveRow(' + counter + ')';
-            $(removeBtn).attr('onclick', RemoveBtnVal);
+        // Update remove Button
+        var removeBtn = newRow.find('input[name="RemoveBttn"]');
+        var RemoveBtnVal = 'RemoveRow(' + counter + ')';
+        $(removeBtn).attr('onclick', RemoveBtnVal);
 
-            //Update Row id (for remove)
-            var RowID = "tablerow" + counter;
-            newRow.attr("id", RowID);
-            //add/append new row to the table
+        //Update Row id (for remove)
+        var RowID = "tablerow" + counter;
+        newRow.attr("id", RowID);
+        //add/append new row to the table
 
-            $("tbody").append(newRow);
-            return false;
+        $("tbody").append(newRow);
+        return false;
 
-        }
+    }
 
-        function RemoveRow(index) {
-            // alert(" record remove: " + index);
-            $('#tablerow' + index).remove();
-            calculateTotalAmount();
-            return false;
-        }
-    </script>
+    function RemoveRow(index) {
+        // alert(" record remove: " + index);
+        $('#tablerow' + index).remove();
+        calculateTotalAmount();
+        return false;
+    }
+</script>
 
 
-      <!--Create Container List and Submit-->
-    <script>
-        // Create and submit Charge Items
+<!--Create Container List and Submit-->
+<script>
+    // Create and submit Charge Items
 
-        function submitForm(e) {
-            //alert("Test submit");
-            const dtlItemsArray = [];
-            const tableRows = $("#tblContainer tbody tr");
-            var chkContainerNo = "";
+    function submitForm(e) {
+        //alert("Test submit");
+        const dtlItemsArray = [];
+        const tableRows = $("#tblContainer tbody tr");
+        var chkContainerNo = "";
 
-            tableRows.each(function (index) {
-                const trRow = $(this);
-                chkContainerNo = trRow.find('input[name="ContainerNo"]').val();
-                 //alert("Test loop");
-                if (chkContainerNo === "" ) {
-                    // chkContainerNo is empty 
-                } else {
-                    // chkAmount is not empty 
-                    const dtlItemJson = buildItemsJson(trRow, index);
-                    dtlItemsArray.push(dtlItemJson);
-                }
-            });
-            //alert("Test list before");
-            $("#dtlItemsList").val(JSON.stringify(dtlItemsArray));
-            //alert("Test list after");
+        tableRows.each(function (index) {
+            const trRow = $(this);
+            chkContainerNo = trRow.find('input[name="ContainerNo"]').val();
+            //alert("Test loop");
+            if (chkContainerNo === "") {
+                // chkContainerNo is empty
+            } else {
+                // chkAmount is not empty
+                const dtlItemJson = buildItemsJson(trRow, index);
+                dtlItemsArray.push(dtlItemJson);
+            }
+        });
+        //alert("Test list before");
+        $("#dtlItemsList").val(JSON.stringify(dtlItemsArray));
+        //alert("Test list after");
 
-        }
+    }
 
-        // Json Var create
-        function buildItemsJson(trRow, id) {
-            return {
-                SerialNo: id,
-                ContainerNo: trRow.find('input[name="ContainerNo"]').val(),
-                Size: trRow.find('select[name="Size"]').val(),
-                Seal: trRow.find('input[name="Seal"]').val(),
-            };
-        }
+    // Json Var create
+    function buildItemsJson(trRow, id) {
+        return {
+            SerialNo: id,
+            ContainerNo: trRow.find('input[name="ContainerNo"]').val(),
+            Size: trRow.find('select[name="Size"]').val(),
+            Seal: trRow.find('input[name="Seal"]').val(),
+        };
+    }
 
-    </script>
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

@@ -95,9 +95,6 @@ namespace FMS_DEV.Models
         [InverseProperty("TxnFCLJob")]
         public virtual RefShippingLine? ShippingLineFCLJobExportNavigation { get; set; }
 
-        // Navigation property for related FCLJobContainers
-        public virtual ICollection<TxnFCLJobContainers> FCLJobContainers { get; set; }
-
 
     }
 }

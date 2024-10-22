@@ -322,13 +322,13 @@
                                             <!-- Template row for new containers (hidden by default) -->
                                             <tr id="tablerow0" hidden>
                                                 <td style="width:30%;">
-                                                    <input type="text" id="ContainerNo0" name="ContainerNo[0]" value="" class="form-control">
+                                                    <input type="text" id="ContainerNo" name="ContainerNo" value="" class="form-control">
                                                 </td>
                                                 <td style="width:20%;">
-                                                    <select id="Size0" name="Size[0]" class="form-control" asp-items="ViewBag.ContainerSize"></select>
+                                                    <select id="Size0" name="Size" class="form-control" asp-items="ViewBag.ContainerSize"></select>
                                                 </td>
                                                 <td style="width:30%;">
-                                                    <input type="text" id="Seal0" name="Seal[0]" value="" class="form-control">
+                                                    <input type="text" id="Seal" name="Seal" value="" class="form-control">
                                                 </td>
                                                 <td>
                                                     <input type="button" id="btnRemove" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(this)" />
@@ -343,13 +343,13 @@
                                                     i++;
                                                     <tr class="tablerow@i">
                                                         <td style="width:30%;">
-                                                            <input type="text" id="ContainerNo@i" name="ContainerNo[@i]" value="@item.ContainerNo" class="form-control">
+                                                            <input type="text" id="ContainerNo" name="ContainerNo" value="@item.ContainerNo" class="form-control">
                                                         </td>
                                                         <td style="width:20%;">
-                                                            <select id="Size@i" name="Size[@i]" class="form-control" asp-items="ViewBag.ContainerSize"></select>
+                                                            <select id="Size" name="Size" asp-for="FCLJobContainers.FirstOrDefault().Size"  class="form-control" value="" asp-items="ViewBag.ContainerSize"></select>
                                                         </td>
                                                         <td style="width:30%;">
-                                                            <input type="text" id="Seal@i" name="Seal[@i]" value="@item.Seal" class="form-control">
+                                                            <input type="text" id="Seal" name="Seal" value="@item.Seal" class="form-control">
                                                         </td>
                                                         <td>
                                                             <input type="button" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(@i)" />
@@ -545,12 +545,12 @@
         return false;
     }
 
-    function buildItemsJson(trRow, index) {
-        const containerNo = trRow.find('input[name="ContainerNo"]').val();
-        // Assuming you have other fields to include
+    function buildItemsJson(trRow, id) {
         return {
-            ContainerNo: containerNo,
-            RowIndex: index
+            SerialNo: id,
+            ContainerNo: trRow.find('input[name="ContainerNo"]').val(),
+            Size: trRow.find('select[name="Size"]').val(),
+            Seal: trRow.find('input[name="Seal"]').val(),
         };
     }
 

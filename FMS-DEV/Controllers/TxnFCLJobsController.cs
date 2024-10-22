@@ -103,6 +103,7 @@ namespace FMS_DEV.Controllers
             }
 
             ModelState.Remove("JobNo");
+            ModelState.Remove("FCLJobContainers");
 
             if (ModelState.IsValid)
             {
@@ -163,8 +164,6 @@ namespace FMS_DEV.Controllers
 
             return View();
         }
-
-
 
         // GET: TxnFCLJobs/Edit/5
         public async Task<IActionResult> Edit(string id)
@@ -565,64 +564,34 @@ namespace FMS_DEV.Controllers
             {
                 try
                 {
-                    _context.Entry(txnFCLJob).State = EntityState.Modified;
-
-                    // Load existing containers for the current job
-                    var existingContainers = await _context.TxnFCLJobContainers
-                        .Where(c => c.JobNo == txnFCLJob.JobNo)
-                        .ToListAsync();
-
-                    // Track existing container IDs for deletion
-                    var existingContainerIds = existingContainers.Select(c => c.SerialNo).ToHashSet();
-
-                    // Process new container data
-                    if (ContainerNo != null && Size != null && Seal != null)
+                    // Deserialize and add Container records
+                    if (!string.IsNullOrWhiteSpace(dtlItemsList))
                     {
-                        for (int i = 0; i < ContainerNo.Length; i++)
+
+                        var rowsToDelete = _context.TxnFCLJobContainers.Where(t => t.JobNo == id);
+                        if (rowsToDelete != null || rowsToDelete.Any())
                         {
-                            var item = new TxnFCLJobContainers
-                            {
-                                JobNo = txnFCLJob.JobNo,
-                                ContainerNo = ContainerNo[i],
-                                Seal = Seal[i],
-                                CreatedDateTime = DateTime.Now
-                            };
+                            // Remove the rows from the database context
+                            _context.TxnFCLJobContainers.RemoveRange(rowsToDelete);
+                        }
 
-                            // Convert Size to decimal?
-                            if (decimal.TryParse(Size[i], out decimal sizeValue))
-                            {
-                                item.Size = sizeValue; // Set the size if parsing is successful
-                            }
-                            else
-                            {
-                                item.Size = null; // Set to null or handle as needed
-                            }
 
-                            // Check if the container already exists
-                            var existingContainer = existingContainers.FirstOrDefault(c => c.ContainerNo == item.ContainerNo);
-                            if (existingContainer != null)
+                        var containerData = JsonConvert.DeserializeObject<List<TxnFCLJobContainers>>(dtlItemsList);
+                        if (containerData != null)
+                        {
+                            foreach (var item in containerData)
                             {
-                                // Update existing container
-                                _context.Entry(existingContainer).CurrentValues.SetValues(item);
-                                existingContainer.LastUpdatedDateTime = DateTime.Now;
-
-                                // Remove the ID from the set since it has been updated
-                                existingContainerIds.Remove(existingContainer.SerialNo);
-                            }
-                            else
-                            {
-                                // Add new container if it doesn't exist
-                                _context.TxnFCLJobContainers.Add(item);
+                                item.JobNo = txnFCLJob.JobNo;
+                           
+                                    item.CreatedDateTime = DateTime.Now;
+                                    item.LastUpdatedDateTime = DateTime.Now;
+                                    _context.TxnFCLJobContainers.Add(item);
+                                
                             }
                         }
                     }
-
-                    // Remove containers that were not part of the new data
-                    var containersToRemove = existingContainers.Where(c => existingContainerIds.Contains(c.SerialNo)).ToList();
-                    _context.TxnFCLJobContainers.RemoveRange(containersToRemove);
-
+                    _context.Update(txnFCLJob);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -635,6 +604,7 @@ namespace FMS_DEV.Controllers
                         throw;
                     }
                 }
+                return RedirectToAction(nameof(Index));
             }
 
             // Initialize ViewModel for the return view in case of an error
