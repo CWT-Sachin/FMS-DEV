@@ -346,7 +346,7 @@
                                                             <input type="text" id="ContainerNo" name="ContainerNo" value="@item.ContainerNo" class="form-control">
                                                         </td>
                                                         <td style="width:20%;">
-                                                            <select id="Size" name="Size" asp-for="FCLJobContainers.FirstOrDefault().Size"  class="form-control" value="" asp-items="ViewBag.ContainerSize"></select>
+                                                            <select id="Size" name="Size" asp-for="@item.Size" class="form-control" value="@item.Size" asp-items="ViewBag.ContainerSize"></select>
                                                         </td>
                                                         <td style="width:30%;">
                                                             <input type="text" id="Seal" name="Seal" value="@item.Seal" class="form-control">

@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\FMS DEV\\FMS-DEV\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\views\\txnfcljobs\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\views\\txnfcljobs\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\views\\txninvoiceexporthds\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\views\\txninvoiceexporthds\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\views\\txnfcljobs\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\views\\txnfcljobs\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\views\\txnfcljobs\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|solutionrelative:fms-dev\\views\\txnfcljobs\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E157090-D785-4C3E-9D19-E06038DEC5CF}|FMS-DEV\\FMS-DEV.csproj|d:\\fms dev\\fms-dev\\fms-dev\\controllers\\txnfcljobscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -28,26 +28,26 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Edit.cshtml",
-              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml",
-              "RelativeDocumentMoniker": "FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml",
-              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml*",
-              "RelativeToolTip": "FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml*",
-              "ViewState": "AgIAAFMBAAAAAAAAAAAAAFgBAABPAAAAAAAAAA==",
+              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnInvoiceExportHds\\Edit.cshtml",
+              "RelativeDocumentMoniker": "FMS-DEV\\Views\\TxnInvoiceExportHds\\Edit.cshtml",
+              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnInvoiceExportHds\\Edit.cshtml",
+              "RelativeToolTip": "FMS-DEV\\Views\\TxnInvoiceExportHds\\Edit.cshtml",
+              "ViewState": "AgIAADgBAAAAAAAAAAAAAEEBAABbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-22T10:11:42.779Z",
+              "WhenOpened": "2024-10-22T11:00:50.73Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Create.cshtml",
-              "RelativeDocumentMoniker": "FMS-DEV\\Views\\TxnFCLJobs\\Create.cshtml",
-              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Create.cshtml",
-              "RelativeToolTip": "FMS-DEV\\Views\\TxnFCLJobs\\Create.cshtml",
-              "ViewState": "AgIAADgBAAAAAAAAAAAAAEEBAABDAAAAAAAAAA==",
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml",
+              "RelativeDocumentMoniker": "FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml",
+              "ToolTip": "D:\\FMS DEV\\FMS-DEV\\FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml",
+              "RelativeToolTip": "FMS-DEV\\Views\\TxnFCLJobs\\Edit.cshtml",
+              "ViewState": "AgIAAFMBAAAAAAAAAAAAAGEBAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-22T10:11:41.754Z",
+              "WhenOpened": "2024-10-22T10:11:42.779Z",
               "EditorCaption": ""
             },
             {
@@ -60,8 +60,7 @@
               "RelativeToolTip": "FMS-DEV\\Controllers\\TxnFCLJobsController.cs",
               "ViewState": "AgIAAC8CAAAAAAAAAAAvwDkCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T04:54:47.153Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-22T04:54:47.153Z"
             }
           ]
         },
