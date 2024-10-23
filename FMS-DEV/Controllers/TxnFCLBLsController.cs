@@ -96,25 +96,35 @@ namespace FMS_DEV.Controllers
 
 
 
-        public IActionResult Edit(string jobNo, string pBLnumber)
+        public IActionResult Edit(string id, string pBLnumber)
         {
-            if (string.IsNullOrEmpty(jobNo))
+            if (string.IsNullOrEmpty(id))
             {
                 return NotFound(); // Handle missing job number
             }
 
             // Find the BL record associated with the jobNo
-            var txnFCLBL = _context.TxnFCLBLs.FirstOrDefault(b => b.JobNo == jobNo);
+            var txnFCLBL = _context.TxnFCLBLs.FirstOrDefault(b => b.JobNo == id);
             if (txnFCLBL == null)
             {
                 return NotFound(); // Handle job not found
             }
 
+            // Get the BL number from the found record
+            string blNumber = txnFCLBL.BLNo;
+
+            // Get containers for this specific job and BL
+            var containers = _context.TxnFCLJobContainers
+                .Where(c => c.JobNo == id && c.BLNumber == pBLnumber)
+                .OrderBy(c => c.ContainerNo)
+                .ToList();
+
             var tables = new TxnFCLBLViewModel
             {
-                FCLBLsMulti = _context.TxnFCLBLs.Where(p => p.JobNo == jobNo).ToList(),
-                FCLJobsMulti = _context.TxnFCLJobs.Where(t => t.JobNo == jobNo).ToList(),
-                FCLJobContainersMulti = _context.TxnFCLJobContainers.Where(c => c.JobNo == jobNo).ToList()
+                FCLBLsMulti = _context.TxnFCLBLs.Where(p => p.JobNo == id).ToList(),
+                FCLJobsMulti = _context.TxnFCLJobs.Where(t => t.JobNo == id).ToList(),
+
+                FCLJobContainersMulti = _context.TxnFCLJobContainers.Where(c => c.JobNo == id && c.BLNumber == pBLnumber).ToList()
             };
 
             // Load necessary ViewData for dropdown lists
@@ -125,7 +135,7 @@ namespace FMS_DEV.Controllers
             ViewData["BLStatus"] = new SelectList(_context.RefBLStatus.Where(bs => bs.IsActive.Equals(true)).OrderBy(sl => sl.Description), "BLStatusID", "Description", txnFCLBL.BLStatus);
             ViewData["ShipmentTerm"] = new SelectList(_context.RefShipmentTerms.Where(s => s.IsActive.Equals(true)).OrderBy(sl => sl.Description), "TermID", "Description", txnFCLBL.ShipmentTerm);
             ViewData["PackageType"] = new SelectList(_context.RefPackages.Where(pt => pt.IsActive.Equals(true)).OrderBy(pkt => pkt.Description), "PackageId", "Description", txnFCLBL.PackageType);
-            ViewData["FCLContainer"] = new SelectList(_context.TxnFCLJobContainers.Where(p => p.JobNo == jobNo).OrderBy(p => p.ContainerNo), "SerialNo", "ContainerNo", txnFCLBL.JobNo);
+            ViewData["FCLContainer"] = new SelectList(_context.TxnFCLJobContainers.Where(p => p.JobNo == id).OrderBy(p => p.ContainerNo), "SerialNo", "ContainerNo");
             ViewData["IntendedVessel"] = new SelectList(_context.RefVessels.Where(v => v.IsActive.Equals(true)).OrderBy(s => s.VesselName), "VesselId", "VesselName", txnFCLBL.JobNo);
             ViewData["POD"] = new SelectList(_context.RefPorts.OrderBy(p => p.PortName), "PortCode", "PortName", txnFCLBL.JobNo);
             ViewData["Customers"] = new SelectList(_context.RefCustomers.OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.JobNo);
@@ -149,42 +159,231 @@ namespace FMS_DEV.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string jobNo, string dtlItemsList, [Bind("JobNo,BLNo,BLTypeID,BLStatus,ShipmentTerm,GrossWeight,CBM,NetWeight,NoofPackages,PackageType,Commodity,HSCode,ShipperID,ShippreName,ShippreAddress1,ShippreAddress2,ShippreAddress3,ShipperCity,ShipperCountry,ShipperTel,ShipperEmail,ConsigneeName,ConsigneeAddress1,ConsigneeAddress2,ConsigneeAddress3,ConsigneeCity,ConsigneeCountry,ConsigneeTel,ConsigneeEmail,NotifyPartyName,NotifyPartyAddress1,NotifyPartyAddress2,NotifyPartyAddress3,NotifyPartyCity,NotifyPartyCountry,NotifyPartyTel,NotifyPartyEmail,Freight,Forwading,Forwader,LocalCharges,MarksAndNos,Description,CreatedBy,CreatedDateTime,LastUpdatedBy,LastUpdatedDateTime,Canceled,CanceledBy,CanceledDateTime,CanceledReson")] TxnFCLBL txnFCLBL)
+        public async Task<IActionResult> Edit(string jobNo, string pBLnumber, string id, string dtlItemsList, [Bind("JobNo,BLNo,BLTypeID,BLStatus,ShipmentTerm,GrossWeight,CBM,NetWeight,NoofPackages,PackageType,Commodity,HSCode,ShipperID,ShippreName,ShippreAddress1,ShippreAddress2,ShippreAddress3,ShipperCity,ShipperCountry,ShipperTel,ShipperEmail,ConsigneeName,ConsigneeAddress1,ConsigneeAddress2,ConsigneeAddress3,ConsigneeCity,ConsigneeCountry,ConsigneeTel,ConsigneeEmail,NotifyPartyName,NotifyPartyAddress1,NotifyPartyAddress2,NotifyPartyAddress3,NotifyPartyCity,NotifyPartyCountry,NotifyPartyTel,NotifyPartyEmail,Freight,Forwading,Forwader,LocalCharges,MarksAndNos,Description,CreatedBy,CreatedDateTime,LastUpdatedBy,LastUpdatedDateTime,Canceled,CanceledBy,CanceledDateTime,CanceledReson")] TxnFCLBL txnFCLBL)
         {
-            if (jobNo != txnFCLBL.JobNo)
+
+            if (id != txnFCLBL.JobNo)
             {
-                return BadRequest(); // If the JobNo doesn't match, return a bad request
+                return NotFound();
             }
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Update the main BL record
-                    _context.Update(txnFCLBL);
+
+                    // Deserialize and update container records
+                    //if (!string.IsNullOrWhiteSpace(dtlItemsList))
+                    //{
+                    //    var rowsToUpdate = _context.TxnFCLJobContainers.Where(t => t.JobNo == id && t.BLNumber == pBLnumber);
+
+                    //    if (rowsToUpdate != null || rowsToUpdate.Any())
+                    //    {
+                    //        // Update the rows from the database context
+                    //        _context.TxnFCLJobContainers.UpdateRange(rowsToUpdate);
+                    //    }
+
+                    //    var containerData = JsonConvert.DeserializeObject<List<TxnFCLJobContainers>>(dtlItemsList);
+                    //    if (containerData != null)
+                    //    {
+                    //        foreach (var item in containerData)
+                    //        {
+                    //            item.JobNo = txnFCLBL.JobNo; // Assign JobNo to each container
+
+                    //            // Update the existing container record
+                    //            item.BLNumber = txnFCLBL.BLNo;
+                    //            item.LastUpdatedDateTime = DateTime.Now;
+                    //            _context.TxnFCLJobContainers.Update(item);
+
+                    //        }
+                    //    }
+                    //}
+
+
+
+
+
+
+
+
+
+                    // Deserialize and update container records
+                    //if (!string.IsNullOrWhiteSpace(dtlItemsList))
+                    //{
+                    //    // Fetch the existing containers from the database based on JobNo and BLNumber
+                    //    var rowsToUpdate = _context.TxnFCLJobContainers.Where(t => t.JobNo == id && t.BLNumber == pBLnumber).ToList();
+
+                    //    if (rowsToUpdate != null && rowsToUpdate.Any())
+                    //    {
+                    //        // Deserialize the incoming container data
+                    //        var containerData = JsonConvert.DeserializeObject<List<TxnFCLJobContainers>>(dtlItemsList);
+
+                    //        if (containerData != null)
+                    //        {
+                    //            foreach (var item in containerData)
+                    //            {
+                    //                item.JobNo = txnFCLBL.JobNo; // Assign JobNo to each container
+                    //                item.BLNumber = txnFCLBL.BLNo; // Assign BLNo to each container
+                    //                item.LastUpdatedDateTime = DateTime.Now;
+
+                    //                // Find the existing container in the database
+                    //                var existingContainer = rowsToUpdate.FirstOrDefault(c => c.SerialNo == item.SerialNo);
+
+                    //                if (existingContainer != null)
+                    //                {
+                    //                    // Retain ContainerNo and other important fields
+                    //                    item.ContainerNo = existingContainer.ContainerNo;
+
+                    //                    // Detach any existing tracked entity with the same key
+                    //                    var trackedEntity = _context.TxnFCLJobContainers.Local
+                    //                        .FirstOrDefault(e => e.JobNo == item.JobNo && e.SerialNo == item.SerialNo);
+                    //                    if (trackedEntity != null)
+                    //                    {
+                    //                        _context.Entry(trackedEntity).State = EntityState.Detached;
+                    //                    }
+
+                    //                    // Update the container
+                    //                    _context.TxnFCLJobContainers.Update(item);
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
+
+
+
+
+
+
+
+
+
+                    // Deserialize and update container records
+                    //if (!string.IsNullOrWhiteSpace(dtlItemsList))
+                    //{
+                    //    // Fetch the existing containers from the database based on JobNo and BLNumber
+                    //    var rowsToUpdate = _context.TxnFCLJobContainers.Where(t => t.JobNo == id && t.BLNumber == pBLnumber).ToList();
+
+                    //    if (rowsToUpdate != null && rowsToUpdate.Any())
+                    //    {
+                    //        // Deserialize the incoming container data
+                    //        var containerData = JsonConvert.DeserializeObject<List<TxnFCLJobContainers>>(dtlItemsList);
+
+                    //        if (containerData != null)
+                    //        {
+                    //            foreach (var item in containerData)
+                    //            {
+                    //                item.JobNo = txnFCLBL.JobNo; // Assign JobNo to each container
+                    //                item.BLNumber = txnFCLBL.BLNo; // Assign BLNo to each container
+                    //                item.LastUpdatedDateTime = DateTime.Now;
+
+                    //                // Check if the container already exists in the database
+                    //                var existingContainer = rowsToUpdate.FirstOrDefault(c => c.SerialNo == item.SerialNo);
+
+                    //                if (existingContainer != null)
+                    //                {
+                    //                    // Retain ContainerNo and other important fields for existing rows
+                    //                    item.ContainerNo = existingContainer.ContainerNo;
+
+                    //                    // Detach any existing tracked entity with the same key
+                    //                    var trackedEntity = _context.TxnFCLJobContainers.Local
+                    //                        .FirstOrDefault(e => e.JobNo == item.JobNo && e.SerialNo == item.SerialNo);
+                    //                    if (trackedEntity != null)
+                    //                    {
+                    //                        _context.Entry(trackedEntity).State = EntityState.Detached;
+                    //                    }
+
+                    //                    // Update the existing container
+                    //                    _context.TxnFCLJobContainers.Update(item);
+                    //                }
+                    //                else
+                    //                {
+                    //                    // This is a new container row, so add it to the context
+                    //                    _context.TxnFCLJobContainers.Add(item);
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        // If no rows exist in the database, this means all rows are new
+                    //        var containerData = JsonConvert.DeserializeObject<List<TxnFCLJobContainers>>(dtlItemsList);
+                    //        if (containerData != null)
+                    //        {
+                    //            foreach (var newItem in containerData)
+                    //            {
+                    //                newItem.JobNo = txnFCLBL.JobNo; // Assign JobNo to new containers
+                    //                newItem.BLNumber = txnFCLBL.BLNo; // Assign BLNo to new containers
+                    //                newItem.LastUpdatedDateTime = DateTime.Now;
+
+                    //                // Add new container to the context
+                    //                _context.TxnFCLJobContainers.Add(newItem);
+                    //            }
+                    //        }
+                    //    }
+                    //}
+
+
+
+
+
+
 
                     // Deserialize and update container records
                     if (!string.IsNullOrWhiteSpace(dtlItemsList))
                     {
+                        // Fetch the existing containers from the database based on JobNo and BLNumber
+                        var rowsToUpdate = _context.TxnFCLJobContainers.Where(t => t.JobNo == id && t.BLNumber == pBLnumber).ToList();
+
+                        // Deserialize the incoming container data
                         var containerData = JsonConvert.DeserializeObject<List<TxnFCLJobContainers>>(dtlItemsList);
+
                         if (containerData != null)
                         {
                             foreach (var item in containerData)
                             {
                                 item.JobNo = txnFCLBL.JobNo; // Assign JobNo to each container
-                                var existingEntity = _context.TxnFCLJobContainers.Where(e => e.JobNo == jobNo && e.SerialNo == item.SerialNo).FirstOrDefault();
+                                item.BLNumber = txnFCLBL.BLNo; // Assign BLNo to each container
+                                item.LastUpdatedDateTime = DateTime.Now;
 
-                                if (existingEntity != null)
+                                // Check if the container already exists in the database by JobNo and SerialNo
+                                var existingContainer = rowsToUpdate.FirstOrDefault(c => c.SerialNo == item.SerialNo);
+
+                                if (existingContainer != null)
                                 {
-                                    // Update the existing container record
-                                    existingEntity.BLNumber = txnFCLBL.BLNo;
-                                    existingEntity.LastUpdatedDateTime = DateTime.Now;
-                                    _context.TxnFCLJobContainers.Update(existingEntity);
+                                    // Update the existing container
+                                    existingContainer.ContainerNo = item.ContainerNo;
+                                    existingContainer.LastUpdatedDateTime = DateTime.Now;
+
+                                    // Mark it as modified
+                                    _context.Entry(existingContainer).State = EntityState.Modified;
+                                }
+                                else
+                                {
+                                    // Assign a new SerialNo for new rows (or use an alternative unique identifier)
+                                    if (item.SerialNo == 0) // or use another condition to determine new row
+                                    {
+                                        item.SerialNo = rowsToUpdate.Count != 0 ? rowsToUpdate.Max(r => r.SerialNo) + 1 : 1; // Generate a new SerialNo
+                                    }
+
+                                    // Add new container to the context
+                                    _context.TxnFCLJobContainers.Add(item);
                                 }
                             }
                         }
                     }
 
+
+
+
+
+
+
+
+
+
+                    _context.Update(txnFCLBL);
                     await _context.SaveChangesAsync(); // Save changes to the database
                 }
                 catch (DbUpdateConcurrencyException)
@@ -217,7 +416,7 @@ namespace FMS_DEV.Controllers
             ViewData["BLStatus"] = new SelectList(_context.RefBLStatus.Where(bs => bs.IsActive.Equals(true)).OrderBy(sl => sl.Description), "BLStatusID", "Description", txnFCLBL.BLStatus);
             ViewData["ShipmentTerm"] = new SelectList(_context.RefShipmentTerms.Where(s => s.IsActive.Equals(true)).OrderBy(sl => sl.Description), "TermID", "Description", txnFCLBL.ShipmentTerm);
             ViewData["PackageType"] = new SelectList(_context.RefPackages.Where(pt => pt.IsActive.Equals(true)).OrderBy(pkt => pkt.Description), "PackageId", "Description", txnFCLBL.PackageType);
-            ViewData["FCLContainer"] = new SelectList(_context.TxnFCLJobContainers.Where(p => p.JobNo == jobNo).OrderBy(p => p.ContainerNo), "SerialNo", "ContainerNo", txnFCLBL.JobNo);
+            ViewData["FCLContainer"] = new SelectList(_context.TxnFCLJobContainers.Where(p => p.JobNo == id).OrderBy(p => p.ContainerNo), "SerialNo", "ContainerNo", txnFCLBL.JobNo);
             ViewData["IntendedVessel"] = new SelectList(_context.RefVessels.Where(v => v.IsActive.Equals(true)).OrderBy(s => s.VesselName), "VesselId", "VesselName", txnFCLBL.JobNo);
             ViewData["POD"] = new SelectList(_context.RefPorts.OrderBy(p => p.PortName), "PortCode", "PortName", txnFCLBL.JobNo);
             ViewData["Customers"] = new SelectList(_context.RefCustomers.OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.JobNo);
@@ -238,6 +437,127 @@ namespace FMS_DEV.Controllers
 
             return View(viewModel); // Return the view with errors and necessary data
         }
+
+
+
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(string jobNo, string pBLnumber, string id, string dtlItemsList, [Bind("JobNo,BLNo,BLTypeID,BLStatus,ShipmentTerm,GrossWeight,CBM,NetWeight,NoofPackages,PackageType,Commodity,HSCode,ShipperID,ShippreName,ShippreAddress1,ShippreAddress2,ShippreAddress3,ShipperCity,ShipperCountry,ShipperTel,ShipperEmail,ConsigneeName,ConsigneeAddress1,ConsigneeAddress2,ConsigneeAddress3,ConsigneeCity,ConsigneeCountry,ConsigneeTel,ConsigneeEmail,NotifyPartyName,NotifyPartyAddress1,NotifyPartyAddress2,NotifyPartyAddress3,NotifyPartyCity,NotifyPartyCountry,NotifyPartyTel,NotifyPartyEmail,Freight,Forwading,Forwader,LocalCharges,MarksAndNos,Description,CreatedBy,CreatedDateTime,LastUpdatedBy,LastUpdatedDateTime,Canceled,CanceledBy,CanceledDateTime,CanceledReson")] TxnFCLBL txnFCLBL)
+        //{
+        //    if (id != txnFCLBL.JobNo)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            // Deserialize and update container records
+        //            if (!string.IsNullOrWhiteSpace(dtlItemsList))
+        //            {
+        //                var rowsToUpdate = _context.TxnFCLJobContainers
+        //                    .AsNoTracking() // Prevents tracking of fetched records
+        //                    .Where(t => t.JobNo == id && t.BLNumber == pBLnumber)
+        //                    .ToList(); // Ensure we get the data as a list before further processing
+
+        //                if (rowsToUpdate != null && rowsToUpdate.Any())
+        //                {
+        //                    // Update the rows from the database context
+        //                    _context.TxnFCLJobContainers.UpdateRange(rowsToUpdate);
+        //                }
+
+        //                var containerData = JsonConvert.DeserializeObject<List<TxnFCLJobContainers>>(dtlItemsList);
+        //                if (containerData != null)
+        //                {
+        //                    foreach (var item in containerData)
+        //                    {
+        //                        item.JobNo = txnFCLBL.JobNo; // Assign JobNo to each container
+        //                        item.BLNumber = txnFCLBL.BLNo;
+        //                        item.LastUpdatedDateTime = DateTime.Now;
+
+        //                        // Detach any existing tracked entity with the same key (JobNo, SerialNo)
+        //                        var existingEntity = _context.TxnFCLJobContainers.Local
+        //                            .FirstOrDefault(e => e.JobNo == item.JobNo && e.SerialNo == item.SerialNo);
+        //                        if (existingEntity != null)
+        //                        {
+        //                            _context.Entry(existingEntity).State = EntityState.Detached;
+        //                        }
+
+        //                        // Now update the entity
+        //                        _context.TxnFCLJobContainers.Update(item);
+        //                    }
+        //                }
+        //            }
+
+        //            // Update the FCL BL record
+        //            _context.Update(txnFCLBL);
+        //            await _context.SaveChangesAsync(); // Save changes to the database
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!_context.TxnFCLBLs.Any(e => e.JobNo == txnFCLBL.JobNo))
+        //            {
+        //                return NotFound(); // Handle job not found during update
+        //            }
+        //            else
+        //            {
+        //                throw; // Rethrow the exception if it's not related to concurrency
+        //            }
+        //        }
+
+        //        return RedirectToAction(nameof(Index)); // Redirect to index after updating
+        //    }
+
+        //    // Reload ViewData for the view in case of model errors
+        //    var viewModel = new TxnFCLBLViewModel
+        //    {
+        //        FCLJobsMulti = _context.TxnFCLJobs.ToList(),
+        //        FCLJobContainersMulti = _context.TxnFCLJobContainers.ToList(),
+        //        FCLBLsMulti = _context.TxnFCLBLs.ToList()
+        //    };
+
+        //    ViewData["Shipper"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.ShipperId);
+        //    ViewData["Consignee"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.ConsigneeName);
+        //    ViewData["NotifyParty"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.NotifyPartyName);
+        //    ViewData["BLTypeID"] = new SelectList(_context.RefBLTypes.Where(bt => bt.IsActive.Equals(true)).OrderBy(sl => sl.Description), "BLTypeID", "Description", txnFCLBL.BLTypeID);
+        //    ViewData["BLStatus"] = new SelectList(_context.RefBLStatus.Where(bs => bs.IsActive.Equals(true)).OrderBy(sl => sl.Description), "BLStatusID", "Description", txnFCLBL.BLStatus);
+        //    ViewData["ShipmentTerm"] = new SelectList(_context.RefShipmentTerms.Where(s => s.IsActive.Equals(true)).OrderBy(sl => sl.Description), "TermID", "Description", txnFCLBL.ShipmentTerm);
+        //    ViewData["PackageType"] = new SelectList(_context.RefPackages.Where(pt => pt.IsActive.Equals(true)).OrderBy(pkt => pkt.Description), "PackageId", "Description", txnFCLBL.PackageType);
+        //    ViewData["FCLContainer"] = new SelectList(_context.TxnFCLJobContainers.Where(p => p.JobNo == id).OrderBy(p => p.ContainerNo), "SerialNo", "ContainerNo", txnFCLBL.JobNo);
+        //    ViewData["IntendedVessel"] = new SelectList(_context.RefVessels.Where(v => v.IsActive.Equals(true)).OrderBy(s => s.VesselName), "VesselId", "VesselName", txnFCLBL.JobNo);
+        //    ViewData["POD"] = new SelectList(_context.RefPorts.OrderBy(p => p.PortName), "PortCode", "PortName", txnFCLBL.JobNo);
+        //    ViewData["Customers"] = new SelectList(_context.RefCustomers.OrderBy(c => c.Name), "CustomerId", "Name", txnFCLBL.JobNo);
+        //    ViewData["ShippingLines"] = new SelectList(_context.RefShippingLines.OrderBy(c => c.Name), "ShippingLineId", "Name", "ShippingLineId");
+        //    ViewData["Agents"] = new SelectList(_context.RefAgents.OrderBy(c => c.AgentName), "AgentId", "AgentName", "AgentId");
+        //    ViewData["HandleBy"] = new SelectList(_context.RefStaffs.Where(h => h.IsSalesPerson.Equals(false) && h.IsActive.Equals(true)).OrderBy(st => st.StaffName), "SatffId", "StaffName", "SatffId");
+        //    ViewData["SalesPerson"] = new SelectList(_context.RefStaffs.Where(s => s.IsSalesPerson.Equals(true) && s.IsActive.Equals(true)).OrderBy(sl => sl.StaffName), "SatffId", "StaffName", "SatffId");
+        //    ViewData["AgentIDNomination"] = new SelectList(_context.RefAgents.Join(_context.RefPorts,
+
+        //        a => a.PortId,
+        //        b => b.PortCode,
+        //        (a, b) => new
+        //        {
+        //            AgentId = a.AgentId,
+        //            AgentName = a.AgentName + " - " + b.PortName,
+        //            IsActive = a.IsActive
+        //        }).Where(a => a.IsActive.Equals(true)).OrderBy(a => a.AgentName), "AgentId", "AgentName", "AgentId");
+
+        //    return View(viewModel); // Return the view with errors and necessary data
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -293,6 +613,17 @@ namespace FMS_DEV.Controllers
             };
 
             // Load necessary ViewData for dropdown lists, etc.
+            ViewData["Shipper"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", "CustomerId");
+            ViewData["Consignee"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", "CustomerId");
+            ViewData["NotifyParty"] = new SelectList(_context.RefCustomers.Where(sp => sp.IsActive.Equals(true)).OrderBy(c => c.Name), "CustomerId", "Name", "CustomerId");
+
+            ViewData["BLTypeID"] = new SelectList(_context.RefBLTypes.Where(bt => bt.IsActive.Equals(true)).OrderBy(sl => sl.Description), "BLTypeID", "Description", "BLTypeID");
+            ViewData["BLStatus"] = new SelectList(_context.RefBLStatus.Where(bs => bs.IsActive.Equals(true)).OrderBy(sl => sl.Description), "BLStatusID", "Description", "BLStatusID");
+            ViewData["ShipmentTerm"] = new SelectList(_context.RefShipmentTerms.Where(s => s.IsActive.Equals(true)).OrderBy(sl => sl.Description), "TermID", "Description", "TermID");
+            ViewData["PackageType"] = new SelectList(_context.RefPackages.Where(pt => pt.IsActive.Equals(true)).OrderBy(pkt => pkt.Description), "PackageId", "Description", "PackageId");
+
+
+            ViewData["FCLContainer"] = new SelectList(_context.TxnFCLJobContainers.Where(p => p.JobNo == FCLJobNumber).OrderBy(p => p.ContainerNo), "SerialNo", "ContainerNo", "SerialNo");
             ViewData["IntendedVessel"] = new SelectList(_context.RefVessels.Where(v => v.IsActive).OrderBy(s => s.VesselName), "VesselId", "VesselName");
             ViewData["PortId"] = new SelectList(_context.RefPorts.OrderBy(p => p.PortName), "PortCode", "PortName");
             ViewData["Customers"] = new SelectList(_context.RefCustomers.OrderBy(c => c.Name), "CustomerId", "Name");

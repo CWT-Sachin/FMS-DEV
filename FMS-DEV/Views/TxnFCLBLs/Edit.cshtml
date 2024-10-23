@@ -254,6 +254,8 @@
                     <form asp-action="Edit" asp-controller="TxnFCLBLs" id="FCLJobForm" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" name="JobNo" asp-for="FCLBLsMulti.FirstOrDefault().JobNo" />
+                    <input type="hidden" name="pBLnumber" asp-for="FCLBLsMulti.FirstOrDefault().BLNo" />
+
 
                         <div class="row">
 
@@ -712,7 +714,7 @@
                                     <tbody id="ContainerDetailsBody">
                                         <!-- Hidden row template for other expenses -->
                                         <tr id="tablerow0" hidden>
-                                            <td>
+                                            <td style="width:60%;">
                                                 <select id="ContainerNo" name="ContainerNo" asp-items="ViewBag.FCLContainer" class="form-control"></select>
                                             </td>
                                             <td>
@@ -727,12 +729,12 @@
                                             {
                                                 i++;
                                                 <tr id="tablerow@i">
-                                                    <td>
-                                                        <select id="ContainerNo" asp-for="@item.ContainerNo" name="ContainerNo" class="form-control" asp-items="ViewBag.FCLContainer">
-                                                        </select>
+                                                    <td style="width:50%;">
+                                                        <select id="ContainerNo" name="ContainerNo" asp-for="@item.ContainerNo" class="form-control" value="@item.ContainerNo" asp-items="ViewBag.FCLContainer"></select>
+                                                        
                                                     </td>
                                                     <td>
-                                                        <input type="button" id="btnRemove" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(@i)" />
+                                                        <input type="button" class="btn btn-danger" value="X" name="RemoveBttn" onclick="RemoveRow(@i)" />
                                                     </td>
                                                 </tr>
                                             }
@@ -858,9 +860,9 @@
 
 
             });
-            //alert("Test list before");
+            alert("Test list before");
             $("#dtlItemsList").val(JSON.stringify(dtlItemsArray));
-            //alert("Test list after");
+            alert("Test list after");
 
         }
 
